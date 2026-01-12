@@ -1,0 +1,37 @@
+'use server'
+
+import { createClient } from '@/lib/supabase/server'
+import { env } from '@/env.mjs'
+import { redirect } from 'next/navigation'
+
+export async function createCheckoutSession(priceId: string) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+        redirect('/login')
+    }
+
+    // In a real app, use the Stripe SDK here
+    console.log(`Creating Stripe checkout session for ${user.email} with price ${priceId}`)
+
+    // Mock redirect to Stripe
+    return { url: 'https://checkout.stripe.com/mock' }
+}
+
+export async function getSubscriptionStatus() {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return null
+
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('org_id, organizations(plan_type)')
+        .eq('id', user.id)
+        .single()
+
+    const org = Array.isArray(profile?.organizations) ? profile.organizations[0] : profile?.organizations
+
+    return (org as any)?.plan_type || 'free'
+}
