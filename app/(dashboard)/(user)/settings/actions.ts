@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { Database } from '@/lib/types/database'
 
 const profileSchema = z.object({
     fullName: z.string().optional(),
@@ -32,7 +33,7 @@ export async function updateProfile(formData: FormData) {
         .update({
             full_name: validatedData.fullName,
             phone_number: validatedData.phoneNumber,
-            locale: validatedData.locale as any,
+            locale: validatedData.locale as Database['public']['Enums']['locale_type'],
         })
         .eq('id', user.id)
 

@@ -3,8 +3,6 @@ import { Geist } from 'next/font/google'
 import './globals.css'
 import CookieBanner from '@/components/shared/cookie-banner'
 import ChatSupport from '@/components/shared/chat-support'
-import { SiteHeader } from '@/components/shared/site-header'
-import { SiteFooter } from '@/components/shared/site-footer'
 
 const geist = Geist({
     subsets: ['latin'],
@@ -24,11 +22,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geist.variable} font-sans antialiased bg-background text-foreground flex flex-col min-h-screen`}>
-                <SiteHeader />
-                <main className="flex-1">
-                    {children}
-                </main>
-                <SiteFooter />
+                {children}
                 <CookieBanner />
                 <ChatSupport />
             </body>

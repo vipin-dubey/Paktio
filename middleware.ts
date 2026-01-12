@@ -19,14 +19,12 @@ export async function middleware(request: NextRequest) {
     let isRewrite = false
 
     if (!subdomain || subdomain === 'www' || subdomain === 'paktio') {
-        response = NextResponse.rewrite(new URL(`/(marketing)${url.pathname}${url.search}`, request.url))
+        response = NextResponse.rewrite(new URL(`/(public)${url.pathname}${url.search}`, request.url))
         isRewrite = true
     } else if (subdomain === 'app') {
         response = NextResponse.rewrite(new URL(`/(dashboard)${url.pathname}${url.search}`, request.url))
-        isRewrite = true
     } else if (['no', 'se', 'dk'].includes(subdomain)) {
         response = NextResponse.rewrite(new URL(`/(regional)/${subdomain}${url.pathname}${url.search}`, request.url))
-        isRewrite = true
     }
 
     // 2. Supabase Auth & Session Refresh
@@ -52,7 +50,7 @@ export async function middleware(request: NextRequest) {
                     if (isRewrite) {
                         // Re-evaluate the rewrite since 'response' was reset to 'next'
                         if (!subdomain || subdomain === 'www' || subdomain === 'paktio') {
-                            response = NextResponse.rewrite(new URL(`/(marketing)${url.pathname}${url.search}`, request.url))
+                            response = NextResponse.rewrite(new URL(`/(public)${url.pathname}${url.search}`, request.url))
                         } else if (subdomain === 'app') {
                             response = NextResponse.rewrite(new URL(`/(dashboard)${url.pathname}${url.search}`, request.url))
                         } else if (['no', 'se', 'dk'].includes(subdomain)) {

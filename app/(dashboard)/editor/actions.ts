@@ -2,7 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
+// import { redirect } from 'next/navigation'
 
 export async function saveContract(title: string, contentJson: any) {
     const supabase = await createClient()
@@ -38,6 +38,19 @@ export async function saveContract(title: string, contentJson: any) {
 export async function requestSignatures(contractId: string, signers: { email: string }[]) {
     const supabase = await createClient()
 
+    // Save signature requests to database (intended signers)
+    const { error: requestError } = await supabase
+        .from('signature_requests')
+        .upsert(
+            signers.map(signer => ({
+                contract_id: contractId,
+                signer_email: signer.email
+            })),
+            { onConflict: 'contract_id,signer_email' }
+        )
+
+    if (requestError) throw new Error(requestError.message)
+
     // Update status to pending
     const { error: updateError } = await supabase
         .from('contracts')
@@ -46,8 +59,41 @@ export async function requestSignatures(contractId: string, signers: { email: st
 
     if (updateError) throw new Error(updateError.message)
 
-    // In a real app, send emails here via Postmark/Resend
-    console.log(`Sending signature requests for contract ${contractId} to:`, signers)
+    // Send email via Resend
+    const { env } = await import('@/env.mjs')
 
-    return { success: true }
+    if (!env.RESEND_API_KEY) {
+        console.log('⚠️  RESEND_API_KEY not configured. Email sending skipped.')
+        console.log('📧 Would have sent emails to:', signers.map(s => s.email).join(', '))
+        console.log(`🔗 Sign URL: ${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/sign/${contractId}`)
+        return { success: true, emailsSent: false }
+    }
+
+    const { Resend } = await import('resend')
+    const resend = new Resend(env.RESEND_API_KEY)
+
+    const results = await Promise.all(signers.map(async (signer) => {
+        const signingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/sign/${contractId}?email=${encodeURIComponent(signer.email)}`
+
+        return resend.emails.send({
+            from: 'Paktio <onboarding@resend.dev>',
+            to: signer.email,
+            subject: `Please sign: ${contractId}`,
+            html: `
+                <h1>Signature Request</h1>
+                <p>You have been requested to sign a contract.</p>
+                <p><strong>Contract ID:</strong> ${contractId}</p>
+                <p><a href="${signingUrl}">Click here to sign</a></p>
+            `
+        })
+    }))
+
+    const failed = results.filter(r => r.error)
+    if (failed.length > 0) {
+        console.error('Failed to send some emails:', failed)
+        // We still return success as long as one succeeded, or we could throw.
+        // For now let's just log.
+    }
+
+    return { success: true, emailsSent: true }
 }

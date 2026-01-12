@@ -18,25 +18,11 @@ export default async function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-[#F9F9F8]">
-            <header className="bg-white border-b border-muted">
-                <div className="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
-                    <h1 className="text-2xl font-black tracking-tighter uppercase">Paktio</h1>
-                    <div className="flex items-center gap-6">
-                        <Link href="/editor" className="bg-primary text-primary-foreground px-5 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-all">
-                            + New Contract
-                        </Link>
-                        <nav className="flex gap-4 text-sm font-medium">
-                            <Link href="/upgrade" className="text-primary hover:underline">Upgrade</Link>
-                            <Link href="/settings" className="hover:text-primary transition-colors">Settings</Link>
-                        </nav>
-                    </div>
-                </div>
-            </header>
 
             <main className="max-w-7xl mx-auto px-4 py-12">
                 <div className="mb-12">
                     <h2 className="text-4xl font-bold tracking-tight mb-2">Workspace Dashboard</h2>
-                    <p className="text-muted-foreground">Manage your organization's legal agreements with character-level precision.</p>
+                    <p className="text-muted-foreground">Manage your organization&apos;s legal agreements with character-level precision.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -52,7 +38,12 @@ export default async function DashboardPage() {
                                     {contracts.map((c) => (
                                         <li key={c.id} className="p-6 hover:bg-muted/5 transition-colors flex justify-between items-center">
                                             <div>
-                                                <Link href={`/editor/${c.id}`} className="text-lg font-bold hover:text-primary block">{c.title}</Link>
+                                                <Link
+                                                    href={c.status === 'draft' ? `/editor?id=${c.id}` : `/history/${c.id}`}
+                                                    className="text-lg font-bold hover:text-primary block"
+                                                >
+                                                    {c.title}
+                                                </Link>
                                                 <p className="text-sm text-muted-foreground">Version {c.version} • Created {new Date(c.created_at).toLocaleDateString()}</p>
                                             </div>
                                             <div className="flex items-center gap-4">

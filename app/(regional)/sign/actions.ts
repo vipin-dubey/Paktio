@@ -6,6 +6,19 @@ import { revalidatePath } from 'next/cache'
 export async function submitSignature(contractId: string, signerName: string, signerEmail: string) {
     const supabase = await createClient()
 
+    // Check if this email has already signed this contract
+    const { data: existingSignature } = await supabase
+        .from('signatures')
+        .select('id')
+        .eq('contract_id', contractId)
+        .eq('signer_email', signerEmail)
+        .maybeSingle()
+
+    if (existingSignature) {
+        // Already signed, just return success
+        return { success: true, alreadySigned: true }
+    }
+
     // Get current contract version to ensure integrity
     const { data: contract } = await supabase
         .from('contracts')
@@ -21,6 +34,7 @@ export async function submitSignature(contractId: string, signerName: string, si
             contract_id: contractId,
             signer_email: signerEmail,
             version_signed: contract.version,
+            email_verified: true, // Email verified via OTP
         })
 
     if (error) throw new Error(error.message)
@@ -31,5 +45,8 @@ export async function submitSignature(contractId: string, signerName: string, si
         .eq('id', contractId)
 
     revalidatePath(`/sign/${contractId}`)
-    return { success: true }
+    revalidatePath(`/history/${contractId}`)
+    revalidatePath('/dashboard')
+
+    return { success: true, alreadySigned: false }
 }

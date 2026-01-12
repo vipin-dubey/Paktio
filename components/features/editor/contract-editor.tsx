@@ -15,13 +15,22 @@ interface ContractEditorProps {
     }
 }
 
+import { requestSignatures } from '@/app/(dashboard)/editor/actions'
+
 export default function ContractEditor({ initialData }: ContractEditorProps) {
     const [prompt, setPrompt] = useState('')
     const [title, setTitle] = useState(initialData?.title || 'Untitled Contract')
     const [blocks, setBlocks] = useState<Block[]>(initialData?.blocks || [])
+    const [contractId, setContractId] = useState<string | undefined>(initialData?.id)
     const [loading, setLoading] = useState(false)
     const [saving, setSaving] = useState(false)
     const [saveMessage, setSaveMessage] = useState('')
+
+    // Signature Request State
+    const [showSignerModal, setShowSignerModal] = useState(false)
+    const [signerEmail, setSignerEmail] = useState('')
+    const [sendingRequest, setSendingRequest] = useState(false)
+    const [signatureRequested, setSignatureRequested] = useState(false)
 
     async function handleGenerate() {
         setLoading(true)
@@ -42,13 +51,44 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
         setSaving(true)
         setSaveMessage('')
         try {
-            await createContract(title, { title, blocks, legal_context: 'en' }, isTemplate)
+            const newContractId = await createContract(title, { title, blocks, legal_context: 'en' }, isTemplate)
+            if (!isTemplate && newContractId) {
+                setContractId(newContractId)
+            }
             setSaveMessage(isTemplate ? 'Saved as Template' : 'Saved Draft')
+            return newContractId
         } catch (err) {
             console.error(err)
             setSaveMessage('Failed to save')
+            return null
         } finally {
             setSaving(false)
+        }
+    }
+
+    async function handleRequestSignatures() {
+        if (!contractId) {
+            setSaveMessage('Saving before requesting signatures...')
+            const savedId = await handleSave(false)
+            if (!savedId) return
+        }
+        setShowSignerModal(true)
+    }
+
+    async function submitSignatureRequest() {
+        if (!signerEmail || !contractId) return
+
+        setSendingRequest(true)
+        try {
+            await requestSignatures(contractId, [{ email: signerEmail }])
+            setSignatureRequested(true)
+            setShowSignerModal(false)
+            setSignerEmail('')
+        } catch (error) {
+            console.error(error)
+            setSaveMessage('Failed to send request')
+        } finally {
+            setSendingRequest(false)
         }
     }
 
@@ -65,19 +105,23 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                     <button
                         onClick={() => handleSave(false)}
                         disabled={saving || blocks.length === 0}
-                        className="bg-muted text-foreground px-4 py-2 rounded-lg hover:bg-muted/80 disabled:opacity-50 text-sm font-medium"
+                        className="bg-white border border-muted text-foreground px-6 py-2 rounded-lg hover:bg-muted/10 disabled:opacity-50 text-sm font-medium whitespace-nowrap"
                     >
                         Save Draft
                     </button>
                     <button
                         onClick={() => handleSave(true)}
                         disabled={saving || blocks.length === 0}
-                        className="bg-secondary text-secondary-foreground border border-secondary px-4 py-2 rounded-lg hover:bg-secondary/10 disabled:opacity-50 text-sm font-medium whitespace-nowrap"
+                        className="bg-white border border-muted text-foreground px-6 py-2 rounded-lg hover:bg-muted/10 disabled:opacity-50 text-sm font-medium whitespace-nowrap"
                     >
                         Save as Template
                     </button>
-                    <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:opacity-90 whitespace-nowrap">
-                        Request Signatures
+                    <button
+                        onClick={handleRequestSignatures}
+                        disabled={saving || blocks.length === 0 || signatureRequested}
+                        className="bg-foreground text-background px-6 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 text-sm font-medium whitespace-nowrap"
+                    >
+                        {signatureRequested ? 'Awaiting Signature' : 'Request Signature'}
                     </button>
                 </div>
             </div>
@@ -116,7 +160,7 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                         <button
                             onClick={handleGenerate}
                             disabled={loading}
-                            className="w-full mt-4 bg-foreground text-background py-3 rounded-lg text-sm font-medium hover:bg-foreground/90 disabled:opacity-50 transition-all"
+                            className="w-full mt-4 bg-primary text-primary-foreground py-3 rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-all"
                         >
                             {loading ? 'Thinking...' : 'Generate with Gemini'}
                         </button>
@@ -128,6 +172,48 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                     </div>
                 </div>
             </div>
+
+            {/* Request Signature Modal */}
+            {showSignerModal && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-background rounded-xl p-8 max-w-md w-full shadow-2xl">
+                        <h3 className="text-xl font-bold mb-4">Request Signatures</h3>
+                        <p className="text-sm text-muted-foreground mb-6">
+                            Enter the email address of the person who needs to sign this contract.
+                        </p>
+
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-sm font-medium block mb-1">Signer Email</label>
+                                <input
+                                    type="email"
+                                    value={signerEmail}
+                                    onChange={(e) => setSignerEmail(e.target.value)}
+                                    placeholder="signer@example.com"
+                                    className="w-full border rounded-lg p-2"
+                                    autoFocus
+                                />
+                            </div>
+
+                            <div className="flex justify-end gap-3 mt-6">
+                                <button
+                                    onClick={() => setShowSignerModal(false)}
+                                    className="px-4 py-2 hover:bg-muted rounded-lg text-sm"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={submitSignatureRequest}
+                                    disabled={sendingRequest || !signerEmail}
+                                    className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm hover:opacity-90 disabled:opacity-50"
+                                >
+                                    {sendingRequest ? 'Sending...' : 'Send Request'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

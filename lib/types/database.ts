@@ -6,6 +6,14 @@ export type Json =
     | { [key: string]: Json | undefined }
     | Json[]
 
+export type Database = {
+    public: {
+        Enums: {
+            locale_type: 'en' | 'no' | 'se' | 'dk'
+        }
+    }
+}
+
 export interface ContractBlock {
     id: string
     type: 'header' | 'clause' | 'list' | 'footer'
