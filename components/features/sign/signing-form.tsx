@@ -1,18 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { submitSignature } from '@/app/(regional)/sign/actions'
 import { validateAndSendOTP } from '@/app/(regional)/sign/[contractId]/actions'
+import type { User } from '@supabase/supabase-js'
+import Link from 'next/link'
 
 interface SigningFormProps {
     contractId: string
     intendedEmail?: string
+    user?: User | null
+    existingSignature?: any
 }
 
-export default function SigningForm({ contractId, intendedEmail }: SigningFormProps) {
+export default function SigningForm({ contractId, intendedEmail, user, existingSignature }: SigningFormProps) {
     const [step, setStep] = useState<'email' | 'otp' | 'sign'>('email')
-    const [email, setEmail] = useState(intendedEmail || '')
+    const [email, setEmail] = useState(intendedEmail || user?.email || '')
     const [otp, setOtp] = useState('')
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false)
@@ -22,6 +26,22 @@ export default function SigningForm({ contractId, intendedEmail }: SigningFormPr
 
     // Validate that user can only sign with the intended email
     const isEmailLocked = !!intendedEmail
+
+    // If user is already authenticated, skip email verification
+    // This happens when:
+    // 1. Contract owner clicks "Sign this contract" from history page (already logged in)
+    // 2. External signer returns from magic link (authenticated via callback)
+    useEffect(() => {
+        if (user && user.email && !existingSignature) {
+            // If there's an intended email, verify it matches
+            if (intendedEmail && user.email === intendedEmail) {
+                setStep('sign')
+            } else if (!intendedEmail) {
+                // No intended email means contract owner signing their own contract
+                setStep('sign')
+            }
+        }
+    }, [user, intendedEmail, existingSignature])
 
     const handleSendOTP = async (e?: React.FormEvent) => {
         if (e) e.preventDefault()
@@ -79,7 +99,8 @@ export default function SigningForm({ contractId, intendedEmail }: SigningFormPr
         }
     }
 
-    if (success) {
+    // Show "already signed" message only if they signed BEFORE this session (not just now)
+    if (existingSignature && !success) {
         return (
             <div className="text-center py-8">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
@@ -87,9 +108,39 @@ export default function SigningForm({ contractId, intendedEmail }: SigningFormPr
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Agreement Signed Successfully!</h3>
-                <p className="text-muted-foreground mb-1">Your signature has been recorded and verified.</p>
-                <p className="text-sm text-green-600">✓ Email verified via OTP</p>
+                <h3 className="text-xl font-bold mb-2">You've Already Signed This Contract</h3>
+                <p className="text-muted-foreground mb-4">
+                    Signed on {new Date(existingSignature.signed_at).toLocaleString()}
+                </p>
+                {user && (
+                    <Link
+                        href="/dashboard"
+                        className="inline-block bg-foreground text-background px-6 py-3 rounded-lg text-sm font-bold hover:opacity-90 transition-all"
+                    >
+                        Return to Dashboard
+                    </Link>
+                )}
+            </div>
+        )
+    }
+
+    if (success) {
+        // Show email verification badge only if user went through the magic link flow
+        const wentThroughEmailVerification = intendedEmail && user?.email === intendedEmail
+
+        return (
+            <div className="text-center py-8">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
+                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 className="text-2xl font-bold mb-3">Contract Signed Successfully! 🎉</h3>
+                <p className="text-muted-foreground mb-2">Your signature has been recorded and verified.</p>
+                {wentThroughEmailVerification && (
+                    <p className="text-sm text-green-600 mb-4">✓ Email verified via secure link</p>
+                )}
+                <p className="text-sm text-muted-foreground mt-4">You can now safely close this page.</p>
             </div>
         )
     }

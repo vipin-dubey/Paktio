@@ -60,29 +60,13 @@ export default async function SigningPage({
                         Document Integrity Verified via SHA-256
                     </div>
 
-                    {existingSignature ? (
-                        <div className="text-center py-8">
-                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
-                                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">You've Already Signed This Contract</h3>
-                            <p className="text-muted-foreground mb-4">
-                                Signed on {new Date(existingSignature.signed_at).toLocaleString()}
-                            </p>
-                            {user && (
-                                <Link
-                                    href="/dashboard"
-                                    className="inline-block bg-foreground text-background px-6 py-3 rounded-lg text-sm font-bold hover:opacity-90 transition-all"
-                                >
-                                    Return to Dashboard
-                                </Link>
-                            )}
-                        </div>
-                    ) : (
-                        <SigningForm contractId={contractId} intendedEmail={intendedEmail} />
-                    )}
+
+                    <SigningForm
+                        contractId={contractId}
+                        intendedEmail={intendedEmail}
+                        user={user}
+                        existingSignature={existingSignature}
+                    />
                 </div>
             </div>
         </div>
