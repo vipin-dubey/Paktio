@@ -90,7 +90,12 @@ export async function requestSignatures(contractId: string, signers: { email: st
     const resend = new Resend(env.RESEND_API_KEY)
 
     const results = await Promise.all(signers.map(async (signer) => {
-        const signingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/sign/${contractId}?email=${encodeURIComponent(signer.email)}`
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+        if (!siteUrl) {
+            console.error('NEXT_PUBLIC_SITE_URL is not set')
+            return { error: 'Configuration error', email: signer.email }
+        }
+        const signingUrl = `${siteUrl}/sign/${contractId}?email=${encodeURIComponent(signer.email)}`
 
         return resend.emails.send({
             from: 'Paktio <support@notify.paktio.com>',
