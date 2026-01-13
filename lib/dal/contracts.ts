@@ -36,7 +36,6 @@ async function getCurrentUserContext() {
 
     // Auto-create organization if missing (Self-Correction for RLS)
     if (!orgId) {
-        console.log('User has no organization. Auto-creating Personal Workspace...')
         const { data: newOrg, error: orgError } = await supabase
             .from('organizations')
             .insert({ name: 'Personal Workspace', plan_type: 'free' })
@@ -58,7 +57,6 @@ async function getCurrentUserContext() {
 export async function getContracts(isTemplate: boolean = false): Promise<ContractDTO[]> {
     const { supabase, orgId } = await getCurrentUserContext()
 
-    console.log('getContracts context:', { orgId, isTemplate })
 
     let query = supabase
         .from('contracts')
@@ -87,7 +85,6 @@ export async function getContracts(isTemplate: boolean = false): Promise<Contrac
         return []
     }
 
-    console.log(`getContracts(isTemplate=${isTemplate}) returned ${data?.length} items`)
     return data.map(c => ({
         id: c.id,
         title: c.title,

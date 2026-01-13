@@ -80,9 +80,6 @@ export async function requestSignatures(contractId: string, signers: { email: st
     const { env } = await import('@/env.mjs')
 
     if (!env.RESEND_API_KEY) {
-        console.log('⚠️  RESEND_API_KEY not configured. Email sending skipped.')
-        console.log('📧 Would have sent emails to:', signers.map(s => s.email).join(', '))
-        console.log(`🔗 Sign URL: ${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/sign/${contractId}`)
         return { success: true, emailsSent: false }
     }
 

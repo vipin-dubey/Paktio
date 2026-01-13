@@ -22,19 +22,16 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
     // Check for client-side session updates (fixes magic link redirect loop)
     useEffect(() => {
         const supabase = createClient()
-        console.log('[SigningForm] Checking client session...')
 
         // 1. Check current session immediately
-        supabase.auth.getUser().then(({ data, error }) => {
-            console.log('[SigningForm] getUser result:', { user: data?.user?.email, error })
+        supabase.auth.getUser().then(({ data }) => {
             if (data?.user) {
                 setUser(data.user)
             }
         })
 
         // 2. Listen for auth changes (e.g. after magic link processing)
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-            console.log('[SigningForm] Auth change:', event, session?.user?.email)
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             if (session?.user) {
                 setUser(session.user)
             }

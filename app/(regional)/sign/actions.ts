@@ -87,7 +87,6 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
         const { env } = await import('@/env.mjs')
 
         if (!env.RESEND_API_KEY) {
-            console.log('RESEND_API_KEY not configured, skipping email notifications')
         } else {
             const { Resend } = await import('resend')
             const resend = new Resend(env.RESEND_API_KEY)
@@ -139,7 +138,6 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
             )
 
             await Promise.all(emailPromises)
-            console.log(`Sent confirmation emails to ${emailAddresses.size} recipients`)
         }
     } catch (emailError) {
         console.error('Failed to send confirmation emails:', emailError)

@@ -12,7 +12,6 @@ export async function createCheckoutSession(priceId: string) {
     }
 
     // In a real app, use the Stripe SDK here
-    console.log(`Creating Stripe checkout session for ${user.email} with price ${priceId}`)
 
     // Mock redirect to Stripe
     return { url: 'https://checkout.stripe.com/mock' }

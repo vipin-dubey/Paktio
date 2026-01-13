@@ -36,7 +36,6 @@ export async function validateAndSendOTP(contractId: string, enteredEmail: strin
 
     // Send magic link to the validated email
     let baseUrl = process.env.NEXT_PUBLIC_SITE_URL
-    console.log('[Debug] validateAndSendOTP baseUrl:', baseUrl)
 
     if (!baseUrl) {
         throw new Error('Server configuration error: NEXT_PUBLIC_SITE_URL not set')

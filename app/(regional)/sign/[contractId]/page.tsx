@@ -28,7 +28,6 @@ export default async function SigningPage({
     }
 
     if (!contract) {
-        console.log('Contract not found. User:', user?.email || 'anonymous', 'ContractId:', contractId)
         return notFound()
     }
 
