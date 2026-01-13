@@ -16,21 +16,18 @@ export async function validateAndSendOTP(contractId: string, enteredEmail: strin
         .eq('signer_email', enteredEmail)
         .maybeSingle()
 
-    // Check if this email is the contract owner
-    const { data: contract } = await supabase
-        .from('contracts')
-        .select('user_id')
-        .eq('id', contractId)
-        .single()
+    // For authenticated users, also check if they are the contract owner
+    let isContractOwner = false
+    if (user) {
+        const { data: contract } = await supabase
+            .from('contracts')
+            .select('user_id')
+            .eq('id', contractId)
+            .single()
 
-    if (!contract) {
-        throw new Error('Contract not found')
+        isContractOwner = !!(contract && contract.user_id === user.id && user.email === enteredEmail)
     }
 
-    // User is authorized if they are either:
-    // 1. The contract owner (authenticated user matches contract owner)
-    // 2. An invited signer (in signature_requests table)
-    const isContractOwner = user && contract.user_id === user.id && user.email === enteredEmail
     const isInvitedSigner = !!signatureRequest
 
     if (!isContractOwner && !isInvitedSigner) {

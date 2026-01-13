@@ -18,13 +18,20 @@ export default async function SigningPage({
     // Get current user (may be null for unauthenticated users)
     const { data: { user } } = await supabase.auth.getUser()
 
-    const { data: contract } = await supabase
+    const { data: contract, error: contractError } = await supabase
         .from('contracts')
         .select('*')
         .eq('id', contractId)
         .single()
 
-    if (!contract) return notFound()
+    if (contractError) {
+        console.error('Contract fetch error:', contractError)
+    }
+
+    if (!contract) {
+        console.log('Contract not found. User:', user?.email || 'anonymous', 'ContractId:', contractId)
+        return notFound()
+    }
 
     // Check if user has already signed
     const { data: existingSignature } = await supabase

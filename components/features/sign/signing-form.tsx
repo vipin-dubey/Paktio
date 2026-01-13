@@ -18,7 +18,16 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
     const [step, setStep] = useState<'email' | 'otp' | 'sign'>('email')
     const [email, setEmail] = useState(intendedEmail || user?.email || '')
     const [otp, setOtp] = useState('')
-    const [name, setName] = useState('')
+
+    // Signer information fields
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [ssn, setSsn] = useState('')
+    const [address, setAddress] = useState('')
+    const [postalCode, setPostalCode] = useState('')
+    const [city, setCity] = useState('')
+
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState('')
@@ -90,7 +99,16 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
         setError('')
 
         try {
-            await submitSignature(contractId, name, email)
+            await submitSignature(contractId, {
+                email,
+                firstName,
+                lastName,
+                phoneNumber,
+                ssn,
+                address,
+                postalCode,
+                city
+            })
             setSuccess(true)
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to submit signature')
@@ -235,31 +253,130 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
 
     // step === 'sign'
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
                 <p className="text-sm text-green-800">
                     ✓ Email verified: <strong>{email}</strong>
                 </p>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="firstName" className="block text-sm font-medium mb-2">
+                        First Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        id="firstName"
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="John"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium mb-2">
+                        Last Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        id="lastName"
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="Doe"
+                    />
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="phoneNumber" className="block text-sm font-medium mb-2">
+                        Phone Number <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        id="phoneNumber"
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="+47 123 45 678"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="ssn" className="block text-sm font-medium mb-2">
+                        Social Security Number <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        id="ssn"
+                        type="text"
+                        value={ssn}
+                        onChange={(e) => setSsn(e.target.value)}
+                        required
+                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="123456789"
+                    />
+                </div>
+            </div>
+
             <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Full Name
+                <label htmlFor="address" className="block text-sm font-medium mb-2">
+                    Address <span className="text-red-500">*</span>
                 </label>
                 <input
-                    id="name"
+                    id="address"
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                     required
                     className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Enter your full name"
+                    placeholder="Street name and number"
                 />
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="postalCode" className="block text-sm font-medium mb-2">
+                        Postal Code <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        id="postalCode"
+                        type="text"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                        required
+                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="0123"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="city" className="block text-sm font-medium mb-2">
+                        City <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        id="city"
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="Oslo"
+                    />
+                </div>
+            </div>
+
             {error && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                     {error}
                 </div>
             )}
+
             <button
                 type="submit"
                 disabled={loading}

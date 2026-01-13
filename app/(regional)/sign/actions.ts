@@ -3,7 +3,18 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 
-export async function submitSignature(contractId: string, signerName: string, signerEmail: string) {
+interface SignerInfo {
+    email: string
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    ssn: string
+    address: string
+    postalCode: string
+    city: string
+}
+
+export async function submitSignature(contractId: string, signerInfo: SignerInfo) {
     const supabase = await createClient()
 
     // Check if this email has already signed this contract
@@ -11,7 +22,7 @@ export async function submitSignature(contractId: string, signerName: string, si
         .from('signatures')
         .select('id')
         .eq('contract_id', contractId)
-        .eq('signer_email', signerEmail)
+        .eq('signer_email', signerInfo.email)
         .maybeSingle()
 
     if (existingSignature) {
@@ -32,9 +43,16 @@ export async function submitSignature(contractId: string, signerName: string, si
         .from('signatures')
         .insert({
             contract_id: contractId,
-            signer_email: signerEmail,
+            signer_email: signerInfo.email,
+            first_name: signerInfo.firstName,
+            last_name: signerInfo.lastName,
+            phone_number: signerInfo.phoneNumber,
+            ssn: signerInfo.ssn,
+            address: signerInfo.address,
+            postal_code: signerInfo.postalCode,
+            city: signerInfo.city,
             version_signed: contract.version,
-            email_verified: true, // Email verified via OTP
+            email_verified: true, // Email verified via magic link
         })
 
     if (error) throw new Error(error.message)
@@ -83,7 +101,7 @@ export async function submitSignature(contractId: string, signerName: string, si
                     subject: `Contract Signed: ${contractData?.title || contractId}`,
                     html: `
                         <h1>Contract Signed</h1>
-                        <p><strong>${signerEmail}</strong> has signed the contract: <strong>${contractData?.title || contractId}</strong></p>
+                        <p><strong>${signerInfo.firstName} ${signerInfo.lastName}</strong> (${signerInfo.email}) has signed the contract: <strong>${contractData?.title || contractId}</strong></p>
                         <p>All signatures have been recorded and verified.</p>
                         <p><a href="${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/history/${contractId}">View Contract History</a></p>
                     `
