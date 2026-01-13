@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
 import { submitSignature } from '@/app/(regional)/sign/actions'
 import { validateAndSendOTP } from '@/app/(regional)/sign/[contractId]/actions'
 import type { User } from '@supabase/supabase-js'
@@ -16,9 +17,33 @@ interface SigningFormProps {
     existingSignature?: Signature | null
 }
 
-export default function SigningForm({ contractId, intendedEmail, user, existingSignature }: SigningFormProps) {
+export default function SigningForm({ contractId, intendedEmail, user: initialUser, existingSignature }: SigningFormProps) {
+    const [user, setUser] = useState<User | null>(initialUser || null)
+    // Check for client-side session updates (fixes magic link redirect loop)
+    useEffect(() => {
+        const supabase = createClient()
+
+        // 1. Check current session immediately
+        supabase.auth.getUser().then(({ data }) => {
+            if (data?.user) {
+                setUser(data.user)
+            }
+        })
+
+        // 2. Listen for auth changes (e.g. after magic link processing)
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            if (session?.user) {
+                setUser(session.user)
+            }
+        })
+
+        return () => subscription.unsubscribe()
+    }, [])
+
     const [step, setStep] = useState<'email' | 'otp' | 'sign'>('email')
     const [email, setEmail] = useState(intendedEmail || user?.email || '')
+
+    // ... existing email matching logic ...
 
     // Signer information fields
     const [firstName, setFirstName] = useState('')
