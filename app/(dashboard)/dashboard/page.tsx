@@ -6,9 +6,15 @@ import TemplateGallery from '@/components/features/dashboard/template-gallery'
 import ContractTabs from '@/components/features/dashboard/contract-tabs'
 import { Plus } from 'lucide-react'
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ verified?: string }>
+}) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
+    const { verified } = await searchParams
+    const isVerified = verified === 'true'
 
     if (!user) {
         redirect('/login')
@@ -22,6 +28,15 @@ export default async function DashboardPage() {
     return (
         <div className="h-full bg-[#F9F9F8] flex flex-col overflow-hidden">
             <main className="max-w-7xl mx-auto w-full px-4 pt-8 pb-4 flex-1 flex flex-col min-h-0 overflow-hidden">
+                {isVerified && (
+                    <div className="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                        <div>
+                            <p className="text-sm font-bold">Email Verified Successfully!</p>
+                            <p className="text-xs">Your account is now fully active. Welcome to Paktio.</p>
+                        </div>
+                    </div>
+                )}
                 {/* Global Header */}
                 <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                     <div className="flex items-center justify-between w-full sm:w-auto gap-4">
