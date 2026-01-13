@@ -120,7 +120,7 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
             // Send notification to all parties
             const emailPromises = Array.from(emailAddresses).map(email =>
                 resend.emails.send({
-                    from: 'Paktio <onboarding@resend.dev>',
+                    from: 'Paktio <support@notify.paktio.com>',
                     to: email,
                     subject: `Contract Signed: ${contractData?.title || contractId}`,
                     html: `

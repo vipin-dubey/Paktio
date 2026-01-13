@@ -78,7 +78,7 @@ export async function requestSignatures(contractId: string, signers: { email: st
         const signingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/sign/${contractId}?email=${encodeURIComponent(signer.email)}`
 
         return resend.emails.send({
-            from: 'Paktio <onboarding@resend.dev>',
+            from: 'Paktio <support@notify.paktio.com>',
             to: signer.email,
             subject: `Please sign: ${contractId}`,
             html: `
