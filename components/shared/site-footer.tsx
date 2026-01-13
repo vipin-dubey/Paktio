@@ -9,7 +9,7 @@ export function SiteFooter() {
                 <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
                 <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
             </div>
-            <span className="mt-4 sm:mt-0">© 2026 Paktio AS, Oslo</span>
+            <span className="mt-4 sm:mt-0">© 2026 Paktio</span>
         </footer>
     )
 }

@@ -32,37 +32,32 @@ export default function TemplateGallery({ templates }: { templates: ContractDTO[
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {templates.map((template) => (
-                <div key={template.id} className="group bg-white border border-muted rounded-xl p-6 hover:shadow-lg transition-all relative overflow-hidden">
-                    {/* Badge for System Templates (no org_id or explicit check if we had it, but for now we assume global if in this list) */}
-                    <div className="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
-
-                    <div className="flex justify-between items-start mb-4">
-                        <div className="p-3 bg-secondary/10 rounded-lg">
-                            <FileText className="w-6 h-6 text-secondary-foreground" />
+                <div key={template.id} className="group bg-white border border-muted/50 rounded-xl p-3 hover:shadow-md transition-all relative overflow-hidden flex flex-col justify-between min-h-[110px]">
+                    <div>
+                        <div className="flex items-center gap-3 mb-1">
+                            <div className="p-1.5 bg-secondary/10 rounded-md shrink-0">
+                                <FileText className="w-3.5 h-3.5 text-secondary-foreground" />
+                            </div>
+                            <h3 className="font-bold text-sm group-hover:text-primary transition-colors line-clamp-1">{template.title}</h3>
                         </div>
-                        <span className="bg-muted/20 text-xs px-2 py-1 rounded-md text-muted-foreground uppercase tracking-wider font-bold">
-                            Template
-                        </span>
+                        <p className="text-[10px] text-muted-foreground ml-[31px]">
+                            v{template.version} • {new Date(template.updated_at).toLocaleDateString()}
+                        </p>
                     </div>
-
-                    <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem]">{template.title}</h3>
-                    <p className="text-xs text-muted-foreground mb-6">
-                        Updated {new Date(template.updated_at).toLocaleDateString()}
-                    </p>
 
                     <button
                         onClick={() => handleUseTemplate(template.id)}
                         disabled={loadingId === template.id}
-                        className="w-full flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 text-foreground py-2 rounded-lg text-sm font-medium transition-colors"
+                        className="mt-2 w-full flex items-center justify-center gap-2 bg-muted/50 hover:bg-primary hover:text-white text-foreground py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
                     >
                         {loadingId === template.id ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <Loader2 className="w-3 h-3 animate-spin" />
                         ) : (
                             <>
-                                <Copy className="w-4 h-4" />
-                                Use Template
+                                <Copy className="w-3 h-3" />
+                                Use
                             </>
                         )}
                     </button>

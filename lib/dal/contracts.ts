@@ -272,8 +272,17 @@ export async function getQuickInsights() {
         .eq('contracts.org_id', orgId)
         .gte('signed_at', weekAgo.toISOString())
 
+    // 3. Drafts count (Org-wide)
+    const { count: draftsCount } = await supabase
+        .from('contracts')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('status', 'draft')
+        .eq('is_template', false)
+
     return {
         awaitingSignature: awaitingCount,
-        signedThisWeek: signedCount || 0
+        signedThisWeek: signedCount || 0,
+        drafts: draftsCount || 0
     }
 }

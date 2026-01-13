@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { updateProfile } from './actions'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
+import { Plus, Settings } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function SettingsPage() {
     const supabase = await createClient()
@@ -16,11 +18,19 @@ export default async function SettingsPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-12 px-4">
-            <Breadcrumbs
-                items={[
-                    { label: 'User Settings' }
-                ]}
-            />
+            <div className="mb-6 flex items-center justify-between gap-4">
+                <Breadcrumbs
+                    items={[
+                        { label: 'User Settings', icon: Settings }
+                    ]}
+                />
+                <Link
+                    href="/editor"
+                    className="sm:hidden bg-foreground text-background p-3 rounded-2xl shadow-lg shadow-foreground/10 flex items-center justify-center transition-all active:scale-95 shrink-0"
+                >
+                    <Plus className="w-5 h-5" />
+                </Link>
+            </div>
             <h1 className="text-3xl font-bold mb-8">User Settings</h1>
 
             <div className="bg-white shadow rounded-lg p-6 space-y-8">

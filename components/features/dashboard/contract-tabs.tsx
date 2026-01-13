@@ -22,77 +22,90 @@ export default function ContractTabs({ contracts }: ContractTabsProps) {
     ] as const
 
     return (
-        <div className="bg-white border border-muted rounded-2xl overflow-hidden shadow-sm">
-            <div className="bg-muted/5 border-b border-muted">
-                <div className="flex px-4">
+        <div className="flex flex-col h-full">
+            {/* Sticky Tab Switcher: Anchored to the top of the component */}
+            <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm pb-3 pt-1 border-b border-muted/50 px-2 sm:px-4">
+                <div className="bg-muted/30 p-1 rounded-xl flex w-full max-w-sm border border-muted/50">
                     {tabs.map((tab) => {
                         const count = contracts.filter(c => c.status === tab.id).length
+                        const isActive = activeTab === tab.id
                         return (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={cn(
-                                    "px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all relative",
-                                    activeTab === tab.id
-                                        ? "text-primary bg-white border-x border-muted border-t-2 border-t-primary -mb-[1px]"
-                                        : "text-muted-foreground hover:text-foreground"
+                                    "flex-1 px-3 py-1.5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all rounded-lg flex items-center justify-center gap-2",
+                                    isActive
+                                        ? "bg-white text-primary shadow-sm"
+                                        : "text-muted-foreground hover:text-foreground/80"
                                 )}
                             >
                                 {tab.label}
-                                <span className={cn(
-                                    "ml-2 px-1.5 py-0.5 rounded-full text-[10px]",
-                                    activeTab === tab.id ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-                                )}>
-                                    {count}
-                                </span>
+                                {count > 0 && (
+                                    <span className={cn(
+                                        "px-1.5 py-0.5 rounded-full text-[9px] font-bold",
+                                        isActive ? "bg-primary/5 text-primary" : "bg-muted/50 text-muted-foreground/60"
+                                    )}>
+                                        {count}
+                                    </span>
+                                )}
                             </button>
                         )
                     })}
                 </div>
             </div>
 
-            {filteredContracts.length > 0 ? (
-                <ul className="divide-y divide-muted">
-                    {filteredContracts.map((c) => (
-                        <li key={c.id} className="p-6 hover:bg-muted/5 transition-colors flex justify-between items-center group">
-                            <div>
-                                <Link
-                                    href={c.status === 'draft' ? `/editor?id=${c.id}` : `/history/${c.id}`}
-                                    className="text-lg font-bold hover:text-primary block transition-colors"
-                                >
-                                    {c.title}
+            {/* Scrollable Agreement List */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-2 sm:p-4">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-muted/30">
+                    {filteredContracts.length > 0 ? (
+                        <ul className="divide-y divide-muted/50">
+                            {filteredContracts.map((c) => (
+                                <li key={c.id} className="p-4 sm:p-6 hover:bg-muted/5 transition-colors group">
+                                    <div className="flex justify-between items-start gap-4">
+                                        <div className="min-w-0 flex-1">
+                                            <Link
+                                                href={c.status === 'draft' ? `/editor?id=${c.id}` : `/history/${c.id}`}
+                                                className="text-base sm:text-lg font-bold hover:text-primary block transition-colors truncate"
+                                            >
+                                                {c.title}
+                                            </Link>
+                                            <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 uppercase tracking-wider">
+                                                v{c.version} • {new Date(c.created_at).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                        <div className="flex flex-col items-end gap-3 mt-1">
+                                            <span className={cn(
+                                                "px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-[0.1em] border",
+                                                c.status === 'signed' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                                                    c.status === 'pending' ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                                                        'bg-slate-50 text-slate-600 border-slate-100'
+                                            )}>
+                                                {c.status}
+                                            </span>
+                                            <Link
+                                                href={`/history/${c.id}`}
+                                                className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline hidden sm:block"
+                                            >
+                                                Audit Log
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <div className="p-16 text-center space-y-4">
+                            <p className="text-muted-foreground italic text-sm">No agreements in this category.</p>
+                            {activeTab === 'draft' && (
+                                <Link href="/editor" className="inline-block border border-primary text-primary px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/5">
+                                    Draft your first contract
                                 </Link>
-                                <p className="text-sm text-muted-foreground">Version {c.version} • Created {new Date(c.created_at).toLocaleDateString()}</p>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <span className={cn(
-                                    "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest",
-                                    c.status === 'signed' ? 'bg-green-100 text-green-700' :
-                                        c.status === 'pending' ? 'bg-amber-100 text-amber-700' :
-                                            'bg-gray-100 text-gray-700'
-                                )}>
-                                    {c.status}
-                                </span>
-                                <Link
-                                    href={`/history/${c.id}`}
-                                    className="text-xs font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity hover:underline"
-                                >
-                                    Audit Log
-                                </Link>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <div className="p-20 text-center space-y-4">
-                    <p className="text-muted-foreground italic">No agreements in this category.</p>
-                    {activeTab === 'draft' && (
-                        <Link href="/editor" className="inline-block border border-primary text-primary px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/5">
-                            Draft your first contract
-                        </Link>
+                            )}
+                        </div>
                     )}
                 </div>
-            )}
+            </div>
         </div>
     )
 }

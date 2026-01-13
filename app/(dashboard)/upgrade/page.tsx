@@ -1,5 +1,7 @@
 import { getSubscriptionStatus } from './actions'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
+import { Plus, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function UpgradePage() {
     const plan = await getSubscriptionStatus()
@@ -23,11 +25,19 @@ export default async function UpgradePage() {
 
     return (
         <div className="max-w-6xl mx-auto py-12 px-4">
-            <Breadcrumbs
-                items={[
-                    { label: 'Upgrade Plan' }
-                ]}
-            />
+            <div className="mb-6 flex items-center justify-between gap-4">
+                <Breadcrumbs
+                    items={[
+                        { label: 'Upgrade Plan', icon: Zap }
+                    ]}
+                />
+                <Link
+                    href="/editor"
+                    className="sm:hidden bg-foreground text-background p-3 rounded-2xl shadow-lg shadow-foreground/10 flex items-center justify-center transition-all active:scale-95 shrink-0"
+                >
+                    <Plus className="w-5 h-5" />
+                </Link>
+            </div>
             <div className="text-center mb-16">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">Choose your plan</h1>
                 <p className="mt-6 text-lg leading-8 text-muted-foreground italic">

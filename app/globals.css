@@ -13,11 +13,21 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-@layer base {
-  * {
-    @apply border-muted;
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
   }
-  body {
-    @apply bg-background text-foreground antialiased;
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #E5E5E1;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #D1D1CC;
   }
 }

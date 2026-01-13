@@ -5,9 +5,9 @@ export default function LandingPage() {
     return (
         <div className="min-h-screen bg-[#F9F9F8] flex flex-col items-center justify-center px-4">
             <div className="max-w-4xl text-center space-y-12">
-                <h1 className="text-7xl font-black tracking-tighter uppercase leading-[0.8]">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9] break-words">
                     Paktio <br />
-                    <span className="text-primary italic">Sovereign Documents</span>
+                    <span className="text-primary italic block sm:inline">Sovereign Documents</span>
                 </h1>
 
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed italic">
