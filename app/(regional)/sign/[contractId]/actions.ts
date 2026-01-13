@@ -35,12 +35,16 @@ export async function validateAndSendOTP(contractId: string, enteredEmail: strin
     }
 
     // Send magic link to the validated email
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+    let baseUrl = process.env.NEXT_PUBLIC_SITE_URL
     console.log('[Debug] validateAndSendOTP baseUrl:', baseUrl)
 
     if (!baseUrl) {
         throw new Error('Server configuration error: NEXT_PUBLIC_SITE_URL not set')
     }
+
+    // Remove trailing slash if present to avoid double slashes in generated URLs
+    baseUrl = baseUrl.replace(/\/$/, '')
+
     const signingUrl = `${baseUrl}/sign/${contractId}?email=${encodeURIComponent(enteredEmail)}`
 
     const { error: otpError } = await supabase.auth.signInWithOtp({

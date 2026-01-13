@@ -45,8 +45,8 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
     // 2. External signer returns from magic link (authenticated via callback)
     useEffect(() => {
         if (user && user.email && !existingSignature) {
-            // If there's an intended email, verify it matches
-            if (intendedEmail && user.email === intendedEmail) {
+            // If there's an intended email, verify it matches (case-insensitive)
+            if (intendedEmail && user.email.toLowerCase() === intendedEmail.toLowerCase()) {
                 setStep('sign')
             } else if (!intendedEmail) {
                 // No intended email means contract owner signing their own contract
@@ -147,8 +147,22 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
     }
 
     if (step === 'email') {
+        const isMismatch = user && intendedEmail && user.email?.toLowerCase() !== intendedEmail.toLowerCase()
+
         return (
             <form onSubmit={handleSendOTP} className="space-y-4">
+                {isMismatch && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                        <p className="font-bold text-amber-800 text-sm mb-1">⚠️ Wrong Account</p>
+                        <ul className="text-xs text-amber-700 space-y-1">
+                            <li>You are logged in as: <strong>{user?.email}</strong></li>
+                            <li>Contract sent to: <strong>{intendedEmail}</strong></li>
+                        </ul>
+                        <p className="text-xs text-amber-600 mt-2">
+                            Please sign out or use the link sent to {intendedEmail}.
+                        </p>
+                    </div>
+                )}
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                     <p className="text-sm text-blue-800">
                         🔒 To sign this contract, we&apos;ll send a verification link to your email address.
