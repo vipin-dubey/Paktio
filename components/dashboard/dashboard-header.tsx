@@ -9,11 +9,11 @@ export function DashboardHeader() {
                 <Link href="/dashboard">
                     <h1 className="text-2xl font-black tracking-tighter uppercase">Paktio</h1>
                 </Link>
-                <div className="flex items-center gap-6">
-                    <Link href="/editor" className="bg-primary text-primary-foreground px-5 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-all">
-                        + New Contract
-                    </Link>
-                    <nav className="flex items-center gap-4">
+                <div className="flex items-center gap-8">
+                    <nav className="flex items-center gap-6">
+                        <Link href="/templates" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                            Templates
+                        </Link>
                         <Link href="/upgrade" className="text-primary hover:underline text-sm font-medium">
                             Upgrade
                         </Link>
