@@ -54,7 +54,19 @@ export function ContractViewer({ contract, contractId, userHasSigned }: Contract
         <div className="space-y-8">
             {/* Document Content View */}
             <section>
-                <h2 className="text-xl font-semibold mb-4">Document Content</h2>
+                <div className="flex justify-between items-end mb-4">
+                    <h2 className="text-xl font-semibold">Document Content</h2>
+                    <Link
+                        href={`/view/${contractId}`}
+                        target="_blank"
+                        className="text-xs font-bold text-primary hover:underline flex items-center gap-1.5"
+                    >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        View Full Document
+                    </Link>
+                </div>
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col border border-muted">
                     <div className="px-8 py-6 border-b bg-muted/5">
                         <h1 className="text-2xl font-bold text-center">
@@ -100,7 +112,7 @@ export function ContractViewer({ contract, contractId, userHasSigned }: Contract
 
             {/* Acceptance & Sign Section */}
             {!userHasSigned && contract?.status !== 'draft' && (
-                <section className="bg-primary/5 border border-primary/20 rounded-xl p-6 space-y-6">
+                <section id="signing-section" className="bg-primary/5 border border-primary/20 rounded-xl p-6 space-y-6 scroll-mt-20">
                     <div className="flex items-start gap-3">
                         <div className="flex items-center h-5">
                             <input
