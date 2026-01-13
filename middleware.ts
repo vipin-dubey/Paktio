@@ -10,22 +10,10 @@ export async function middleware(request: NextRequest) {
     })
 
     // 1. Routing Logic (determine response type)
-    const url = request.nextUrl
-    const hostname = request.headers.get('host') || 'paktio.com'
-    const subdomain = hostname.includes('localhost')
-        ? hostname.split('.')[0]
-        : hostname.split('.')[0]
-
-    let isRewrite = false
-
-    if (!subdomain || subdomain === 'www' || subdomain === 'paktio') {
-        response = NextResponse.rewrite(new URL(`/(public)${url.pathname}${url.search}`, request.url))
-        isRewrite = true
-    } else if (subdomain === 'app') {
-        response = NextResponse.rewrite(new URL(`/(dashboard)${url.pathname}${url.search}`, request.url))
-    } else if (['no', 'se', 'dk'].includes(subdomain)) {
-        response = NextResponse.rewrite(new URL(`/(regional)/${subdomain}${url.pathname}${url.search}`, request.url))
-    }
+    // 1. Routing Logic (determine response type)
+    // Removed complex rewrites causing 404s. Route Groups ((public), (dashboard)) are internal
+    // and should not be target of rewrites unless using [domain] dynamic routing.
+    // Default routing will handle '/' -> (public)/page.tsx and '/dashboard' -> (dashboard)/dashboard/page.tsx appropriately.
 
     // 2. Supabase Auth & Session Refresh
     const supabase = createServerClient(
@@ -47,16 +35,8 @@ export async function middleware(request: NextRequest) {
                     // This is the tricky part. The official docs create a NEW response here.
                     // If we need to persist the rewrite, we must create the response WITH the rewrite.
 
-                    if (isRewrite) {
-                        // Re-evaluate the rewrite since 'response' was reset to 'next'
-                        if (!subdomain || subdomain === 'www' || subdomain === 'paktio') {
-                            response = NextResponse.rewrite(new URL(`/(public)${url.pathname}${url.search}`, request.url))
-                        } else if (subdomain === 'app') {
-                            response = NextResponse.rewrite(new URL(`/(dashboard)${url.pathname}${url.search}`, request.url))
-                        } else if (['no', 'se', 'dk'].includes(subdomain)) {
-                            response = NextResponse.rewrite(new URL(`/(regional)/${subdomain}${url.pathname}${url.search}`, request.url))
-                        }
-                    }
+                    // Simplified session handling without manual rewrite re-application.
+                    // This is sufficient as we are no longer doing complex rewrites.
 
                     cookiesToSet.forEach(({ name, value, options }) =>
                         response.cookies.set(name, value, options)
