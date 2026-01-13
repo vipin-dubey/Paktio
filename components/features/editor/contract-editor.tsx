@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { generateContract } from '@/app/actions/gemini'
-import { createContract } from '@/lib/dal/contracts'
+import { createContract, updateContract } from '@/lib/dal/contracts'
 import type { ContractBlock } from '@/lib/types/database'
 
 interface Block extends ContractBlock { }
@@ -12,16 +13,23 @@ interface ContractEditorProps {
         title: string
         blocks: Block[]
         id?: string
+        party_roles?: {
+            owner_label?: string
+            signer_label?: string
+        }
     }
 }
 
 import { requestSignatures } from '@/app/(dashboard)/editor/actions'
 
 export default function ContractEditor({ initialData }: ContractEditorProps) {
+    const router = useRouter()
     const [prompt, setPrompt] = useState('')
     const [title, setTitle] = useState(initialData?.title || 'Untitled Contract')
     const [blocks, setBlocks] = useState<Block[]>(initialData?.blocks || [])
     const [contractId, setContractId] = useState<string | undefined>(initialData?.id)
+    const [ownerLabel, setOwnerLabel] = useState(initialData?.party_roles?.owner_label || 'Contract Owner')
+    const [signerLabel, setSignerLabel] = useState(initialData?.party_roles?.signer_label || 'Signer')
     const [loading, setLoading] = useState(false)
     const [saving, setSaving] = useState(false)
     const [saveMessage, setSaveMessage] = useState('')
@@ -51,12 +59,28 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
         setSaving(true)
         setSaveMessage('')
         try {
-            const newContractId = await createContract(title, { title, blocks, legal_context: 'en' }, isTemplate)
-            if (!isTemplate && newContractId) {
-                setContractId(newContractId)
+            const content = {
+                title,
+                blocks,
+                legal_context: 'en',
+                party_roles: {
+                    owner_label: ownerLabel,
+                    signer_label: signerLabel
+                }
             }
+            let activeId = contractId
+            if (contractId) {
+                await updateContract(contractId, content, isTemplate)
+            } else {
+                activeId = await createContract(title, content, isTemplate)
+                if (!isTemplate && activeId) {
+                    setContractId(activeId)
+                    router.replace(`/editor?id=${activeId}`)
+                }
+            }
+
             setSaveMessage(isTemplate ? 'Saved as Template' : 'Saved Draft')
-            return newContractId
+            return activeId
         } catch (err) {
             console.error(err)
             setSaveMessage('Failed to save')
@@ -67,11 +91,9 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
     }
 
     async function handleRequestSignatures() {
-        if (!contractId) {
-            setSaveMessage('Saving before requesting signatures...')
-            const savedId = await handleSave(false)
-            if (!savedId) return
-        }
+        setSaveMessage('Saving changes before requesting signature...')
+        const currentId = await handleSave(false)
+        if (!currentId) return
         setShowSignerModal(true)
     }
 
@@ -159,13 +181,44 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                         />
                         <button
                             onClick={handleGenerate}
-                            disabled={loading}
-                            className="w-full mt-4 bg-primary text-primary-foreground py-3 rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-all"
+                            disabled={loading || !prompt}
+                            className="w-full bg-foreground text-background py-3 rounded-lg font-bold uppercase tracking-wider text-xs hover:opacity-90 disabled:opacity-50 transition-all flex justify-center items-center gap-2"
                         >
-                            {loading ? 'Thinking...' : 'Generate with Gemini'}
+                            {loading ? (
+                                <>
+                                    <span className="animate-spin text-lg">⟳</span> Generating...
+                                </>
+                            ) : (
+                                <>
+                                    <span>✦</span> Generate Draft
+                                </>
+                            )}
                         </button>
                     </div>
 
+                    <div className="bg-muted/10 border border-muted rounded-xl p-6 space-y-4">
+                        <h3 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Party Roles</h3>
+                        <div>
+                            <label className="block text-xs uppercase text-muted-foreground mb-1">Creator Role (You)</label>
+                            <input
+                                type="text"
+                                value={ownerLabel}
+                                onChange={(e) => setOwnerLabel(e.target.value)}
+                                className="w-full bg-background border rounded-lg px-3 py-2 text-sm"
+                                placeholder="e.g. Landlord"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs uppercase text-muted-foreground mb-1">Signer Role</label>
+                            <input
+                                type="text"
+                                value={signerLabel}
+                                onChange={(e) => setSignerLabel(e.target.value)}
+                                className="w-full bg-background border rounded-lg px-3 py-2 text-sm"
+                                placeholder="e.g. Tenant"
+                            />
+                        </div>
+                    </div>
                     <div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
                         <h3 className="text-sm font-semibold text-primary mb-2 italic">Context: EEA Law</h3>
                         <p className="text-xs text-muted-foreground">Paktio automatically applies relevant regional law based on your organization settings.</p>

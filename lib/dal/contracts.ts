@@ -4,6 +4,8 @@ import { createClient } from '@/lib/supabase/server'
 import type { ContractDTO, ContractDetailDTO, ContractContent } from '@/lib/types/database'
 import { z } from 'zod'
 
+import { revalidatePath } from 'next/cache'
+
 const contractContentSchema = z.object({
     title: z.string().min(1),
     blocks: z.array(z.object({
@@ -11,7 +13,11 @@ const contractContentSchema = z.object({
         type: z.enum(['header', 'clause', 'list', 'footer']),
         content: z.string()
     })),
-    legal_context: z.string().optional()
+    legal_context: z.string().optional(),
+    party_roles: z.object({
+        owner_label: z.string().optional(),
+        signer_label: z.string().optional()
+    }).optional()
 })
 
 async function getCurrentUserContext() {
@@ -144,6 +150,8 @@ export async function createContract(
         .single()
 
     if (error) throw new Error(error.message)
+    revalidatePath('/dashboard')
+    revalidatePath(`/editor`)
     return data.id
 }
 
@@ -173,6 +181,8 @@ export async function updateContract(
         .eq('org_id', orgId)
 
     if (error) throw new Error(error.message)
+    revalidatePath('/dashboard')
+    revalidatePath('/editor')
 }
 
 export async function deleteContract(id: string): Promise<void> {
@@ -185,6 +195,7 @@ export async function deleteContract(id: string): Promise<void> {
         .eq('org_id', orgId)
 
     if (error) throw new Error(error.message)
+    revalidatePath('/dashboard')
 }
 
 export async function duplicateContract(templateId: string): Promise<string> {

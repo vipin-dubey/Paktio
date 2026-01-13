@@ -12,7 +12,8 @@ export default async function EditorPage({ searchParams }: { searchParams: Promi
             initialData = {
                 title: contract.content.title || contract.title,
                 blocks: contract.content.blocks || [],
-                id: contract.id
+                id: contract.id,
+                party_roles: contract.content.party_roles
             }
         }
     }

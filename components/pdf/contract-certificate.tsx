@@ -138,13 +138,25 @@ interface ContractPDFProps {
 export const ContractPDF = ({ contractId, contract, signatures }: any) => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
     // Using content_json from DB structure, handling potential different field names if any
-    const blocks = contract?.content_json?.blocks || contract?.blocks || [];
+    const blocks = contract?.content_json?.blocks || contract?.content?.blocks || contract?.blocks || [];
+    const partyRoles = contract?.content_json?.party_roles || contract?.content?.party_roles || {};
+
+    const getDisplayRole = (sig: any) => {
+        const role = sig.role || 'Signer';
+        // Check if we have a custom label override in the contract configuration
+        if (role === 'Signer' && partyRoles.signer_label) return partyRoles.signer_label;
+        if (role === 'Document Owner' && partyRoles.owner_label) return partyRoles.owner_label;
+        return role;
+    };
 
     return (
         <Document>
             {/* Contract Content Page(s) */}
             <Page style={styles.page}>
                 <Text style={styles.contractHeader}>{contract?.title || 'Contract Document'}</Text>
+                <Text style={{ fontSize: 9, color: '#666', textAlign: 'center', marginBottom: 20, marginTop: -15, fontFamily: 'Courier' }}>
+                    PAKTIO reference number: {contractId}
+                </Text>
 
                 {blocks.map((block: any, index: number) => {
                     switch (block.type) {
@@ -160,6 +172,82 @@ export const ContractPDF = ({ contractId, contract, signatures }: any) => {
                             return <Text key={index} style={styles.blockClause}>{block.content}</Text>;
                     }
                 })}
+
+                {/* Additional Contract Sections */}
+                <View wrap={false} style={{ marginTop: 20 }}>
+                    {/* Parties Section Logic without Title */}
+                    {signatures && signatures.length > 0 ? (
+                        signatures.map((sig: any, index: number) => (
+                            <View key={index} style={{ marginBottom: 20 }}>
+                                {/* Role Header */}
+                                <Text style={{ fontSize: 12, fontWeight: 'bold', marginBottom: 8, paddingBottom: 4, borderBottom: '1px solid #eee', color: '#000' }}>
+                                    {getDisplayRole(sig)}
+                                </Text>
+
+                                {/* Details Grid/List */}
+                                <View style={styles.row}>
+                                    <Text style={styles.label}>Full Name:</Text>
+                                    <Text style={styles.value}>{sig.first_name} {sig.last_name}</Text>
+                                </View>
+
+                                <View style={styles.row}>
+                                    <Text style={styles.label}>Date of Birth:</Text>
+                                    <Text style={styles.value}>
+                                        {sig.date_of_birth ? new Date(sig.date_of_birth).toLocaleDateString() : '-'}
+                                    </Text>
+                                </View>
+
+                                {sig.ssn && (
+                                    <View style={styles.row}>
+                                        <Text style={styles.label}>Social Security No:</Text>
+                                        <Text style={styles.value}>{sig.ssn}</Text>
+                                    </View>
+                                )}
+
+                                <View style={styles.row}>
+                                    <Text style={styles.label}>Email Address:</Text>
+                                    <Text style={styles.value}>{sig.signer_email}</Text>
+                                </View>
+
+                                <View style={styles.row}>
+                                    <Text style={styles.label}>Phone Number:</Text>
+                                    <Text style={styles.value}>{sig.phone_number}</Text>
+                                </View>
+
+                                <View style={styles.row}>
+                                    <Text style={styles.label}>Address:</Text>
+                                    <Text style={styles.value}>
+                                        {sig.address}, {sig.postal_code} {sig.city}
+                                    </Text>
+                                </View>
+                            </View>
+                        ))
+                    ) : (
+                        <Text style={{ fontSize: 9, fontStyle: 'italic', color: '#666' }}>
+                            No parties recorded.
+                        </Text>
+                    )}
+                </View>
+
+                <View wrap={false}>
+                    <Text style={{ fontSize: 14, fontWeight: 'bold', marginTop: 20, marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#eee', paddingBottom: 4 }}>
+                        Attachments
+                    </Text>
+                    <Text style={{ fontSize: 10 }}>No attachments</Text>
+                </View>
+
+                <View wrap={false}>
+                    <Text style={{ fontSize: 14, fontWeight: 'bold', marginTop: 20, marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#eee', paddingBottom: 4 }}>
+                        Signatures
+                    </Text>
+                    <Text style={{ fontSize: 10, lineHeight: 1.5 }}>
+                        This contract is signed electronically using PAKTIO's e-signing service. The signatures with detailed information are attached in a separate signing certificate page at the end of this pdf.
+                    </Text>
+                    <Text style={{ fontSize: 10, marginTop: 10, lineHeight: 1.5 }}>
+                        Learn more about PAKTIO's electronic signatures at{' '}
+                        <Text style={{ color: '#2563eb' }}>https://www.paktio.com/en/signing</Text>
+                    </Text>
+                </View>
 
                 <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
                     `${pageNumber} / ${totalPages}`
@@ -178,7 +266,7 @@ export const ContractPDF = ({ contractId, contract, signatures }: any) => {
             <Page size="A4" style={styles.page}>
                 {/* Header */}
                 <View style={styles.header}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Digital Contract Certificate</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Digital Signing Certificate</Text>
                     <Text style={[styles.subtitle, { marginTop: 4 }]}>
                         This certificate attests to the integrity and signing of the document.
                     </Text>

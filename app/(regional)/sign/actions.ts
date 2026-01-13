@@ -31,14 +31,27 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
         return { success: true, alreadySigned: true }
     }
 
-    // Get current contract version to ensure integrity
+    // Get current contract details including roles configuration
     const { data: contract } = await supabase
         .from('contracts')
-        .select('version')
+        .select('version, created_by, content_json')
         .eq('id', contractId)
         .single()
 
     if (!contract) throw new Error('Contract not found')
+
+    // Determine signer role
+    const { data: { user } } = await supabase.auth.getUser()
+    // Handle both raw DB field (content_json) and mapped DTO field (content)
+    const content = (contract.content_json || (contract as any).content) as any
+    const partyRoles = content?.party_roles || {}
+
+    let role = partyRoles.signer_label || 'Signer'
+
+    // logic: if logged in user is the creator, they are the owner
+    if (user && user.id === contract.created_by) {
+        role = partyRoles.owner_label || 'Document Owner'
+    }
 
     const { error } = await supabase
         .from('signatures')
@@ -54,7 +67,8 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
             postal_code: signerInfo.postalCode,
             city: signerInfo.city,
             version_signed: contract.version,
-            email_verified: true, // Email verified via magic link
+            email_verified: true,
+            role: role // Save determined role
         })
 
     if (error) throw new Error(error.message)

@@ -24,6 +24,10 @@ export interface ContractContent {
     title: string
     blocks: ContractBlock[]
     legal_context: string
+    party_roles?: {
+        owner_label?: string
+        signer_label?: string
+    }
 }
 
 export interface Contract {
