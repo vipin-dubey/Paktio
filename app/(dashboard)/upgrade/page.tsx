@@ -1,4 +1,5 @@
 import { getSubscriptionStatus } from './actions'
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 
 export default async function UpgradePage() {
     const plan = await getSubscriptionStatus()
@@ -21,7 +22,12 @@ export default async function UpgradePage() {
     ]
 
     return (
-        <div className="max-w-6xl mx-auto py-20 px-4">
+        <div className="max-w-6xl mx-auto py-12 px-4">
+            <Breadcrumbs
+                items={[
+                    { label: 'Upgrade Plan' }
+                ]}
+            />
             <div className="text-center mb-16">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">Choose your plan</h1>
                 <p className="mt-6 text-lg leading-8 text-muted-foreground italic">

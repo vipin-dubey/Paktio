@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { updateProfile } from './actions'
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 
 export default async function SettingsPage() {
     const supabase = await createClient()
@@ -15,6 +16,11 @@ export default async function SettingsPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-12 px-4">
+            <Breadcrumbs
+                items={[
+                    { label: 'User Settings' }
+                ]}
+            />
             <h1 className="text-3xl font-bold mb-8">User Settings</h1>
 
             <div className="bg-white shadow rounded-lg p-6 space-y-8">

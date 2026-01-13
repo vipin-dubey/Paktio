@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 
 interface SignerInfo {
@@ -100,8 +101,12 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
                 .select('signer_email')
                 .eq('contract_id', contractId)
 
-            // Get contract owner email
-            const { data: ownerData } = await supabase.auth.admin.getUserById(contractData?.user_id || '')
+            // Get contract owner email using service role client (to have admin access)
+            const adminClient = createSupabaseClient(
+                env.NEXT_PUBLIC_SUPABASE_URL,
+                env.SUPABASE_SERVICE_ROLE_KEY
+            )
+            const { data: ownerData } = await adminClient.auth.admin.getUserById(contractData?.user_id || '')
             const ownerEmail = ownerData?.user?.email
 
             // Collect all email addresses (owner + all signers)

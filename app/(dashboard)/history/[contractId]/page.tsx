@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import DownloadCertificateButton from '@/components/features/contract/download-certificate-button'
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
+import { ContractViewer } from '@/components/features/contract/contract-viewer'
 
 export default async function HistoryPage({ params }: { params: Promise<{ contractId: string }> }) {
     const supabase = await createClient()
@@ -26,6 +28,11 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
 
     return (
         <div className="max-w-4xl mx-auto py-12 px-4">
+            <Breadcrumbs
+                items={[
+                    { label: 'Contract Details' }
+                ]}
+            />
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold">Contract Details</h1>
                 <DownloadCertificateButton
@@ -96,23 +103,12 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                     </div>
                 </section>
 
-                {/* Sign button for authenticated users who haven't signed yet */}
-                {user && !userHasSigned && contract?.status !== 'draft' && (
-                    <div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h3 className="font-bold text-primary mb-1">Your signature is required</h3>
-                                <p className="text-sm text-muted-foreground">Sign this contract to complete the agreement</p>
-                            </div>
-                            <Link
-                                href={`/sign/${contractId}`}
-                                className="bg-foreground text-background px-6 py-3 rounded-lg text-sm font-bold hover:opacity-90 transition-all"
-                            >
-                                Sign this contract
-                            </Link>
-                        </div>
-                    </div>
-                )}
+                <ContractViewer
+                    contract={contract as any}
+                    contractId={contractId}
+                    userHasSigned={!!userHasSigned}
+                />
+
 
                 <section>
                     <h2 className="text-xl font-semibold mb-4">Signatures</h2>

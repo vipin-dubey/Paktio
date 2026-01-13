@@ -21,6 +21,7 @@ interface ContractEditorProps {
 }
 
 import { requestSignatures } from '@/app/(dashboard)/editor/actions'
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 
 export default function ContractEditor({ initialData }: ContractEditorProps) {
     const router = useRouter()
@@ -116,6 +117,11 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
 
     return (
         <div className="max-w-5xl mx-auto py-12 px-4 flex flex-col h-[calc(100vh-100px)]">
+            <Breadcrumbs
+                items={[
+                    { label: contractId ? 'Edit Contract' : 'New Contract' }
+                ]}
+            />
             <div className="mb-8 flex justify-between items-center gap-4">
                 <input
                     value={title}

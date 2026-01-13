@@ -1,0 +1,152 @@
+'use client'
+
+import { useState, useRef, useEffect } from 'react'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
+
+interface Block {
+    id: string
+    type: 'header' | 'clause' | 'list' | 'footer'
+    content: string
+}
+
+interface Contract {
+    id: string
+    title: string
+    content_json: {
+        blocks: Block[]
+    }
+    status: string
+}
+
+interface ContractViewerProps {
+    contract: Contract
+    contractId: string
+    userHasSigned: boolean
+}
+
+export function ContractViewer({ contract, contractId, userHasSigned }: ContractViewerProps) {
+    const [hasReadToBottom, setHasReadToBottom] = useState(false)
+    const [isAccepted, setIsAccepted] = useState(false)
+    const scrollRef = useRef<HTMLDivElement>(null)
+
+    const handleScroll = () => {
+        if (!scrollRef.current || hasReadToBottom) return
+
+        const { scrollTop, scrollHeight, clientHeight } = scrollRef.current
+        // Check if user is within 20px of bottom
+        if (scrollHeight - scrollTop - clientHeight < 20) {
+            setHasReadToBottom(true)
+        }
+    }
+
+    // Auto-enable if content is shorter than container
+    useEffect(() => {
+        if (scrollRef.current) {
+            const { scrollHeight, clientHeight } = scrollRef.current
+            if (scrollHeight <= clientHeight) {
+                setHasReadToBottom(true)
+            }
+        }
+    }, [])
+
+    return (
+        <div className="space-y-8">
+            {/* Document Content View */}
+            <section>
+                <h2 className="text-xl font-semibold mb-4">Document Content</h2>
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col border border-muted">
+                    <div className="px-8 py-6 border-b bg-muted/5">
+                        <h1 className="text-2xl font-bold text-center">
+                            {contract?.title}
+                        </h1>
+                    </div>
+
+                    <div
+                        ref={scrollRef}
+                        onScroll={handleScroll}
+                        className="p-8 h-[500px] overflow-y-auto space-y-4 scroll-smooth"
+                    >
+                        {(contract?.content_json?.blocks || []).map((block: any) => (
+                            <div key={block.id} className="text-foreground">
+                                {block.type === 'header' && (
+                                    <h3 className="text-lg font-bold mt-6 mb-2">{block.content}</h3>
+                                )}
+                                {block.type === 'clause' && (
+                                    <p className="text-sm leading-relaxed mb-4">{block.content}</p>
+                                )}
+                                {block.type === 'list' && (
+                                    <div className="flex gap-3 mb-2 ml-4">
+                                        <span className="text-primary font-bold">•</span>
+                                        <p className="text-sm leading-relaxed">{block.content}</p>
+                                    </div>
+                                )}
+                                {block.type === 'footer' && (
+                                    <p className="text-xs text-muted-foreground mt-8 border-t pt-4 italic">
+                                        {block.content}
+                                    </p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {!hasReadToBottom && (
+                        <div className="px-8 py-3 bg-amber-50 border-t border-amber-100 flex items-center justify-center gap-2 text-xs text-amber-700 animate-pulse">
+                            <span>↓ Please scroll to the bottom of the document to proceed</span>
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            {/* Acceptance & Sign Section */}
+            {!userHasSigned && contract?.status !== 'draft' && (
+                <section className="bg-primary/5 border border-primary/20 rounded-xl p-6 space-y-6">
+                    <div className="flex items-start gap-3">
+                        <div className="flex items-center h-5">
+                            <input
+                                id="terms"
+                                type="checkbox"
+                                disabled={!hasReadToBottom}
+                                checked={isAccepted}
+                                onChange={(e) => setIsAccepted(e.target.checked)}
+                                className="w-4 h-4 rounded border-muted text-primary focus:ring-primary disabled:opacity-50 transition-all cursor-pointer disabled:cursor-not-allowed"
+                            />
+                        </div>
+                        <div className="text-sm">
+                            <label
+                                htmlFor="terms"
+                                className={cn(
+                                    "font-medium transition-colors cursor-pointer",
+                                    !hasReadToBottom ? "text-muted-foreground cursor-not-allowed" : "text-foreground"
+                                )}
+                            >
+                                I have read and understood the terms and conditions outlined in this document.
+                            </label>
+                            <p className="text-muted-foreground text-xs mt-1">
+                                By checking this box, you acknowledge that you have reviewed the entire agreement.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-primary/10">
+                        <div>
+                            <h3 className="font-bold text-primary mb-1">Your signature is required</h3>
+                            <p className="text-sm text-muted-foreground">Sign this contract to complete the agreement</p>
+                        </div>
+                        <Link
+                            href={`/sign/${contractId}`}
+                            className={cn(
+                                "bg-foreground text-background px-8 py-3 rounded-lg text-sm font-bold transition-all inline-block",
+                                (!isAccepted || !hasReadToBottom)
+                                    ? "opacity-30 cursor-not-allowed pointer-events-none grayscale"
+                                    : "hover:opacity-90 hover:scale-[1.02] shadow-lg shadow-primary/10"
+                            )}
+                        >
+                            Sign this contract
+                        </Link>
+                    </div>
+                </section>
+            )}
+        </div>
+    )
+}

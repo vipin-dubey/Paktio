@@ -1,8 +1,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getContracts } from '@/lib/dal/contracts'
+import { getContracts, getQuickInsights } from '@/lib/dal/contracts'
 import TemplateGallery from '@/components/features/dashboard/template-gallery'
+import ContractTabs from '@/components/features/dashboard/contract-tabs'
 
 export default async function DashboardPage() {
     const supabase = await createClient()
@@ -15,6 +16,7 @@ export default async function DashboardPage() {
     // Use DAL to fetch data
     const contracts = await getContracts(false)
     const templates = await getContracts(true)
+    const insights = await getQuickInsights()
 
     return (
         <div className="min-h-screen bg-[#F9F9F8]">
@@ -27,46 +29,7 @@ export default async function DashboardPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="md:col-span-3 space-y-6">
-                        <div className="bg-white border border-muted rounded-2xl overflow-hidden">
-                            <div className="px-6 py-4 bg-muted/5 border-b border-muted flex justify-between items-center">
-                                <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Recent Contracts</span>
-                                <span className="text-xs font-bold text-primary">{contracts?.length || 0} Total</span>
-                            </div>
-
-                            {contracts && contracts.length > 0 ? (
-                                <ul className="divide-y divide-muted">
-                                    {contracts.map((c) => (
-                                        <li key={c.id} className="p-6 hover:bg-muted/5 transition-colors flex justify-between items-center">
-                                            <div>
-                                                <Link
-                                                    href={c.status === 'draft' ? `/editor?id=${c.id}` : `/history/${c.id}`}
-                                                    className="text-lg font-bold hover:text-primary block"
-                                                >
-                                                    {c.title}
-                                                </Link>
-                                                <p className="text-sm text-muted-foreground">Version {c.version} • Created {new Date(c.created_at).toLocaleDateString()}</p>
-                                            </div>
-                                            <div className="flex items-center gap-4">
-                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${c.status === 'signed' ? 'bg-green-100 text-green-700' :
-                                                    c.status === 'pending' ? 'bg-amber-100 text-amber-700' :
-                                                        'bg-gray-100 text-gray-700'
-                                                    }`}>
-                                                    {c.status}
-                                                </span>
-                                                <Link href={`/history/${c.id}`} className="text-xs font-bold text-primary hover:underline">Audit Log</Link>
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <div className="p-20 text-center space-y-4">
-                                    <p className="text-muted-foreground italic">No agreements drafting yet.</p>
-                                    <Link href="/editor" className="inline-block border border-primary text-primary px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/5">
-                                        Draft your first contract
-                                    </Link>
-                                </div>
-                            )}
-                        </div>
+                        <ContractTabs contracts={contracts as any} />
 
                         {/* Templates Section */}
                         <div className="space-y-4 pt-8">
@@ -86,11 +49,11 @@ export default async function DashboardPage() {
                             <div className="space-y-4">
                                 <div>
                                     <p className="text-sm text-muted-foreground">Awaiting your signature</p>
-                                    <p className="text-2xl font-bold">0</p>
+                                    <p className="text-2xl font-bold">{insights.awaitingSignature}</p>
                                 </div>
                                 <div>
                                     <p className="text-sm text-muted-foreground">Signed this week</p>
-                                    <p className="text-2xl font-bold">0</p>
+                                    <p className="text-2xl font-bold">{insights.signedThisWeek}</p>
                                 </div>
                             </div>
                         </div>

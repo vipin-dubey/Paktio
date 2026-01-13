@@ -229,3 +229,46 @@ export async function duplicateContract(templateId: string): Promise<string> {
 
     return newContract.id
 }
+
+export async function getQuickInsights() {
+    const { supabase, orgId } = await getCurrentUserContext()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user || !orgId) return { awaitingSignature: 0, signedThisWeek: 0 }
+
+    // 1. Awaiting your signature
+    // Pending contracts where user is requested but hasn't signed
+    const { data: requests } = await supabase
+        .from('signature_requests')
+        .select('contract_id, contracts!inner(status)')
+        .eq('signer_email', user.email)
+        .eq('contracts.status', 'pending')
+
+    let awaitingCount = 0
+    if (requests && requests.length > 0) {
+        const contractIds = requests.map(r => r.contract_id)
+        const { data: signed } = await supabase
+            .from('signatures')
+            .select('contract_id')
+            .eq('signer_email', user.email)
+            .in('contract_id', contractIds)
+
+        const signedIds = new Set(signed?.map(s => (s as any).contract_id))
+        awaitingCount = contractIds.filter(id => !signedIds.has(id)).length
+    }
+
+    // 2. Signed this week (Org-wide)
+    const weekAgo = new Date()
+    weekAgo.setDate(weekAgo.getDate() - 7)
+
+    const { count: signedCount } = await supabase
+        .from('signatures')
+        .select('*, contracts!inner(org_id)', { count: 'exact', head: true })
+        .eq('contracts.org_id', orgId)
+        .gte('signed_at', weekAgo.toISOString())
+
+    return {
+        awaitingSignature: awaitingCount,
+        signedThisWeek: signedCount || 0
+    }
+}
