@@ -182,9 +182,9 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-foreground text-background px-10 py-4 rounded-xl text-lg font-bold hover:opacity-90 transition-all shadow-xl disabled:opacity-50"
+                    className="w-full bg-foreground text-background px-6 py-4 rounded-xl text-sm sm:text-lg font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-xl disabled:opacity-50"
                 >
-                    {loading ? 'Sending...' : 'Send Verification Link'}
+                    {loading ? 'Sending...' : 'Verify Email'}
                 </button>
             </form>
         )
@@ -238,14 +238,18 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                <p className="text-sm text-green-800">
-                    ✓ Email verified: <strong>{email}</strong>
+                <p className="text-sm text-green-800 flex items-center justify-between sm:justify-start gap-2">
+                    <span className="flex items-center gap-2">
+                        <span className="sm:inline hidden">✓ Email verified:</span>
+                        <strong>{email}</strong>
+                    </span>
+                    <span className="sm:hidden font-bold text-lg">✓</span>
                 </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium mb-2">
+                    <label htmlFor="firstName" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                         First Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -254,13 +258,13 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         required
-                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="John"
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium mb-2">
+                    <label htmlFor="lastName" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                         Last Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -269,7 +273,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         required
-                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="Doe"
                     />
                 </div>
@@ -277,7 +281,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label htmlFor="phoneNumber" className="block text-sm font-medium mb-2">
+                    <label htmlFor="phoneNumber" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                         Phone Number <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -286,13 +290,13 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         required
-                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="+47 123 45 678"
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="dateOfBirth" className="block text-sm font-medium mb-2">
+                    <label htmlFor="dateOfBirth" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                         Date of Birth <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -301,27 +305,27 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                         value={dateOfBirth}
                         onChange={(e) => setDateOfBirth(e.target.value)}
                         required
-                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                     />
                 </div>
             </div>
 
             <div>
-                <label htmlFor="ssn" className="block text-sm font-medium mb-2">
-                    Social Security Number <span className="text-muted-foreground text-xs">(Optional)</span>
+                <label htmlFor="ssn" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
+                    Social Security Number <span className="text-muted-foreground text-[8px] tracking-normal lowercase">(Optional)</span>
                 </label>
                 <input
                     id="ssn"
                     type="text"
                     value={ssn}
                     onChange={(e) => setSsn(e.target.value)}
-                    className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                     placeholder="123456789"
                 />
             </div>
 
             <div>
-                <label htmlFor="address" className="block text-sm font-medium mb-2">
+                <label htmlFor="address" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                     Address <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -330,14 +334,14 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     required
-                    className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                     placeholder="Street name and number"
                 />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label htmlFor="postalCode" className="block text-sm font-medium mb-2">
+                    <label htmlFor="postalCode" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                         Postal Code <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -346,13 +350,13 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                         value={postalCode}
                         onChange={(e) => setPostalCode(e.target.value)}
                         required
-                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="0123"
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="city" className="block text-sm font-medium mb-2">
+                    <label htmlFor="city" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                         City <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -361,7 +365,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         required
-                        className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-muted/30 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="Oslo"
                     />
                 </div>
@@ -387,7 +391,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
             <button
                 type="submit"
                 disabled={loading || !signatureImage}
-                className="w-full bg-foreground text-background px-10 py-4 rounded-xl text-lg font-bold hover:opacity-90 transition-all shadow-xl disabled:opacity-50"
+                className="w-full bg-foreground text-background px-6 py-4 rounded-xl text-sm sm:text-lg font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-xl disabled:opacity-50 active:scale-[0.98]"
             >
                 {loading ? 'Signing...' : 'Sign and Accept Agreement'}
             </button>

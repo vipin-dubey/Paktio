@@ -141,9 +141,12 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
             setSignatureRequested(true)
             setShowSignerModal(false)
             setSignerEmail('')
-        } catch (error) {
+        } catch (error: any) {
             console.error(error)
-            setSaveMessage('Failed to send request')
+            const errorMessage = error?.message || 'Failed to send request'
+            setSaveMessage(`Error: ${errorMessage}`)
+            // Reset message after delay
+            setTimeout(() => setSaveMessage(''), 5000)
         } finally {
             setSendingRequest(false)
         }

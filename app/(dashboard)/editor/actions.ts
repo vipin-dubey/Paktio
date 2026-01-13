@@ -36,9 +36,24 @@ export async function saveContract(title: string, contentJson: ContractContent) 
     revalidatePath('/dashboard')
     return data
 }
-
 export async function requestSignatures(contractId: string, signers: { email: string }[]) {
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+        throw new Error('You must be logged in to request signatures')
+    }
+
+    // Verify user has access to this contract
+    const { data: contract, error: contractError } = await supabase
+        .from('contracts')
+        .select('id')
+        .eq('id', contractId)
+        .single()
+
+    if (contractError || !contract) {
+        throw new Error('Contract not found or access denied')
+    }
 
     // Save signature requests to database (intended signers)
     const { error: requestError } = await supabase

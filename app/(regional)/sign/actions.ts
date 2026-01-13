@@ -95,7 +95,7 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
             // Get contract details and all signatures
             const { data: contractData } = await supabase
                 .from('contracts')
-                .select('title, user_id')
+                .select('title, created_by')
                 .eq('id', contractId)
                 .single()
 
@@ -105,12 +105,18 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
                 .eq('contract_id', contractId)
 
             // Get contract owner email using service role client (to have admin access)
-            const adminClient = createSupabaseClient(
-                env.NEXT_PUBLIC_SUPABASE_URL,
-                env.SUPABASE_SERVICE_ROLE_KEY
-            )
-            const { data: ownerData } = await adminClient.auth.admin.getUserById(contractData?.user_id || '')
-            const ownerEmail = ownerData?.user?.email
+            let ownerEmail: string | undefined = undefined;
+
+            if (env.SUPABASE_SERVICE_ROLE_KEY && env.NEXT_PUBLIC_SUPABASE_URL) {
+                const adminClient = createSupabaseClient(
+                    env.NEXT_PUBLIC_SUPABASE_URL,
+                    env.SUPABASE_SERVICE_ROLE_KEY
+                )
+                const { data: ownerData } = await adminClient.auth.admin.getUserById(contractData?.created_by || '')
+                ownerEmail = ownerData?.user?.email
+            } else {
+                console.warn('SUPABASE_SERVICE_ROLE_KEY or NEXT_PUBLIC_SUPABASE_URL not set. Owner notification skipped.')
+            }
 
             // Collect all email addresses (owner + all signers)
             const emailAddresses = new Set<string>()

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { SignOutButton } from './sign-out-button'
+import { Settings, LayoutGrid, File, User } from 'lucide-react'
 
 export async function SiteHeader() {
     const supabase = await createClient()
@@ -16,23 +17,36 @@ export async function SiteHeader() {
                 <nav className="flex items-center gap-2 md:gap-6 text-sm font-medium">
                     {user ? (
                         <>
-                            <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors hidden md:block">
+                            <Link href="/dashboard" className="hidden md:block text-muted-foreground hover:text-foreground transition-colors">
                                 Dashboard
                             </Link>
-                            <Link href="/settings" className="text-muted-foreground hover:text-foreground transition-colors hidden md:block">
+                            <Link href="/templates" className="hidden md:block text-muted-foreground hover:text-foreground transition-colors">
+                                Templates
+                            </Link>
+                            <Link href="/settings" className="hidden md:block text-muted-foreground hover:text-foreground transition-colors">
                                 Settings
                             </Link>
-                            {/* Mobile only icon for Dashboard if needed, otherwise just SignOut is sparse but functional for now. 
-                                Actually, leaving just SignOut on mobile might be too little. 
-                                Let's add a simple Mobile Menu or just icons later if requested.
-                                For now, hiding text prevents layout break. 
-                            */}
+
+                            {/* Mobile Icons */}
                             <Link href="/dashboard" className="md:hidden text-muted-foreground hover:text-foreground transition-colors p-2">
                                 <span className="sr-only">Dashboard</span>
-                                {/* Simple Grid Icon for Dashboard on Mobile */}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="7" height="9" x="3" y="3" rx="1" /><rect width="7" height="5" x="14" y="3" rx="1" /><rect width="7" height="9" x="14" y="12" rx="1" /><rect width="7" height="5" x="3" y="16" rx="1" /></svg>
+                                <LayoutGrid className="w-5 h-5" />
                             </Link>
-                            <SignOutButton />
+                            <Link href="/templates" className="md:hidden text-muted-foreground hover:text-foreground transition-colors p-2">
+                                <span className="sr-only">Templates</span>
+                                <File className="w-5 h-5" />
+                            </Link>
+                            <Link href="/settings" className="md:hidden text-muted-foreground hover:text-foreground transition-colors p-2">
+                                <span className="sr-only">Settings</span>
+                                <Settings className="w-5 h-5" />
+                            </Link>
+
+                            <div className="flex items-center gap-2 pl-2 border-l border-muted">
+                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <User className="w-4 h-4 text-primary" />
+                                </div>
+                                <SignOutButton />
+                            </div>
                         </>
                     ) : (
                         <>

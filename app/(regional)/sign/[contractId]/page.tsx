@@ -41,9 +41,9 @@ export default async function SigningPage({
         .maybeSingle()
 
     return (
-        <div className="min-h-screen bg-[#F9F9F8] py-20 px-4">
+        <div className="min-h-screen bg-[#F9F9F8] py-8 sm:py-20 px-4">
             <div className="max-w-3xl mx-auto bg-white border border-muted rounded-2xl shadow-sm overflow-hidden">
-                <div className="p-8 border-b border-muted bg-muted/5">
+                <div className="p-6 sm:p-8 border-b border-muted bg-muted/5">
                     <div className="flex justify-between items-start">
                         <div>
                             <h2 className="text-xs font-black uppercase tracking-widest text-primary mb-1">Contract for review</h2>
@@ -56,14 +56,17 @@ export default async function SigningPage({
                     </div>
                 </div>
 
-                <div className="p-12 min-h-[400px]">
+                <div className="p-6 sm:p-12 min-h-[400px]">
                     <ContractViewer contentJson={contract.content_json} />
                 </div>
 
-                <div className="p-8 bg-muted/5 border-t border-muted">
-                    <div className="mb-6 text-sm text-muted-foreground flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        Document Integrity Verified via SHA-256
+                <div className="p-6 sm:p-8 bg-[#F9F9F8] border-t border-muted">
+                    <div className="mb-8 flex items-center justify-center sm:justify-start gap-2.5 py-2 px-4 bg-white border border-muted rounded-full w-fit mx-auto sm:mx-0 shadow-sm">
+                        <div className="relative flex items-center justify-center">
+                            <span className="absolute w-2 h-2 rounded-full bg-green-500 animate-ping opacity-75" />
+                            <span className="relative w-2 h-2 rounded-full bg-green-500 border border-white" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.1em] text-foreground/70">Secure Integrity: SHA-256 Verified</span>
                     </div>
 
 
