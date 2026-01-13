@@ -29,7 +29,7 @@ export default async function DashboardPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="md:col-span-3 space-y-6">
-                        <ContractTabs contracts={contracts as any} />
+                        <ContractTabs contracts={contracts} />
 
                         {/* Templates Section */}
                         <div className="space-y-4 pt-8">

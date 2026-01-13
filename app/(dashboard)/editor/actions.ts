@@ -4,7 +4,9 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 // import { redirect } from 'next/navigation'
 
-export async function saveContract(title: string, contentJson: any) {
+import type { ContractContent } from '@/lib/types/database'
+
+export async function saveContract(title: string, contentJson: ContractContent) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 

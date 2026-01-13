@@ -1,24 +1,24 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { submitSignature } from '@/app/(regional)/sign/actions'
 import { validateAndSendOTP } from '@/app/(regional)/sign/[contractId]/actions'
 import type { User } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { SignaturePad } from './signature-pad'
 
+import type { Signature } from '@/lib/types/database'
+
 interface SigningFormProps {
     contractId: string
     intendedEmail?: string
     user?: User | null
-    existingSignature?: any
+    existingSignature?: Signature | null
 }
 
 export default function SigningForm({ contractId, intendedEmail, user, existingSignature }: SigningFormProps) {
     const [step, setStep] = useState<'email' | 'otp' | 'sign'>('email')
     const [email, setEmail] = useState(intendedEmail || user?.email || '')
-    const [otp, setOtp] = useState('')
 
     // Signer information fields
     const [firstName, setFirstName] = useState('')
@@ -62,7 +62,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
 
         try {
             // Server-side validation: checks if email is authorized and sends OTP to the correct email
-            const result = await validateAndSendOTP(contractId, email)
+            await validateAndSendOTP(contractId, email)
 
             setOtpAttempts(prev => prev + 1)
             setStep('otp')
@@ -73,28 +73,6 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
         }
     }
 
-    const handleVerifyOTP = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setLoading(true)
-        setError('')
-
-        try {
-            const supabase = createClient()
-            const { error } = await supabase.auth.verifyOtp({
-                email,
-                token: otp,
-                type: 'email'
-            })
-
-            if (error) throw error
-
-            setStep('sign')
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Invalid OTP')
-        } finally {
-            setLoading(false)
-        }
-    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -131,9 +109,9 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">You've Already Signed This Contract</h3>
+                <h3 className="text-xl font-bold mb-2">You&apos;ve Already Signed This Contract</h3>
                 <p className="text-muted-foreground mb-4">
-                    Signed on {new Date(existingSignature.signed_at).toLocaleString()}
+                    Signed on {existingSignature?.signed_at ? new Date(existingSignature.signed_at).toLocaleString() : 'N/A'}
                 </p>
                 {user && (
                     <Link
@@ -173,7 +151,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
             <form onSubmit={handleSendOTP} className="space-y-4">
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                     <p className="text-sm text-blue-800">
-                        🔒 To sign this contract, we'll send a verification link to your email address.
+                        🔒 To sign this contract, we&apos;ll send a verification link to your email address.
                     </p>
                 </div>
                 <div>
@@ -217,7 +195,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
             <div className="space-y-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
                     <p className="text-sm text-green-800 mb-2">
-                        ✉️ We've sent a verification link to <strong>{email}</strong>
+                        ✉️ We&apos;ve sent a verification link to <strong>{email}</strong>
                     </p>
                     <p className="text-xs text-green-700">
                         Please check your email and click the link to verify your email address and continue signing.
@@ -225,12 +203,12 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                 </div>
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <p className="text-sm text-blue-800">
-                        After clicking the link in your email, you'll be redirected back here to complete the signature.
+                        After clicking the link in your email, you&apos;ll be redirected back here to complete the signature.
                     </p>
                 </div>
                 {otpAttempts >= 2 && (
                     <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
-                        <p className="font-medium mb-1">Haven't received the email?</p>
+                        <p className="font-medium mb-1">Haven&apos;t received the email?</p>
                         <p>Please check your spam folder. The email is sent to the address this contract was sent to.</p>
                     </div>
                 )}

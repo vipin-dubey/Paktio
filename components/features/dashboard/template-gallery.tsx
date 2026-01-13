@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { FileText, Copy, Loader2, Globe } from 'lucide-react'
+import { FileText, Copy, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import type { ContractDTO } from '@/lib/types/database'
 import { duplicateContract } from '@/lib/dal/contracts'

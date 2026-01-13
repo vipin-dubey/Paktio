@@ -4,23 +4,10 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-interface Block {
-    id: string
-    type: 'header' | 'clause' | 'list' | 'footer'
-    content: string
-}
-
-interface Contract {
-    id: string
-    title: string
-    content_json: {
-        blocks: Block[]
-    }
-    status: string
-}
+import type { ContractBlock, ContractDetailDTO } from '@/lib/types/database'
 
 interface ContractViewerProps {
-    contract: Contract
+    contract: ContractDetailDTO
     contractId: string
     userHasSigned: boolean
 }
@@ -79,7 +66,7 @@ export function ContractViewer({ contract, contractId, userHasSigned }: Contract
                         onScroll={handleScroll}
                         className="p-8 h-[500px] overflow-y-auto space-y-4 scroll-smooth"
                     >
-                        {(contract?.content_json?.blocks || []).map((block: any) => (
+                        {(contract?.content?.blocks || []).map((block: ContractBlock) => (
                             <div key={block.id} className="text-foreground">
                                 {block.type === 'header' && (
                                     <h3 className="text-lg font-bold mt-6 mb-2">{block.content}</h3>

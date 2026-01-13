@@ -16,7 +16,7 @@ export default function PrivacyPage() {
 
                 <div className="space-y-4">
                     <h2 className="text-2xl font-bold uppercase tracking-widest text-primary">2. Document Integrity</h2>
-                    <p>Our "Integrity Rule" uses SHA-256 hashing to ensure that once a document is signed, its state cannot be modified without voiding the signatures. This cryptographic proof is stored alongside your document metadata.</p>
+                    <p>Our &quot;Integrity Rule&quot; uses SHA-256 hashing to ensure that once a document is signed, its state cannot be modified without voiding the signatures. This cryptographic proof is stored alongside your document metadata.</p>
                 </div>
 
                 <div className="space-y-4">

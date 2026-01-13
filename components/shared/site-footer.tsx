@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export function SiteFooter() {
     return (
-        <footer className="mt-32 py-10 text-xs text-muted-foreground flex flex-col sm:flex-row items-center sm:gap-8 gap-4 border-t border-muted/50 w-full justify-center">
+        <footer className="py-10 text-xs text-muted-foreground flex flex-col sm:flex-row items-center sm:gap-8 gap-4 border-t border-muted/50 w-full justify-center">
             <div className="flex gap-8">
                 <Link href="/about" className="hover:text-primary transition-colors">About</Link>
                 <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>

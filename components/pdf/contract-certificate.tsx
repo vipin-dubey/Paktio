@@ -143,12 +143,20 @@ const styles = StyleSheet.create({
     }
 })
 
-export const ContractPDF = ({ contractId, contract, signatures }: any) => {
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
-    const blocks = contract?.content_json?.blocks || contract?.content?.blocks || contract?.blocks || [];
-    const partyRoles = contract?.content_json?.party_roles || contract?.content?.party_roles || {};
+import type { ContractDetailDTO, Signature, ContractBlock } from '@/lib/types/database'
 
-    const getDisplayRole = (sig: any) => {
+interface ContractPDFProps {
+    contractId: string
+    contract: ContractDetailDTO
+    signatures: Signature[]
+}
+
+export const ContractPDF = ({ contractId, contract, signatures }: ContractPDFProps) => {
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
+    const blocks = contract?.content?.blocks || [];
+    const partyRoles = contract?.content?.party_roles || {};
+
+    const getDisplayRole = (sig: Signature & { role?: string }) => {
         const role = sig.role || 'Signer';
         if (role === 'Signer' && partyRoles.signer_label) return partyRoles.signer_label;
         if (role === 'Document Owner' && partyRoles.owner_label) return partyRoles.owner_label;
@@ -164,7 +172,7 @@ export const ContractPDF = ({ contractId, contract, signatures }: any) => {
                     PAKTIO reference number: {contractId}
                 </Text>
 
-                {blocks.map((block: any, index: number) => {
+                {blocks.map((block: ContractBlock, index: number) => {
                     switch (block.type) {
                         case 'header':
                             return <Text key={index} style={styles.blockHeader}>{block.content}</Text>;
@@ -181,7 +189,7 @@ export const ContractPDF = ({ contractId, contract, signatures }: any) => {
 
                 <View wrap={false} style={{ marginTop: 20 }}>
                     {signatures && signatures.length > 0 ? (
-                        signatures.map((sig: any, index: number) => (
+                        signatures.map((sig: Signature, index: number) => (
                             <View key={index} style={{ marginBottom: 15 }}>
                                 <Text style={{ fontSize: 11, fontWeight: 'bold', marginBottom: 6, paddingBottom: 2, borderBottom: '1px solid #eee' }}>
                                     {getDisplayRole(sig)}
@@ -211,10 +219,10 @@ export const ContractPDF = ({ contractId, contract, signatures }: any) => {
                         Signatures
                     </Text>
                     <Text style={{ fontSize: 9, lineHeight: 1.5 }}>
-                        This contract is signed electronically using PAKTIO's e-signing service. The signatures with detailed information are attached in a separate signing certificate page at the end of this pdf.
+                        This contract is signed electronically using PAKTIO{"'"}s e-signing service. The signatures with detailed information are attached in a separate signing certificate page at the end of this pdf.
                     </Text>
                     <Text style={{ fontSize: 9, marginTop: 8, lineHeight: 1.5 }}>
-                        Learn more about PAKTIO's electronic signatures at{' '}
+                        Learn more about PAKTIO{"'"}s electronic signatures at{' '}
                         <Text style={{ color: '#2563eb' }}>{baseUrl}/en/signing</Text>
                     </Text>
                 </View>
@@ -246,12 +254,12 @@ export const ContractPDF = ({ contractId, contract, signatures }: any) => {
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Signing Records & Handwritten Signatures</Text>
-                    {signatures?.map((sig: any, index: number) => (
+                    {signatures?.map((sig: Signature, index: number) => (
                         <View key={sig.id || index} style={[styles.signatureBlock, { border: '1px solid #f0f0f0', borderRadius: 4, marginBottom: 15 }]} wrap={false}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View style={{ flex: 1 }}>
                                     <Text style={{ fontSize: 10, fontWeight: 'bold', marginBottom: 4 }}>{sig.first_name} {sig.last_name}</Text>
-                                    <Text style={styles.signatureHeader}>Signed: {new Date(sig.signed_at).toLocaleString()}</Text>
+                                    <Text style={styles.signatureHeader}>Signed: {sig.signed_at ? new Date(sig.signed_at).toLocaleString() : 'N/A'}</Text>
                                     <View style={styles.signatureRow}><Text style={styles.signatureLabel}>Email:</Text><Text style={styles.signatureValue}>{sig.signer_email}</Text></View>
                                     <View style={styles.signatureRow}><Text style={styles.signatureLabel}>Phone:</Text><Text style={styles.signatureValue}>{sig.phone_number}</Text></View>
                                     <View style={styles.signatureRow}><Text style={styles.signatureLabel}>Address:</Text><Text style={styles.signatureValue}>{sig.address}, {sig.city}</Text></View>
@@ -260,6 +268,7 @@ export const ContractPDF = ({ contractId, contract, signatures }: any) => {
                                     <Text style={{ fontSize: 7, color: '#999', marginBottom: 4 }}>CAPTURED SIGNATURE</Text>
                                     <View style={styles.signatureBox}>
                                         {sig.signature_image ? (
+                                            /* eslint-disable-next-line jsx-a11y/alt-text */
                                             <Image src={sig.signature_image} style={styles.signatureImage} />
                                         ) : (
                                             <Text style={{ fontSize: 8, color: '#ccc' }}>No image</Text>

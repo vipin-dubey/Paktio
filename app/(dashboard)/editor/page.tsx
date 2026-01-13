@@ -1,6 +1,5 @@
 import ContractEditor from '@/components/features/editor/contract-editor'
 import { getContract } from '@/lib/dal/contracts'
-import { redirect } from 'next/navigation'
 
 export default async function EditorPage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
     const { id } = await searchParams

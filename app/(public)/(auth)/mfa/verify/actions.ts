@@ -3,7 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
-export async function verifyMFA(prevState: any, formData: FormData) {
+export async function verifyMFA(prevState: { error?: string } | null, formData: FormData) {
     const code = formData.get('code') as string
 
     if (!code || code.length !== 6) {
@@ -39,7 +39,7 @@ export async function verifyMFA(prevState: any, formData: FormData) {
     }
 
     // 3. Verify
-    const { data: verifyData, error: verifyError } = await supabase.auth.mfa.verify({
+    const { error: verifyError } = await supabase.auth.mfa.verify({
         factorId: totpFactor.id,
         challengeId: challenge.id,
         code: code,

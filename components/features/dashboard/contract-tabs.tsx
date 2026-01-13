@@ -4,16 +4,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-interface Contract {
-    id: string
-    title: string
-    status: string
-    version: number
-    created_at: string
-}
+import type { ContractDTO } from '@/lib/types/database'
 
 interface ContractTabsProps {
-    contracts: Contract[]
+    contracts: ContractDTO[]
 }
 
 export default function ContractTabs({ contracts }: ContractTabsProps) {

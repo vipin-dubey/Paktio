@@ -91,7 +91,7 @@ export async function getContracts(isTemplate: boolean = false): Promise<Contrac
     return data.map(c => ({
         id: c.id,
         title: c.title,
-        status: c.status as any,
+        status: c.status as ContractDTO['status'],
         version: c.version,
         is_template: c.is_template,
         updated_at: c.created_at,
@@ -116,12 +116,13 @@ export async function getContract(id: string): Promise<ContractDetailDTO | null>
     return {
         id: data.id,
         title: data.title, // Logic can be improved if title is in content
-        status: data.status as any,
+        status: data.status as ContractDetailDTO['status'],
         version: data.version,
         is_template: data.is_template,
         updated_at: data.created_at,
         created_at: data.created_at,
-        content: data.content_json as ContractContent,
+        current_hash: data.current_hash,
+        content: data.content_json as unknown as ContractContent,
         signatures: data.signatures || []
     }
 }
@@ -165,7 +166,11 @@ export async function updateContract(
     // Validate content
     contractContentSchema.parse(content)
 
-    const updateData: any = {
+    const updateData: {
+        title: string
+        content_json: ContractContent
+        is_template?: boolean
+    } = {
         title: content.title,
         content_json: content
     }
@@ -253,7 +258,7 @@ export async function getQuickInsights() {
             .eq('signer_email', user.email)
             .in('contract_id', contractIds)
 
-        const signedIds = new Set(signed?.map(s => (s as any).contract_id))
+        const signedIds = new Set(signed?.map(s => s.contract_id))
         awaitingCount = contractIds.filter(id => !signedIds.has(id)).length
     }
 

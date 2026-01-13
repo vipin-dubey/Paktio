@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { env } from '@/env.mjs'
 import { redirect } from 'next/navigation'
 
 export async function createCheckoutSession(priceId: string) {
@@ -31,7 +30,7 @@ export async function getSubscriptionStatus() {
         .eq('id', user.id)
         .single()
 
-    const org = Array.isArray(profile?.organizations) ? profile.organizations[0] : profile?.organizations
+    const org = profile?.organizations as unknown as { plan_type: string } | null
 
-    return (org as any)?.plan_type || 'free'
+    return org?.plan_type || 'free'
 }

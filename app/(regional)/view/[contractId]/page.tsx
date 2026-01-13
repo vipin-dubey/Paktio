@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { PrintButton } from '@/components/features/contract/print-button'
+import type { ContractBlock } from '@/lib/types/database'
 
 export default async function ViewContractPage({
     params
@@ -50,7 +51,7 @@ export default async function ViewContractPage({
                     </header>
 
                     <div className="space-y-6">
-                        {blocks.map((block: any) => (
+                        {blocks.map((block: ContractBlock) => (
                             <div key={block.id}>
                                 {block.type === 'header' && (
                                     <h2 className="text-xl font-bold mt-8 mb-4 border-l-4 border-primary pl-4">

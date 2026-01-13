@@ -1,27 +1,22 @@
 import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import DownloadCertificateButton from '@/components/features/contract/download-certificate-button'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { ContractViewer } from '@/components/features/contract/contract-viewer'
+import { getContract } from '@/lib/dal/contracts'
 
 export default async function HistoryPage({ params }: { params: Promise<{ contractId: string }> }) {
-    const supabase = await createClient()
     const { contractId } = await params
+    const supabase = await createClient()
 
     // Get current user
     const { data: { user } } = await supabase.auth.getUser()
 
-    const { data: contract } = await supabase
-        .from('contracts')
-        .select('*')
-        .eq('id', contractId)
-        .single()
+    const contract = await getContract(contractId)
+    if (!contract) redirect('/dashboard')
 
-    const { data: signatures } = await supabase
-        .from('signatures')
-        .select('*')
-        .eq('contract_id', contractId)
-        .order('signed_at', { ascending: false })
+    const signatures = contract.signatures
 
     // Check if current user has already signed
     const userHasSigned = user && signatures?.some(sig => sig.signer_email === user.email)
@@ -117,7 +112,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                 </section>
 
                 <ContractViewer
-                    contract={contract as any}
+                    contract={contract}
                     contractId={contractId}
                     userHasSigned={!!userHasSigned}
                 />
@@ -127,7 +122,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                     <h2 className="text-xl font-semibold mb-4">Signatures</h2>
                     {signatures && signatures.length > 0 ? (
                         <div className="space-y-6">
-                            {signatures.map((sig, index) => (
+                            {signatures.map((sig) => (
                                 <div key={sig.id} className="bg-white rounded-lg p-6">
                                     <div className="mb-6">
                                         <p className="text-xs text-muted-foreground">

@@ -7,10 +7,10 @@ import { createContract, updateContract } from '@/lib/dal/contracts'
 import type { ContractBlock } from '@/lib/types/database'
 import { requestSignatures } from '@/app/(dashboard)/editor/actions'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
-import { Trash2, Plus, MoveUp, MoveDown, HelpCircle, Sparkles, FileLineChart, List, ListOrdered, Heading1, AlignLeft, Type, Eye, X } from 'lucide-react'
+import { Trash2, Plus, MoveUp, MoveDown, Sparkles, FileLineChart, List, Heading1, AlignLeft, Type, Eye, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-interface Block extends ContractBlock { }
+type Block = ContractBlock
 
 interface ContractEditorProps {
     initialData?: {
@@ -147,20 +147,6 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
         }
     }
 
-    // Helper to determine list index (for numbered lists)
-    const getListIndex = (currentIndex: number) => {
-        let count = 0;
-        for (let i = 0; i <= currentIndex; i++) {
-            if (blocks[i].type === 'list') {
-                // Check if the previous one was also a list to see if they are part of a continuous sequence
-                // For now, simpler: just count consecutive list items of same "implied numbering"
-                count++;
-            } else {
-                count = 0;
-            }
-        }
-        return count;
-    }
 
     return (
         <div className="max-w-7xl mx-auto py-8 px-4 flex flex-col h-[calc(100vh-80px)]">

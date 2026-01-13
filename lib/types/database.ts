@@ -47,9 +47,19 @@ export interface Signature {
     id: string
     contract_id: string
     signer_email: string
-    signed_at: string | null
+    signed_at: string
     ip_address: string | null
     version_signed: number
+    first_name: string | null
+    last_name: string | null
+    phone_number: string | null
+    ssn: string | null
+    address: string | null
+    postal_code: string | null
+    city: string | null
+    date_of_birth: string | null
+    email_verified?: boolean
+    signature_image?: string | null
 }
 
 // DTOs
@@ -61,6 +71,7 @@ export interface ContractDTO {
     is_template: boolean
     updated_at: string
     created_at: string
+    current_hash?: string | null
 }
 
 export interface ContractDetailDTO extends ContractDTO {

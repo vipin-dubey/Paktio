@@ -31,7 +31,7 @@ export default function CookieBanner() {
                     <h4 className="text-lg font-bold mb-2">We value your privacy</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                         Paktio uses cookies to improve your experience and ensure document integrity as per EU laws.
-                        By clicking "Accept All", you consent to our use of cookies for analytics and personalized content.
+                        By clicking &quot;Accept All&quot;, you consent to our use of cookies for analytics and personalized content.
                         View our <a href="/privacy" className="text-primary underline">Privacy Policy</a> for more details.
                     </p>
                 </div>

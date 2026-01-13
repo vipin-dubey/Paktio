@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import QRCode from 'qrcode'
+import Image from 'next/image'
 
 export default function MFAActivation() {
     const [step, setStep] = useState(1)
@@ -32,7 +33,7 @@ export default function MFAActivation() {
             const url = await QRCode.toDataURL(data.totp.uri)
             setQrCodeUrl(url)
             setStep(2)
-        } catch (err) {
+        } catch {
             setError('Failed to generate QR code')
         }
     }, [supabase])
@@ -51,7 +52,7 @@ export default function MFAActivation() {
         }
 
         // 2. Verify the challenge
-        const { data, error: verifyError } = await supabase.auth.mfa.verify({
+        const { error: verifyError } = await supabase.auth.mfa.verify({
             factorId,
             challengeId: challenge.id,
             code: verificationCode,
@@ -121,7 +122,16 @@ export default function MFAActivation() {
                     <p className="text-sm text-muted-foreground mb-4">Scan this code with your authenticator app.</p>
 
                     <div className="flex justify-center mb-4">
-                        {qrCodeUrl && <img src={qrCodeUrl} alt="MFA QR Code" className="w-48 h-48" />}
+                        {qrCodeUrl && (
+                            <Image
+                                src={qrCodeUrl}
+                                alt="MFA QR Code"
+                                width={192}
+                                height={192}
+                                className="w-48 h-48"
+                                unoptimized
+                            />
+                        )}
                     </div>
 
                     <p className="text-xs text-center text-muted-foreground mb-4 font-mono select-all">

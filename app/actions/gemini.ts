@@ -27,6 +27,7 @@ export async function generateContract(prompt: string, locale: string = 'en') {
   Maintain a Scandinavian minimalist tone: clear, direct, and avoiding archaic legalese.`
 
   console.log(`Generating contract with prompt: ${prompt} for locale: ${locale}`)
+  console.log(`System Instruction: ${systemInstruction}`)
 
   // Simulated Gemini Response
   const mockResponse = {

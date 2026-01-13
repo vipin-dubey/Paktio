@@ -3,9 +3,11 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { ContractPDF } from '@/components/pdf/contract-certificate'
 
+import type { ContractDetailDTO, Signature } from '@/lib/types/database'
+
 interface DownloadCertificateButtonProps {
-    contract: any
-    signatures: any[]
+    contract: ContractDetailDTO
+    signatures: Signature[]
     contractId: string
     className?: string
 }

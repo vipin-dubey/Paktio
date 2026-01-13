@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
+import type { ContractContent } from '@/lib/types/database'
 
 interface SignerInfo {
     email: string
@@ -45,7 +46,7 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
     // Determine signer role
     const { data: { user } } = await supabase.auth.getUser()
     // Handle both raw DB field (content_json) and mapped DTO field (content)
-    const content = (contract.content_json || (contract as any).content) as any
+    const content = contract.content_json as unknown as ContractContent
     const partyRoles = content?.party_roles || {}
 
     let role = partyRoles.signer_label || 'Signer'
