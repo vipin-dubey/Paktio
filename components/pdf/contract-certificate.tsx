@@ -73,6 +73,34 @@ const styles = StyleSheet.create({
         fontSize: 8,
         paddingBottom: 1,
     },
+    contractHeader: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    blockHeader: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 6,
+    },
+    blockClause: {
+        fontSize: 10,
+        marginBottom: 8,
+        lineHeight: 1.4,
+    },
+    blockList: {
+        fontSize: 10,
+        marginBottom: 4,
+        marginLeft: 10,
+    },
+    blockFooter: {
+        fontSize: 8,
+        color: '#666',
+        marginTop: 20,
+        textAlign: 'center',
+    },
     footer: {
         position: 'absolute',
         bottom: 30,
@@ -90,6 +118,15 @@ const styles = StyleSheet.create({
         fontSize: 8,
         color: '#666',
     },
+    pageNumber: {
+        position: 'absolute',
+        fontSize: 8,
+        bottom: 30,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        color: '#999',
+    },
 })
 
 interface ContractPDFProps {
@@ -98,21 +135,55 @@ interface ContractPDFProps {
     contractId: string
 }
 
-export const ContractPDF = ({ contract, signatures, contractId }: ContractPDFProps) => {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+export const ContractPDF = ({ contractId, contract, signatures }: any) => {
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
+    // Using content_json from DB structure, handling potential different field names if any
+    const blocks = contract?.content_json?.blocks || contract?.blocks || [];
 
     return (
         <Document>
+            {/* Contract Content Page(s) */}
+            <Page style={styles.page}>
+                <Text style={styles.contractHeader}>{contract?.title || 'Contract Document'}</Text>
+
+                {blocks.map((block: any, index: number) => {
+                    switch (block.type) {
+                        case 'header':
+                            return <Text key={index} style={styles.blockHeader}>{block.content}</Text>;
+                        case 'clause':
+                            return <Text key={index} style={styles.blockClause}>{block.content}</Text>;
+                        case 'list':
+                            return <Text key={index} style={styles.blockList}>• {block.content}</Text>;
+                        case 'footer':
+                            return <Text key={index} style={styles.blockFooter}>{block.content}</Text>;
+                        default:
+                            return <Text key={index} style={styles.blockClause}>{block.content}</Text>;
+                    }
+                })}
+
+                <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+                    `${pageNumber} / ${totalPages}`
+                )} fixed />
+
+                {/* Footer Logo fixed on bottom of every page */}
+                <View style={styles.footer}>
+                    <Text style={styles.footerLogo}>PAKTIO</Text>
+                    <Text style={styles.footerText}>
+                        Digitally signed and verified • {baseUrl}
+                    </Text>
+                </View>
+            </Page>
+
+            {/* Certificate Page */}
             <Page size="A4" style={styles.page}>
                 {/* Header */}
                 <View style={styles.header}>
-                    <Text style={{ fontSize: 12, fontWeight: 'bold', marginBottom: 8 }}>
-                        Digital Contract Certificate
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Digital Contract Certificate</Text>
+                    <Text style={[styles.subtitle, { marginTop: 4 }]}>
+                        This certificate attests to the integrity and signing of the document.
                     </Text>
-                    <Text style={{ fontSize: 8, color: '#666', textAlign: 'center', lineHeight: 1.4 }}>
-                        This certificate verifies the authenticity and legal validity of the digital signatures
-                        recorded below. The original contract document is securely stored by Paktio, and the
-                        SHA-256 hash provided can be used to verify that the document remains unaltered since signing.
+                    <Text style={[styles.subtitle, { marginTop: 2, fontStyle: 'italic', fontSize: 8 }]}>
+                        Verified by Paktio via SHA-256 Hashing
                     </Text>
                 </View>
 
@@ -169,8 +240,8 @@ export const ContractPDF = ({ contract, signatures, contractId }: ContractPDFPro
                     <Text style={styles.sectionTitle}>Signatures</Text>
 
                     {signatures && signatures.length > 0 ? (
-                        signatures.map((sig, index) => (
-                            <View key={sig.id} style={styles.signatureBlock}>
+                        signatures.map((sig: any, index: number) => (
+                            <View key={sig.id || index} style={styles.signatureBlock}>
                                 {/* Full Name as Header */}
                                 <Text style={{ fontSize: 10, fontWeight: 'bold', marginBottom: 4 }}>
                                     {sig.first_name} {sig.last_name}
@@ -239,6 +310,11 @@ export const ContractPDF = ({ contract, signatures, contractId }: ContractPDFPro
                         Certificate generated on {new Date().toLocaleString()}
                     </Text>
                 </View>
+
+                {/* Page Number on Certificate too */}
+                <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+                    `${pageNumber} / ${totalPages}`
+                )} fixed />
             </Page>
         </Document>
     )
