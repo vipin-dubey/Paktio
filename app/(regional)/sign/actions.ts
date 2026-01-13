@@ -14,6 +14,7 @@ interface SignerInfo {
     address: string
     postalCode: string
     city: string
+    signatureImage?: string
 }
 
 export async function submitSignature(contractId: string, signerInfo: SignerInfo) {
@@ -67,6 +68,7 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
             address: signerInfo.address,
             postal_code: signerInfo.postalCode,
             city: signerInfo.city,
+            signature_image: signerInfo.signatureImage,
             version_signed: contract.version,
             email_verified: true,
             role: role // Save determined role

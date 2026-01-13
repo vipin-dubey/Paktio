@@ -6,6 +6,7 @@ import { submitSignature } from '@/app/(regional)/sign/actions'
 import { validateAndSendOTP } from '@/app/(regional)/sign/[contractId]/actions'
 import type { User } from '@supabase/supabase-js'
 import Link from 'next/link'
+import { SignaturePad } from './signature-pad'
 
 interface SigningFormProps {
     contractId: string
@@ -28,6 +29,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
     const [address, setAddress] = useState('')
     const [postalCode, setPostalCode] = useState('')
     const [city, setCity] = useState('')
+    const [signatureImage, setSignatureImage] = useState('')
 
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -109,7 +111,8 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                 ssn,
                 address,
                 postalCode,
-                city
+                city,
+                signatureImage
             })
             setSuccess(true)
         } catch (err) {
@@ -386,6 +389,17 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                 </div>
             </div>
 
+            <div className="pt-6 border-t border-muted mt-6">
+                <label className="block text-sm font-semibold mb-4 text-foreground/80">
+                    Finger/Mouse Signature <span className="text-red-500">*</span>
+                </label>
+                <SignaturePad
+                    onSave={(data) => setSignatureImage(data)}
+                    onClear={() => setSignatureImage('')}
+                />
+            </div>
+
+
             {error && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                     {error}
@@ -394,7 +408,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
 
             <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !signatureImage}
                 className="w-full bg-foreground text-background px-10 py-4 rounded-xl text-lg font-bold hover:opacity-90 transition-all shadow-xl disabled:opacity-50"
             >
                 {loading ? 'Signing...' : 'Sign and Accept Agreement'}
