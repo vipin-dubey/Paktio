@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import DownloadCertificateButton from '@/components/features/contract/download-certificate-button'
 
 export default async function HistoryPage({ params }: { params: Promise<{ contractId: string }> }) {
     const supabase = await createClient()
@@ -25,23 +26,71 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
 
     return (
         <div className="max-w-4xl mx-auto py-12 px-4">
-            <h1 className="text-3xl font-bold mb-8">Contract History: {contract?.title}</h1>
+            <div className="flex justify-between items-center mb-8">
+                <h1 className="text-3xl font-bold">Contract Details</h1>
+                <DownloadCertificateButton
+                    contract={contract}
+                    signatures={signatures || []}
+                    contractId={contractId}
+                />
+            </div>
 
             <div className="space-y-8">
+                {/* Contract Metadata */}
                 <section>
-                    <h2 className="text-xl font-semibold mb-4">Current Version: {contract?.version}</h2>
-                    <div className="bg-white border border-muted rounded-xl p-6 shadow-sm">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <p className="text-sm text-muted-foreground font-mono">
-                                    HASH: {contract?.current_hash || 'Not yet calculated'}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                    Last updated: {contract?.updated_at ? new Date(contract.updated_at).toLocaleString() : new Date(contract?.created_at || '').toLocaleString()}
-                                </p>
+                    <h2 className="text-xl font-semibold mb-4">Document Information</h2>
+                    <div className="bg-white rounded-lg p-6 space-y-3">
+                        {/* Document Name */}
+                        <div className="flex items-baseline gap-3">
+                            <label className="text-xs text-muted-foreground min-w-[140px]">
+                                Document Name:
+                            </label>
+                            <p className="text-sm font-medium">{contract?.title}</p>
+                        </div>
+
+                        {/* Creation Date */}
+                        <div className="flex items-baseline gap-3">
+                            <label className="text-xs text-muted-foreground min-w-[140px]">
+                                Creation Date:
+                            </label>
+                            <p className="text-sm">{new Date(contract?.created_at || '').toLocaleDateString()}</p>
+                        </div>
+
+                        {/* Reference Number */}
+                        <div className="flex items-baseline gap-3">
+                            <label className="text-xs text-muted-foreground min-w-[140px]">
+                                Reference Number:
+                            </label>
+                            <p className="text-sm font-mono">{contractId}</p>
+                        </div>
+
+                        {/* SHA-256 Hash */}
+                        <div className="flex items-baseline gap-3">
+                            <label className="text-xs text-muted-foreground min-w-[140px]">
+                                Document Hash:
+                            </label>
+                            <p className="text-xs font-mono break-all text-muted-foreground">
+                                {contract?.current_hash || 'Not yet calculated'}
+                            </p>
+                        </div>
+
+                        {/* Access URL */}
+                        <div className="flex items-baseline gap-3">
+                            <label className="text-xs text-muted-foreground min-w-[140px]">
+                                Access URL:
+                            </label>
+                            <p className="text-sm text-muted-foreground break-all">
+                                {typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/sign/{contractId}
+                            </p>
+                        </div>
+
+                        {/* Status & Version */}
+                        <div className="flex justify-between items-center pt-3 mt-3 border-t border-muted/50">
+                            <div className="text-xs text-muted-foreground">
+                                Version: <span className="font-mono">v{contract?.version}</span>
                             </div>
-                            <div className={`px-4 py-1 rounded-full text-xs font-bold uppercase ${contract?.status === 'signed' ? 'bg-green-100 text-green-700' : 'bg-primary/10 text-primary'}`}>
-                                {contract?.status}
+                            <div className="text-xs text-muted-foreground">
+                                Status: {contract?.status}
                             </div>
                         </div>
                     </div>
@@ -66,45 +115,129 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                 )}
 
                 <section>
-                    <h2 className="text-xl font-semibold mb-4">Signature Audit Log</h2>
+                    <h2 className="text-xl font-semibold mb-4">Signatures</h2>
                     {signatures && signatures.length > 0 ? (
-                        <div className="overflow-hidden border border-muted rounded-xl bg-white">
-                            <table className="min-w-full divide-y divide-muted">
-                                <thead className="bg-muted/5">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Signer</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Date</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Version</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Email Verified</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-muted">
-                                    {signatures.map((sig) => (
-                                        <tr key={sig.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">{sig.signer_email}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{new Date(sig.signed_at).toLocaleString()}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">v{sig.version_signed}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm">
-                                                {sig.email_verified ? (
-                                                    <span className="text-green-600 font-medium">✓ Verified</span>
-                                                ) : (
-                                                    <span className="text-muted-foreground">Not verified</span>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                        <div className="space-y-6">
+                            {signatures.map((sig, index) => (
+                                <div key={sig.id} className="bg-white rounded-lg p-6">
+                                    <div className="mb-6">
+                                        <p className="text-xs text-muted-foreground">
+                                            Signed on {new Date(sig.signed_at).toLocaleDateString()} at {new Date(sig.signed_at).toLocaleTimeString()}
+                                        </p>
+                                    </div>
+
+                                    <div className="space-y-5">
+                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-5">
+                                            {/* Name Row */}
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    First Name
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">{sig.first_name}</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    Last Name
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">{sig.last_name}</p>
+                                                </div>
+                                            </div>
+
+                                            {/* Email & Phone */}
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    Email Address
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">{sig.signer_email}</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    Phone Number
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">{sig.phone_number}</p>
+                                                </div>
+                                            </div>
+
+                                            {/* DOB & SSN (or Empty) */}
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    Date of Birth
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">
+                                                        {sig.date_of_birth ? new Date(sig.date_of_birth).toLocaleDateString() : '-'}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            {sig.ssn && (
+                                                <div>
+                                                    <label className="block text-xs text-muted-foreground mb-1.5">
+                                                        Social Security Number
+                                                    </label>
+                                                    <div className="pb-1">
+                                                        <p className="text-sm">{sig.ssn}</p>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Address & Postal */}
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    Street Address
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">{sig.address}</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    Postal Code
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">{sig.postal_code}</p>
+                                                </div>
+                                            </div>
+
+                                            {/* City */}
+                                            <div>
+                                                <label className="block text-xs text-muted-foreground mb-1.5">
+                                                    City
+                                                </label>
+                                                <div className="pb-1">
+                                                    <p className="text-sm">{sig.city}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Verification Footer */}
+                                    <div className="mt-6 flex justify-between items-center text-xs text-muted-foreground">
+                                        <span>
+                                            Version v{sig.version_signed}
+                                        </span>
+                                        {sig.email_verified && (
+                                            <span>
+                                                Email verified
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     ) : (
                         <p className="text-muted-foreground italic">No signatures recorded yet.</p>
                     )}
                 </section>
 
-                <div className="bg-amber-50 border border-amber-200 p-6 rounded-xl">
-                    <h3 className="text-amber-800 font-bold mb-2">Integrity Note</h3>
-                    <p className="text-sm text-amber-700 leading-relaxed">
-                        Paktio uses a SHA-256 hashing algorithm to ensure document immutability. If the content is modified after a signature is applied, all previous signatures are automatically voided and the version counter is incremented.
+                <div className="border-t border-muted pt-6">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                        All signatures are cryptographically verified using SHA-256 hashing. Any modification to the document after signing will invalidate all signatures.
                     </p>
                 </div>
             </div>

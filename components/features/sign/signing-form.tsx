@@ -23,6 +23,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [dateOfBirth, setDateOfBirth] = useState('')
     const [ssn, setSsn] = useState('')
     const [address, setAddress] = useState('')
     const [postalCode, setPostalCode] = useState('')
@@ -104,6 +105,7 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                 firstName,
                 lastName,
                 phoneNumber,
+                dateOfBirth,
                 ssn,
                 address,
                 postalCode,
@@ -309,19 +311,32 @@ export default function SigningForm({ contractId, intendedEmail, user, existingS
                 </div>
 
                 <div>
-                    <label htmlFor="ssn" className="block text-sm font-medium mb-2">
-                        Social Security Number <span className="text-red-500">*</span>
+                    <label htmlFor="dateOfBirth" className="block text-sm font-medium mb-2">
+                        Date of Birth <span className="text-red-500">*</span>
                     </label>
                     <input
-                        id="ssn"
-                        type="text"
-                        value={ssn}
-                        onChange={(e) => setSsn(e.target.value)}
+                        id="dateOfBirth"
+                        type="date"
+                        value={dateOfBirth}
+                        onChange={(e) => setDateOfBirth(e.target.value)}
                         required
                         className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="123456789"
                     />
                 </div>
+            </div>
+
+            <div>
+                <label htmlFor="ssn" className="block text-sm font-medium mb-2">
+                    Social Security Number <span className="text-muted-foreground text-xs">(Optional)</span>
+                </label>
+                <input
+                    id="ssn"
+                    type="text"
+                    value={ssn}
+                    onChange={(e) => setSsn(e.target.value)}
+                    className="w-full px-4 py-2 border border-muted rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="123456789"
+                />
             </div>
 
             <div>

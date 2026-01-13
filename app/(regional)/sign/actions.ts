@@ -8,7 +8,8 @@ interface SignerInfo {
     firstName: string
     lastName: string
     phoneNumber: string
-    ssn: string
+    dateOfBirth: string
+    ssn?: string
     address: string
     postalCode: string
     city: string
@@ -47,7 +48,8 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
             first_name: signerInfo.firstName,
             last_name: signerInfo.lastName,
             phone_number: signerInfo.phoneNumber,
-            ssn: signerInfo.ssn,
+            date_of_birth: signerInfo.dateOfBirth,
+            ssn: signerInfo.ssn || null,
             address: signerInfo.address,
             postal_code: signerInfo.postalCode,
             city: signerInfo.city,
