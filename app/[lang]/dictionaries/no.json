@@ -1,0 +1,68 @@
+{
+    "common": {
+        "loading": "Laster...",
+        "error": "Noe gikk galt",
+        "save": "Lagre",
+        "cancel": "Avbryt",
+        "delete": "Slett"
+    },
+    "auth": {
+        "signIn": "Logg inn",
+        "signUp": "Start gratis prøveperiode",
+        "email": "E-postadresse",
+        "password": "Passord",
+        "passwordHint": "Passord (min. 6 tegn)",
+        "forgotPassword": "Glemt passord?",
+        "forgotPasswordSubtitle": "Oppgi e-posten din for å motta en tilbakestillingslenke.",
+        "resetPassword": "Tilbakestill passord",
+        "sendResetLink": "Send tilbakestillingslenke",
+        "loadingSendReset": "Sender lenke...",
+        "backToLogin": "Tilbake til innlogging",
+        "noAccount": "Har du ikke konto?",
+        "createAccount": "Opprett konto",
+        "alreadyHaveAccount": "Har du allerede en konto?",
+        "signInTitle": "Logg inn på Paktio",
+        "signInSubtitle": "Skandinavisk minimalistisk presisjon for dine avtaler.",
+        "signUpTitle": "Opprett din konto",
+        "signUpSubtitle": "Bli med på fremtidens tegn-baserte samarbeidsavtaler.",
+        "checkEmail": "Sjekk e-posten din",
+        "returnToSignIn": "Tilbake til innlogging",
+        "loadingSignIn": "Logger inn...",
+        "loadingSignUp": "Oppretter konto..."
+    },
+    "nav": {
+        "dashboard": "Dashbord",
+        "templates": "Maler",
+        "settings": "Innstillinger",
+        "signOut": "Logg ut"
+    },
+    "footer": {
+        "about": "Om oss",
+        "contact": "Kontakt",
+        "privacy": "Personvern",
+        "terms": "Vilkår"
+    },
+    "marketing": {
+        "hero": {
+            "title": "Paktio",
+            "subtitle": "Suverene dokumenter",
+            "description": "High-end AI-kontraktsutforming med presisjon på tegnnivå og SHA-256 dokumentintegritet for det skandinaviske juridiske landskapet.",
+            "ctaStart": "Start gratis prøveperiode",
+            "ctaSignIn": "Logg inn"
+        },
+        "features": {
+            "integrity": {
+                "label": "Integritet",
+                "text": "Kryptografisk bevis for hver avtale via SHA-256 integritetsutløsere."
+            },
+            "intelligence": {
+                "label": "Intelligens",
+                "text": "AI-native utforming ved bruk av Gemini 1.5 Pro med kontekstbevisste juridiske skjemaer."
+            },
+            "compliance": {
+                "label": "Samsvar",
+                "text": "eIDAS AdES-kompatible signaturer optimalisert for EØS og de skandinaviske markedene."
+            }
+        }
+    }
+}

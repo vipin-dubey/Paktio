@@ -2,20 +2,98 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+// Supported locales
+const locales = ['en', 'no', 'se', 'da', 'fi', 'is']
+const defaultLocale = 'en'
+
+// Get locale from path or headers (simplified for now)
+function getLocale(request: NextRequest) {
+    // 1. Check if path starts with a locale
+    const pathname = request.nextUrl.pathname
+    const pathnameIsMissingLocale = locales.every(
+        (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    )
+
+    if (pathnameIsMissingLocale) return defaultLocale
+
+    // Extract locale from path
+    return pathname.split('/')[1]
+}
+
 export async function middleware(request: NextRequest) {
-    let response = NextResponse.next({
-        request: {
-            headers: request.headers,
-        },
-    })
+    const url = request.nextUrl
+    let hostname = request.headers.get('host') || ''
 
-    // 1. Routing Logic (determine response type)
-    // 1. Routing Logic (determine response type)
-    // Removed complex rewrites causing 404s. Route Groups ((public), (dashboard)) are internal
-    // and should not be target of rewrites unless using [domain] dynamic routing.
-    // Default routing will handle '/' -> (public)/page.tsx and '/dashboard' -> (dashboard)/dashboard/page.tsx appropriately.
+    // Normalize hostname (remove port for localhost)
+    hostname = hostname.split(':')[0]
 
-    // 2. Supabase Auth & Session Refresh
+    // Determine subdomain (marketing vs app)
+    // "app.paktio.com" -> app
+    // "paktio.com" -> marketing
+    // Localhost: "app.localhost" -> app, "localhost" -> marketing
+    let currentHost = 'marketing'
+    if (hostname.startsWith('app.')) {
+        currentHost = 'app'
+    }
+
+    // Get locale
+    const locale = getLocale(request)
+
+    // Prepare path for rewrite
+    // If path already allows includes locale, we might need to strip it for internal routing 
+    // BUT Next.js dynamic routes [lang] Expect the locale to be there.
+    // So we construct: /[lang]/(group)/...
+
+    let pathname = url.pathname
+
+    // Handle missing locale by redirecting (unless it's a file)
+    const pathnameIsMissingLocale = locales.every(
+        (loc) => !pathname.startsWith(`/${loc}/`) && pathname !== `/${loc}`
+    )
+
+    // Skip if internal Next.js request or static file
+    if (
+        pathname.includes('.') ||
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/api')
+    ) {
+        return NextResponse.next()
+    }
+
+    // Redirect if missing locale
+    if (pathnameIsMissingLocale) {
+        return NextResponse.redirect(
+            new URL(`/${defaultLocale}${pathname}`, request.url)
+        )
+    }
+
+    // Now rewrite to the correct route group
+    // Target: /[lang]/(app|marketing)/[rest]
+
+    // We need to inject the route group AFTER the locale
+    // Current path: /en/dashboard -> /en/(app)/dashboard
+
+    const pathParts = pathname.split('/')
+    // Intelligent Route Detection
+    const appPaths = [
+        'login', 'signup', 'forgot-password', 'mfa',
+        'dashboard', 'editor', 'history', 'templates', 'upgrade', 'settings',
+        'sign', 'reset-password', 'admin-auth'
+    ]
+    const rest = pathParts.slice(2).filter(Boolean).join('/')
+    const isAppPath = appPaths.some(path => rest.startsWith(path))
+
+    let targetGroup = currentHost
+    if (currentHost === 'marketing' && isAppPath) {
+        targetGroup = 'app'
+    }
+
+    const newPath = `/${pathParts[1]}/${targetGroup}${rest ? `/${rest}` : ''}`
+
+    // Rewrite
+    let response = NextResponse.rewrite(new URL(newPath, request.url))
+
+    // 2. Supabase Auth & Session Refresh (Keep existing logic)
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -28,15 +106,9 @@ export async function middleware(request: NextRequest) {
                     cookiesToSet.forEach(({ name, value, options }) =>
                         request.cookies.set(name, value)
                     )
-                    response = NextResponse.next({
-                        request,
-                    })
-                    // If we had a rewrite, we need to re-apply it or set cookies on the new response
-                    // This is the tricky part. The official docs create a NEW response here.
-                    // If we need to persist the rewrite, we must create the response WITH the rewrite.
 
-                    // Simplified session handling without manual rewrite re-application.
-                    // This is sufficient as we are no longer doing complex rewrites.
+                    // Update the rewrite response with new cookies 
+                    response = NextResponse.rewrite(new URL(newPath, request.url))
 
                     cookiesToSet.forEach(({ name, value, options }) =>
                         response.cookies.set(name, value, options)
@@ -46,9 +118,6 @@ export async function middleware(request: NextRequest) {
         }
     )
 
-    // Check user and redirect if needed (optional here, mostly for refreshing session)
-    // We generally don't want to redirect in middleware unless strictly necessary to avoid loops.
-    // But we MUST call getUser() to trigger the cookie refresh if needed.
     await supabase.auth.getUser()
 
     return response

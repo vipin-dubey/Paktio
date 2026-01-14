@@ -3,9 +3,25 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { login } from '@/app/(public)/(auth)/actions'
+import { login } from '@/lib/actions/auth'
 
-export function LoginForm() {
+export function LoginForm({
+    lang = 'en',
+    dict
+}: {
+    lang?: string,
+    dict: {
+        email: string
+        password: string
+        passwordHint?: string
+        signIn: string
+        loadingSignIn: string
+        forgotPassword: string
+        noAccount: string
+        createAccount: string
+        [key: string]: any
+    }
+}) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
@@ -22,27 +38,21 @@ export function LoginForm() {
                 setLoading(false)
             } else if (result?.success) {
                 // Refresh router to ensure middleware/layout checks run against new session
-                // This fixes the "needs refresh" issue on login
                 router.refresh()
-
-                // Allow a tiny delay for the refresh to start propagating or cookie to settle? 
-                // Usually await router.refresh() (if it returned promise) would be ideal, 
-                // but router.refresh() is void in Next 13/14 app router usually. 
-                // However, the subsequent push will fetch the new page.
 
                 if (result.redirectUrl) {
                     router.push(result.redirectUrl)
                 }
             }
         } catch (e) {
-            setError('An unexpected error occurred')
+            setError(dict.common?.error || 'An unexpected error occurred')
             setLoading(false)
         }
-        // Note: We don't setLoading(false) on success to prevent UI flashing before redirect
     }
 
     return (
         <form action={handleSubmit} className="mt-8 space-y-6">
+            <input type="hidden" name="lang" value={lang} />
             {error && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-4 text-sm text-red-600 animate-in fade-in slide-in-from-top-2">
                     {error}
@@ -57,7 +67,7 @@ export function LoginForm() {
                         autoComplete="email"
                         required
                         className="relative block w-full rounded-t-lg border border-muted bg-white px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm transition-colors"
-                        placeholder="Email address"
+                        placeholder={dict.email}
                     />
                 </div>
                 <div>
@@ -68,7 +78,7 @@ export function LoginForm() {
                         autoComplete="current-password"
                         required
                         className="relative block w-full rounded-b-lg border border-muted bg-white px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm transition-colors"
-                        placeholder="Password"
+                        placeholder={dict.password}
                     />
                 </div>
             </div>
@@ -83,21 +93,21 @@ export function LoginForm() {
                     {loading ? (
                         <span className="flex items-center gap-2">
                             <span className="w-4 h-4 rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground animate-spin" />
-                            Signing in...
+                            {dict.loadingSignIn}
                         </span>
                     ) : (
-                        'Sign in'
+                        dict.signIn
                     )}
                 </button>
             </div>
 
             <div className="text-center">
-                <Link href="/signup" className="text-sm font-medium text-primary hover:underline">
-                    Don&apos;t have an account? Sign up
+                <Link href={`/${lang}/signup`} className="text-sm font-medium text-primary hover:underline">
+                    {dict.noAccount} {dict.signUp}
                 </Link>
                 <div className="mt-4">
-                    <Link href="/forgot-password" className="text-sm font-medium text-muted-foreground hover:text-primary hover:underline transition-colors">
-                        Forgot your password?
+                    <Link href={`/${lang}/forgot-password`} className="text-sm font-medium text-muted-foreground hover:text-primary hover:underline transition-colors">
+                        {dict.forgotPassword}
                     </Link>
                 </div>
             </div>

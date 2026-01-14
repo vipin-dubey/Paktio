@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { submitSignature } from '@/app/(regional)/sign/actions'
-import { validateAndSendOTP } from '@/app/(regional)/sign/[contractId]/actions'
+import { submitSignature } from '@/lib/actions/sign'
+import { validateAndSendOTP } from '@/lib/actions/otp'
 import type { User } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { SignaturePad } from './signature-pad'
@@ -15,9 +15,10 @@ interface SigningFormProps {
     intendedEmail?: string
     user?: User | null
     existingSignature?: Signature | null
+    lang?: string
 }
 
-export default function SigningForm({ contractId, intendedEmail, user: initialUser, existingSignature }: SigningFormProps) {
+export default function SigningForm({ contractId, intendedEmail, user: initialUser, existingSignature, lang = 'en' }: SigningFormProps) {
     const [user, setUser] = useState<User | null>(initialUser || null)
     // Check for client-side session updates (fixes magic link redirect loop)
     useEffect(() => {
@@ -87,7 +88,7 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
 
         try {
             // Server-side validation: checks if email is authorized and sends OTP to the correct email
-            await validateAndSendOTP(contractId, email)
+            await validateAndSendOTP(contractId, email, lang)
 
             setOtpAttempts(prev => prev + 1)
             setStep('otp')
@@ -129,7 +130,7 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
                 postalCode,
                 city,
                 signatureImage
-            })
+            }, lang)
             setSuccess(true)
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to submit signature')

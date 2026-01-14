@@ -1,0 +1,68 @@
+{
+    "common": {
+        "loading": "Hleður...",
+        "error": "Eitthvað fór úrskeiðis",
+        "save": "Vist",
+        "cancel": "Hætta við",
+        "delete": "Eyða"
+    },
+    "auth": {
+        "signIn": "Skrá inn",
+        "signUp": "Byrja frítt tímabil",
+        "email": "Netfang",
+        "password": "Lykilorð",
+        "passwordHint": "Lykilorð (lágm. 6 stafir)",
+        "forgotPassword": "Gleymt lykilorð?",
+        "forgotPasswordSubtitle": "Sláðu inn netfangið þitt til að fá endurstillingartengil.",
+        "resetPassword": "Endurstilla lykilorð",
+        "sendResetLink": "Senda endurstillingartengil",
+        "loadingSendReset": "Sendir tengil...",
+        "backToLogin": "Til baka í innskráningu",
+        "noAccount": "Enginn reikningur?",
+        "createAccount": "Búa til reikning",
+        "alreadyHaveAccount": "Ertu þegar með reikning?",
+        "signInTitle": "Skrá inn í Paktio",
+        "signInSubtitle": "Skandinavísk lágmarks nákvæmni fyrir samningana þína.",
+        "signUpTitle": "Búa til reikning",
+        "signUpSubtitle": "Taktu þátt í framtíð samvinnusamninga á stafstigi.",
+        "checkEmail": "Athugaðu tölvupóstinn þinn",
+        "returnToSignIn": "Til baka í innskráningu",
+        "loadingSignIn": "Skráir inn...",
+        "loadingSignUp": "Býr til reikning..."
+    },
+    "nav": {
+        "dashboard": "Stjórnborð",
+        "templates": "Sniðmát",
+        "settings": "Stillingar",
+        "signOut": "Skrá út"
+    },
+    "footer": {
+        "about": "Um okkur",
+        "contact": "Hafa samband",
+        "privacy": "Persónuvernd",
+        "terms": "Skilmálar"
+    },
+    "marketing": {
+        "hero": {
+            "title": "Paktio",
+            "subtitle": "Fullvalda skjöl",
+            "description": "Hágæða AI samningsgerð með nákvæmni á stafstigi og SHA-256 skjalaheilindum fyrir skandinavískt lögfræðilegt landslag.",
+            "ctaStart": "Byrja frítt tímabil",
+            "ctaSignIn": "Skrá inn"
+        },
+        "features": {
+            "integrity": {
+                "label": "Heilindi",
+                "text": "Dulritunarsönnun fyrir hverja samning via SHA-256 heilindakveikjur."
+            },
+            "intelligence": {
+                "label": "Greind",
+                "text": "AI-innfædd gerð með Gemini 1.5 Pro með samhengisupplýstum lagalegum skemum."
+            },
+            "compliance": {
+                "label": "Fylgni",
+                "text": "eIDAS AdES samhæfar undirskriftir fínstilltar fyrir EES og skandinavíska markaði."
+            }
+        }
+    }
+}

@@ -1,0 +1,68 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "Something went wrong",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete"
+    },
+    "auth": {
+        "signIn": "Sign In",
+        "signUp": "Start Free Trial",
+        "email": "Email Address",
+        "password": "Password",
+        "passwordHint": "Password (min 6 characters)",
+        "forgotPassword": "Forgot your password?",
+        "forgotPasswordSubtitle": "Enter your email to receive a reset link.",
+        "resetPassword": "Reset Password",
+        "sendResetLink": "Send Reset Link",
+        "loadingSendReset": "Sending link...",
+        "backToLogin": "Back to Login",
+        "noAccount": "Don't have an account?",
+        "createAccount": "Create an account",
+        "alreadyHaveAccount": "Already have an account?",
+        "signInTitle": "Sign in to Paktio",
+        "signInSubtitle": "Scandinavian minimalist precision for your agreements.",
+        "signUpTitle": "Create your account",
+        "signUpSubtitle": "Join the future of character-level collaborative agreements.",
+        "checkEmail": "Check your email",
+        "returnToSignIn": "Return to sign in",
+        "loadingSignIn": "Signing in...",
+        "loadingSignUp": "Creating account..."
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "templates": "Templates",
+        "settings": "Settings",
+        "signOut": "Sign Out"
+    },
+    "footer": {
+        "about": "About",
+        "contact": "Contact",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
+    },
+    "marketing": {
+        "hero": {
+            "title": "Paktio",
+            "subtitle": "Sovereign Documents",
+            "description": "High-end AI contract drafting with character-level precision and SHA-256 document integrity for the Scandinavian legal landscape.",
+            "ctaStart": "Start Free Trial",
+            "ctaSignIn": "Sign In"
+        },
+        "features": {
+            "integrity": {
+                "label": "Integrity",
+                "text": "Cryptographic proof for every agreement via SHA-256 integrity triggers."
+            },
+            "intelligence": {
+                "label": "Intelligence",
+                "text": "AI-native drafting using Gemini 1.5 Pro with context-aware legal schemas."
+            },
+            "compliance": {
+                "label": "Compliance",
+                "text": "eIDAS AdES compliant signatures optimized for EEA and Scandinavian markets."
+            }
+        }
+    }
+}

@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { updatePassword } from '@/app/(public)/(auth)/forgot-password/actions'
+import { updatePassword } from '@/lib/actions/password'
 
-export function ResetPasswordForm() {
+export function ResetPasswordForm({ lang = 'en' }: { lang?: string }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -26,6 +26,7 @@ export function ResetPasswordForm() {
 
     return (
         <form action={handleSubmit} className="mt-8 space-y-6">
+            <input type="hidden" name="lang" value={lang} />
             {error && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-4 text-sm text-red-600 animate-in fade-in slide-in-from-top-2">
                     {error}

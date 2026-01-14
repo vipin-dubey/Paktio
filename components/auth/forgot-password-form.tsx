@@ -1,10 +1,24 @@
 'use client'
 
 import { useState } from 'react'
-import { resetPassword } from '@/app/(public)/(auth)/forgot-password/actions'
+import { resetPassword } from '@/lib/actions/password'
 import Link from 'next/link'
 
-export function ForgotPasswordForm() {
+export function ForgotPasswordForm({
+    lang = 'en',
+    dict
+}: {
+    lang?: string,
+    dict: {
+        email: string
+        sendResetLink: string
+        loadingSendReset: string
+        backToLogin: string
+        checkEmail: string
+        returnToSignIn: string
+        [key: string]: any
+    }
+}) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
@@ -22,7 +36,7 @@ export function ForgotPasswordForm() {
                 setSuccess(result.success)
             }
         } catch (e) {
-            setError('An unexpected error occurred')
+            setError(dict.common?.error || 'An unexpected error occurred')
         } finally {
             setLoading(false)
         }
@@ -36,13 +50,13 @@ export function ForgotPasswordForm() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h3 className="text-lg font-medium text-green-900 mb-2">Check your email</h3>
+                <h3 className="text-lg font-medium text-green-900 mb-2">{dict.checkEmail}</h3>
                 <p className="text-sm text-green-700 mb-6">
                     {success}
                 </p>
                 <div className="text-sm">
-                    <Link href="/login" className="font-medium text-green-700 hover:text-green-600 hover:underline">
-                        Return to sign in
+                    <Link href={`/${lang}/login`} className="font-medium text-green-700 hover:text-green-600 hover:underline">
+                        {dict.returnToSignIn}
                     </Link>
                 </div>
             </div>
@@ -51,6 +65,7 @@ export function ForgotPasswordForm() {
 
     return (
         <form action={handleSubmit} className="mt-8 space-y-6">
+            <input type="hidden" name="lang" value={lang} />
             {error && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-4 text-sm text-red-600 animate-in fade-in slide-in-from-top-2">
                     {error}
@@ -62,8 +77,8 @@ export function ForgotPasswordForm() {
                     name="email"
                     type="email"
                     required
-                    className="relative block w-full rounded-lg border border-muted bg-white px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
-                    placeholder="Email address"
+                    className="relative block w-full rounded-lg border border-muted bg-white px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm transition-colors"
+                    placeholder={dict.email}
                 />
             </div>
 
@@ -71,22 +86,22 @@ export function ForgotPasswordForm() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="group relative flex w-full justify-center rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group relative flex w-full justify-center rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
                 >
                     {loading ? (
                         <span className="flex items-center gap-2">
                             <span className="w-4 h-4 rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground animate-spin" />
-                            Sending link...
+                            {dict.loadingSendReset}
                         </span>
                     ) : (
-                        'Send Reset Link'
+                        dict.sendResetLink
                     )}
                 </button>
             </div>
 
             <div className="text-center">
-                <Link href="/login" className="text-sm font-medium text-primary hover:underline">
-                    Back to Sign in
+                <Link href={`/${lang}/login`} className="text-sm font-medium text-primary hover:underline transition-colors">
+                    {dict.backToLogin}
                 </Link>
             </div>
         </form>

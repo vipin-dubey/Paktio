@@ -1,0 +1,48 @@
+
+> paktio@0.1.0 build
+> next build
+
+??? Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+??? Compiled successfully in 8.2s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/4) ...
+  Generating static pages using 11 workers (1/4) 
+  Generating static pages using 11 workers (2/4) 
+  Generating static pages using 11 workers (3/4) 
+??? Generating static pages using 11 workers (4/4) in 209.7ms
+  Finalizing page optimization ...
+
+Route (app)
+??? ??? /_not-found
+??? ?? /[lang]
+??? ?? /[lang]/about
+??? ?? /[lang]/admin-auth/callback
+??? ?? /[lang]/admin-auth/reset-password
+??? ?? /[lang]/contact
+??? ?? /[lang]/dashboard
+??? ?? /[lang]/editor
+??? ?? /[lang]/forgot-password
+??? ?? /[lang]/history/[contractId]
+??? ?? /[lang]/login
+??? ?? /[lang]/mfa/verify
+??? ?? /[lang]/privacy
+??? ?? /[lang]/settings
+??? ?? /[lang]/sign/[contractId]
+??? ?? /[lang]/signup
+??? ?? /[lang]/templates
+??? ?? /[lang]/terms
+??? ?? /[lang]/upgrade
+??? ?? /[lang]/view/[contractId]
+??? ?? /api/auth/callback
+??? ?? /api/webhooks/stripe
+
+
+?? Proxy (Middleware)
+
+???  (Static)   prerendered as static content
+??  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,68 @@
+{
+    "common": {
+        "loading": "Ladataan...",
+        "error": "Jokin meni pieleen",
+        "save": "Tallenna",
+        "cancel": "Peruuta",
+        "delete": "Poista"
+    },
+    "auth": {
+        "signIn": "Kirjaudu sisään",
+        "signUp": "Aloita ilmainen kokeilu",
+        "email": "Sähköpostiosoite",
+        "password": "Salasana",
+        "passwordHint": "Salasana (väh. 6 merkkiä)",
+        "forgotPassword": "Unohditko salasanan?",
+        "forgotPasswordSubtitle": "Anna sähköpostiosoitteesi saadaksesi nollauslinkin.",
+        "resetPassword": "Nollaa salasana",
+        "sendResetLink": "Lähetä nollauslinkki",
+        "loadingSendReset": "Lähetetään linkkiä...",
+        "backToLogin": "Takaisin kirjautumiseen",
+        "noAccount": "Eikö sinulla ole tiliä?",
+        "createAccount": "Luo tili",
+        "alreadyHaveAccount": "Onko sinulla jo tili?",
+        "signInTitle": "Kirjaudu Paktioon",
+        "signInSubtitle": "Skandinaavista minimalistista tarkkuutta sopimuksiisi.",
+        "signUpTitle": "Luo tili",
+        "signUpSubtitle": "Liity merkitason yhteistyösopimusten tulevaisuuteen.",
+        "checkEmail": "Tarkista sähköpostisi",
+        "returnToSignIn": "Palaa kirjautumiseen",
+        "loadingSignIn": "Kirjaudutaan sisään...",
+        "loadingSignUp": "Luodaan tiliä..."
+    },
+    "nav": {
+        "dashboard": "Hallintapaneeli",
+        "templates": "Mallit",
+        "settings": "Asetukset",
+        "signOut": "Kirjaudu ulos"
+    },
+    "footer": {
+        "about": "Tietoa meistä",
+        "contact": "Ota yhteyttä",
+        "privacy": "Tietosuojaseloste",
+        "terms": "Käyttöehdot"
+    },
+    "marketing": {
+        "hero": {
+            "title": "Paktio",
+            "subtitle": "Suvereenit asiakirjat",
+            "description": "Korkealaatuinen AI-sopimusluonnostelu merkitason tarkkuudella ja SHA-256-asiakirjojen eheydellä skandinaaviseen oikeusympäristöön.",
+            "ctaStart": "Aloita ilmainen kokeilu",
+            "ctaSignIn": "Kirjaudu sisään"
+        },
+        "features": {
+            "integrity": {
+                "label": "Eheys",
+                "text": "Kryptografinen todiste jokaisesta sopimuksesta SHA-256-eheyslaukaimien kautta."
+            },
+            "intelligence": {
+                "label": "Älykkyys",
+                "text": "AI-natiivi luonnostelu käyttäen Gemini 1.5 Prota kontekstitietoisten oikeudellisten skeemojen kanssa."
+            },
+            "compliance": {
+                "label": "Vaatimustenmukaisuus",
+                "text": "eIDAS AdES -yhteensopivat allekirjoitukset, jotka on optimoitu ETA- ja Skandinavian markkinoille."
+            }
+        }
+    }
+}
