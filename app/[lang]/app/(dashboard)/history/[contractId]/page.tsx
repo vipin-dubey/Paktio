@@ -7,16 +7,22 @@ import { History, Plus } from 'lucide-react'
 import { ContractViewer } from '@/components/features/contract/contract-viewer'
 import { getContract } from '@/lib/dal/contracts'
 import { DocumentHash } from '@/components/features/contract/document-hash'
+import { getDictionary } from '@/app/[lang]/dictionaries/get-dictionary'
 
-export default async function HistoryPage({ params }: { params: Promise<{ contractId: string }> }) {
-    const { contractId } = await params
+export default async function HistoryPage({
+    params
+}: {
+    params: Promise<{ lang: string, contractId: string }>
+}) {
+    const { lang, contractId } = await params
+    const dictionary = await getDictionary(lang)
     const supabase = await createClient()
 
     // Get current user
     const { data: { user } } = await supabase.auth.getUser()
 
     const contract = await getContract(contractId)
-    if (!contract) redirect('/dashboard')
+    if (!contract) redirect(`/${lang}/dashboard`)
 
     const signatures = contract.signatures
 
@@ -28,7 +34,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
             <div className="mb-4 flex items-center justify-between gap-4">
                 <Breadcrumbs
                     items={[
-                        { label: 'Contract History', icon: History }
+                        { label: dictionary.history.title, icon: History }
                     ]}
                 />
                 <Link
@@ -40,8 +46,8 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
             </div>
             <div className="flex flex-row justify-between items-start gap-4 mb-6">
                 <div className="space-y-1 min-w-0">
-                    <h1 className="text-xl sm:text-3xl font-black tracking-tighter uppercase truncate">Document Details</h1>
-                    <p className="text-xs sm:text-sm text-muted-foreground italic truncate">Immutable record of this legal agreement.</p>
+                    <h1 className="text-xl sm:text-3xl font-black tracking-tighter uppercase truncate">{dictionary.history.details}</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground italic truncate">{dictionary.history.subtitle}</p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                     {!userHasSigned && contract?.status !== 'draft' && (
@@ -52,8 +58,8 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
-                            <span className="hidden sm:inline">Go to Signing</span>
-                            <span className="sm:hidden">Sign</span>
+                            <span className="hidden sm:inline">{dictionary.history.actions.goToSigning}</span>
+                            <span className="sm:hidden">{dictionary.history.actions.sign}</span>
                         </Link>
                     )}
                     <DownloadCertificateButton
@@ -79,7 +85,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                     <section className="pb-2">
                         <h2 className="text-xl font-bold tracking-tight mb-6 flex items-center gap-2">
                             <span className="w-1.5 h-6 bg-primary rounded-full"></span>
-                            Recorded Signatures
+                            {dictionary.history.signatures.title}
                         </h2>
                         {signatures && signatures.length > 0 ? (
                             <div className="space-y-4">
@@ -89,23 +95,23 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                                             <div>
                                                 <p className="text-sm font-bold">{sig.first_name} {sig.last_name}</p>
                                                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">
-                                                    Signed on {new Date(sig.signed_at).toLocaleDateString()} • {new Date(sig.signed_at).toLocaleTimeString()}
+                                                    {dictionary.history.signatures.signedOn} {new Date(sig.signed_at).toLocaleDateString()} • {new Date(sig.signed_at).toLocaleTimeString()}
                                                 </p>
                                             </div>
                                             {sig.email_verified && (
                                                 <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
-                                                    Verified
+                                                    {dictionary.history.signatures.verified}
                                                 </span>
                                             )}
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                                             <div>
-                                                <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-muted-foreground/60 mb-1">Email</label>
+                                                <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-muted-foreground/60 mb-1">{dictionary.auth.email}</label>
                                                 <p className="text-xs font-medium">{sig.signer_email}</p>
                                             </div>
                                             <div>
-                                                <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-muted-foreground/60 mb-1">Phone</label>
+                                                <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-muted-foreground/60 mb-1">{dictionary.settings.personal.phone}</label>
                                                 <p className="text-xs font-medium">{sig.phone_number}</p>
                                             </div>
                                         </div>
@@ -114,7 +120,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                             </div>
                         ) : (
                             <div className="bg-muted/5 border border-dashed border-muted rounded-2xl p-8 text-center">
-                                <p className="text-muted-foreground italic text-sm">No signatures recorded yet.</p>
+                                <p className="text-muted-foreground italic text-sm">{dictionary.history.signatures.noSignatures}</p>
                             </div>
                         )}
                     </section>
@@ -122,27 +128,27 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
 
                 <div className="space-y-8 overflow-y-auto pr-2 custom-scrollbar">
                     <section className="bg-white border border-muted rounded-2xl p-6 shadow-sm sticky top-0">
-                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground/60 mb-6">Document Info</h2>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground/60 mb-6">{dictionary.history.info.title}</h2>
 
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1.5">Reference ID</label>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1.5">{dictionary.history.info.referenceId}</label>
                                 <p className="text-[11px] font-mono break-all bg-muted/30 px-2 py-1.5 rounded-md border border-muted/50">{contractId}</p>
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1.5">Mathematical Signature</label>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1.5">{dictionary.history.info.mathematicalSignature}</label>
                                 <DocumentHash hash={contract?.current_hash || ''} showBadge />
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-muted">
                                 <div>
-                                    <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1">Version</label>
+                                    <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1">{dictionary.history.info.version}</label>
                                     <p className="text-xs font-bold font-mono">v{contract?.version}</p>
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1">Status</label>
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-primary capitalize">{contract?.status}</span>
+                                    <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1">{dictionary.history.info.status}</label>
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-primary capitalize">{dictionary.dashboard.insights[contract?.status === 'draft' ? 'drafts' : contract?.status === 'pending' ? 'awaiting' : 'signed']}</span>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +156,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
 
                     <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10">
                         <p className="text-[10px] leading-relaxed text-muted-foreground italic">
-                            All signatures are cryptographically tied to the hash displayed above. Modification of content will void this record.
+                            {dictionary.history.info.integrityNotice}
                         </p>
                     </div>
                 </div>

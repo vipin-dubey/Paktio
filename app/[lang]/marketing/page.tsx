@@ -6,7 +6,7 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
     const dict = await getDictionary(lang)
 
     return (
-        <div className="min-h-screen bg-[#F9F9F8] flex flex-col items-center justify-center px-4">
+        <div className="min-h-screen bg-[#F9F9F8] flex flex-col items-center justify-center px-4 pt-24 pb-12 sm:pt-0 sm:pb-0">
             <div className="max-w-4xl text-center space-y-12">
                 <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9] break-words">
                     {dict.marketing.hero.title} <br />

@@ -1,7 +1,16 @@
 import ContractEditor from '@/components/features/editor/contract-editor'
 import { getContract } from '@/lib/dal/contracts'
+import { getDictionary } from '@/app/[lang]/dictionaries/get-dictionary'
 
-export default async function EditorPage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
+export default async function EditorPage({
+    params,
+    searchParams
+}: {
+    params: Promise<{ lang: string }>
+    searchParams: Promise<{ id?: string }>
+}) {
+    const { lang } = await params
+    const dictionary = await getDictionary(lang)
     const { id } = await searchParams
     let initialData = undefined
 
@@ -19,7 +28,7 @@ export default async function EditorPage({ searchParams }: { searchParams: Promi
 
     return (
         <div className="min-h-screen bg-background">
-            <ContractEditor initialData={initialData} />
+            <ContractEditor initialData={initialData} dictionary={dictionary} />
         </div>
     )
 }

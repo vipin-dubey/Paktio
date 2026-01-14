@@ -5,13 +5,20 @@ import TemplateGallery from '@/components/features/dashboard/template-gallery'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { BookOpen, Plus } from 'lucide-react'
 import Link from 'next/link'
+import { getDictionary } from '@/app/[lang]/dictionaries/get-dictionary'
 
-export default async function TemplatesPage() {
+export default async function TemplatesPage({
+    params,
+}: {
+    params: Promise<{ lang: string }>
+}) {
+    const { lang } = await params
+    const dictionary = await getDictionary(lang)
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-        redirect('/login')
+        redirect(`/${lang}/login`)
     }
 
     const templates = await getContracts(true)
@@ -22,7 +29,7 @@ export default async function TemplatesPage() {
                 <div className="mb-8 flex items-center justify-between gap-4">
                     <Breadcrumbs
                         items={[
-                            { label: 'Template Library', icon: BookOpen }
+                            { label: dictionary.templates.title, icon: BookOpen }
                         ]}
                     />
                     <Link
@@ -36,25 +43,25 @@ export default async function TemplatesPage() {
                 {/* Global Header: Unified with Dashboard */}
                 <div className="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                     <div>
-                        <h1 className="text-3xl font-black tracking-tighter uppercase mb-1">Template Library</h1>
-                        <p className="text-sm text-muted-foreground italic">Curated frameworks for rapid high-fidelity drafting.</p>
+                        <h1 className="text-3xl font-black tracking-tighter uppercase mb-1">{dictionary.templates.title}</h1>
+                        <p className="text-sm text-muted-foreground italic">{dictionary.templates.subtitle}</p>
                     </div>
 
                     <div className="bg-white border border-muted px-4 py-2 rounded-2xl shadow-sm">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
-                            {templates.length} System Templates Available
+                            {templates.length} {dictionary.templates.available}
                         </span>
                     </div>
                 </div>
 
                 {/* Persistent Section Header */}
                 <div className="mb-6 flex items-center justify-between border-b border-muted pb-4">
-                    <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">Featured Frameworks</h2>
+                    <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">{dictionary.templates.featured}</h2>
                 </div>
 
                 <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
                     <section className="pb-12">
-                        <TemplateGallery templates={templates} />
+                        <TemplateGallery templates={templates} dictionary={dictionary} />
                     </section>
                 </div>
             </main>

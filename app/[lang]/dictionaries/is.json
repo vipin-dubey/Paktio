@@ -2,7 +2,8 @@
     "common": {
         "loading": "Hleður...",
         "error": "Eitthvað fór úrskeiðis",
-        "save": "Vist",
+        "unexpectedError": "Óvænt villa kom upp",
+        "save": "Vista",
         "cancel": "Hætta við",
         "delete": "Eyða"
     },
@@ -42,6 +43,23 @@
         "privacy": "Persónuvernd",
         "terms": "Skilmálar"
     },
+    "shared": {
+        "cookieBanner": {
+            "title": "Við virðum friðhelgi þína",
+            "description": "Paktio notar vafrakökur til að bæta upplifun þína og tryggja heilindi skjala samkvæmt lögum ESB. Með því að smella á „Samþykkja allt“ samþykkir þú notkun okkar á vafrakökum fyrir greiningu og sérsniðið efni.",
+            "privacyPolicy": "Persónuverndarstefna",
+            "viewDetails": "Sjá {privacyPolicy} fyrir frekari upplýsingar.",
+            "necessary": "Aðeins nauðsynlegar",
+            "acceptAll": "Samþykkja allt"
+        },
+        "chatSupport": {
+            "title": "Paktio aðstoð",
+            "status": "Alltaf á netinu",
+            "greeting": "Hvernig getum við hjálpað í dag?",
+            "description": "Lagalega verkfræðiteymið okkar er tilbúið að aðstoða þig.",
+            "startChat": "Hefja spjall"
+        }
+    },
     "marketing": {
         "hero": {
             "title": "Paktio",
@@ -64,5 +82,270 @@
                 "text": "eIDAS AdES samhæfar undirskriftir fínstilltar fyrir EES og skandinavíska markaði."
             }
         }
+    },
+    "dashboard": {
+        "workspace": "Vinnusvæði",
+        "precision": "Nákvæmni á stafstigi innan seilingar.",
+        "insights": {
+            "drafts": "Drög",
+            "awaiting": "Bíður",
+            "signed": "Undirritað"
+        },
+        "pipeline": "Stjórnunarleiðsla",
+        "templates": {
+            "title": "Kerfissniðmát",
+            "subtitle": "Staðlaðir rammar fyrir hraða samningsgerð.",
+            "browseAll": "Skoða allt"
+        },
+        "security": {
+            "title": "Skjalaöryggi",
+            "description": "Paktio innsiglar öll drög með einstöku **SHA-256 dulmáli**, sem tryggir að útgáfan sem er undirrituð sé nákvæmlega sú sem þú samþykktir."
+        },
+        "links": {
+            "title": "Gagnlegir tenglar",
+            "compliance": "Fylgnileiðbeiningar",
+            "api": "API skjölun"
+        },
+        "noAgreements": "Engir samningar í þessum flokki.",
+        "draftFirst": "Settu upp þinn fyrsta samning",
+        "auditLog": "Endurskoðunarskrá",
+        "useTemplate": "Nota"
+    },
+    "editor": {
+        "status": {
+            "drafting": "Í gerð",
+            "edit": "Breyta",
+            "saving": "Vistar breytingar áður en beðið er um undirskrift...",
+            "errorGenerating": "Villa við að búa til samning",
+            "savedTemplate": "Vistað sem sniðmát",
+            "savedDraft": "Vistað sem drög",
+            "failedSave": "Mistókst að vista",
+            "dispatching": "Sendir..."
+        },
+        "actions": {
+            "saveDraft": "Vista drög",
+            "save": "Vista",
+            "requestSignature": "Biðja um undirskrift",
+            "send": "Senda",
+            "sent": "Sent",
+            "preview": "Forskoða skjal"
+        },
+        "architect": {
+            "title": "Lagalegur hönnuður",
+            "placeholder": "Drög að 6 mánaða ráðgjafarsamningi...",
+            "generate": "Búa til drög",
+            "tools": "Ritverkfæri"
+        },
+        "roles": {
+            "title": "Hlutverk skjals",
+            "primary": "Aðalaðili",
+            "counterparty": "Gagnaðili",
+            "primaryPlaceholder": "t.ex. Leigusali",
+            "counterpartyPlaceholder": "t.ex. Leigjandi"
+        },
+        "canvas": {
+            "untitled": "Ónafngreindur samningur",
+            "emptyTitle": "Byrja frá grunni eða nota AI",
+            "emptyDescription": "Byrjaðu að skrifa hér að neðan til að smíða samninginn þinn handvirkt eða notaðu lagalega hönnuðinn sem grunn.",
+            "addHeader": "Bæta við haus",
+            "addClause": "Bæta við klausu",
+            "chooseTemplates": "Velja úr sniðmátum",
+            "insertSection": "Setja inn hluta",
+            "header": "Haus",
+            "clause": "Klausa",
+            "listItem": "Listaliður",
+            "footer": "Síðufótur",
+            "deleteBlock": "Eyða blokk",
+            "moveUp": "Færa upp",
+            "moveDown": "Færa niður"
+        },
+        "modal": {
+            "requestTitle": "Senda beiðni",
+            "requestDescription": "Sláðu inn netfang gagnaðila. Þeir munu fá öruggan tengil til að undirrita.",
+            "previewTitle": "Forskoðun skjals",
+            "previewSubtitle": "Svona mun samningurinn þinn líta út fyrir undirritendur.",
+            "signaturePlaceholder": "Pláss fyrir undirskrift"
+        }
+    },
+    "history": {
+        "title": "Samningssaga",
+        "details": "Upplýsingar um skjal",
+        "subtitle": "Óbreytanleg skrá yfir þennan lagalega samning.",
+        "actions": {
+            "goToSigning": "Fara í undirritun",
+            "sign": "Undirrita"
+        },
+        "signatures": {
+            "title": "Skráðar undirskriftir",
+            "signedOn": "Undirritað þann",
+            "verified": "Staðfest",
+            "noSignatures": "Engar undirskriftir skráðar enn."
+        },
+        "info": {
+            "title": "Upplýsingar um skjal",
+            "referenceId": "Tilvísunarnúmer",
+            "mathematicalSignature": "Stærðfræðileg undirskrift",
+            "version": "Útgáfa",
+            "status": "Staða",
+            "integrityNotice": "Allar undirskriftir eru dulritunarlega bundnar við töluna hér að ofan. Breyting á innihaldi mun ógilda þessa skrá."
+        }
+    },
+    "templates": {
+        "title": "Sniðmátasafn",
+        "subtitle": "Valdir rammar fyrir hraða og vandaða samningsgerð.",
+        "available": "Kerfissniðmát í boði",
+        "featured": "Valdir rammar"
+    },
+    "upgrade": {
+        "title": "Veldu þína leið",
+        "subtitle": "Hágæða samningsstjórnun sniðin að skandinavískri nákvæmni.",
+        "current": "Núverandi leið",
+        "monthly": "/mánuði",
+        "currentLabel": "Núverandi leið þín",
+        "upgradeTo": "Uppfæra í ",
+        "tiers": {
+            "starter": {
+                "name": "Starter",
+                "price": "0 kr.",
+                "description": "Fullkomið fyrir sjálfstætt starfandi. 3 samningar/mánuði.",
+                "features": [
+                    "AI samningsgerð",
+                    "SHA-256 heilindi",
+                    "Opinberir undirritunartenglar"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "price": "2.900 kr.",
+                "description": "Fyrir lítil teymi og lögfræðinga.",
+                "features": [
+                    "Ótakmarkaðir samningar",
+                    "MFA auðkenning",
+                    "Sérsniðin vörumerki",
+                    "Forgangsaðstoð"
+                ]
+            }
+        }
+    },
+    "settings": {
+        "title": "Notendastillingar",
+        "loginRequired": "Vinsamlegast skráðu þig inn",
+        "personal": {
+            "title": "Persónuupplýsingar",
+            "fullName": "Fullt nafn",
+            "phone": "Símanúmer",
+            "email": "Netfang",
+            "locale": "Tungumál",
+            "save": "Vista breytingar"
+        },
+        "security": {
+            "title": "Öryggi og MFA",
+            "description": "Fjölþátta auðkenning bætir auknu öryggislagi við reikninginn þinn.",
+            "manage": "Sýsla með MFA",
+            "activate": "Virkja MFA"
+        }
+    },
+    "pages": {
+        "contact": {
+            "title": "Hafa samband",
+            "subtitle": "Við erum hér til að hjálpa. Hafðu samband við teymið okkar í Ósló fyrir stuðning, fyrirspurnir eða samstarfstækifæri.",
+            "getInTouch": "Hafa samband",
+            "hq": "Höfuðstöðvar",
+            "details": "Fyrir almennar fyrirspurnir eða stuðning, vinsamlegast sendu okkur tölvupóst beint eða notaðu spjallgræjuna ef hún er í boði."
+        },
+        "about": {
+            "title": "Um Paktio",
+            "subtitle": "Skilgreint af heilindum. Drikið af gáfum. Tryggt með stærðfræði.",
+            "mission": {
+                "title": "Markmið okkar",
+                "content": "Við erum að endurhugsa lagalega samninga fyrir stafræna öld. Við trúum því að samningur eigi að vera meira en bara texti á síðu — hann ætti að vera óbreytanleg, sannreynanleg skrá yfir sannleikann."
+            },
+            "sovereignty": {
+                "title": "Fullvalda skjöl",
+                "content": "Í heimi hverfulla gagna stendur Paktio fyrir varanleika. Við smíðum verkfæri som virða heilagleika samningsins og tryggja að það sem þú skrifar undir sé nákvæmlega það sem verður áfram í skránni, að eilífu."
+            },
+            "roots": {
+                "title": "Skandinavískar rætur",
+                "content": "Paktio fæddist í Osló og felur í sér skandinavísku meginreglurnar um gagnsæi, traust og naumhyggju. Við fjarlægjum allt óþarfa til að einbeita okkur að því sem skiptir máli: samningnum sjálfum."
+            }
+        },
+        "privacy": {
+            "title": "Persónuverndarstefna",
+            "subtitle": "Hjá Paktio eru heilindi skjala og gagnafullveldi kjarninn í öllu sem við smíðum. Þessi stefna útlistar hvernig við verndum upplýsingar þínar í samræmi við GDPR og EES staðla.",
+            "sections": {
+                "sovereignty": {
+                    "title": "1. Gagnafullveldi",
+                    "content": "Við trúum því að gögnin þín tilheyri þér. Paktio þjónar sem vörsluaðili lagalegra samninga þinna. Öll gögn sem slegin eru inn í Paktio eru geymd á öruggan hátt innan EES."
+                },
+                "integrity": {
+                    "title": "2. Heilindi skjala",
+                    "content": "„Regla okkar um heilindi“ notar SHA-256 dulmálstæknina til að tryggja að þegar skjal hefur verið undirritað sé ekki hægt að breyta stöðu þess án þess að ógilda undirskriftirnar. Þessi dulmálssönnun er geymd ásamt lýsigögnum skjalsins þíns."
+                },
+                "rights": {
+                    "title": "3. Réttindi þín",
+                    "content": "Samkvæmt lögum ESB átt þú rétt á að fá aðgang að, leiðrétta eða eyða persónuupplýsingum þínum. Þú getur hvenær sem er óskað eftir fullum útflutningi á reikningsgögnum þínum í gegnum stillingasíðuna."
+                }
+            }
+        },
+        "terms": {
+            "title": "Þjónustuskilmálar",
+            "sections": {
+                "agreement": {
+                    "title": "1. Samþykki á skilmálum",
+                    "content": "Með því að nota Paktio samþykkir þú að vera bundinn af þessum þjónustuskilmálum. Ef þú samþykkir ekki þessa skilmála skaltu ekki nota forritið."
+                },
+                "accounts": {
+                    "title": "2. Notendareikningar",
+                    "content": "Þú berð ábyrgð á að viðhalda öryggi reikningsins þíns, þar á meðal að virkja fjölþátta auðkenningu (MFA) þar sem hún er í boði. Paktio ber ekki ábyrgð á óviðkomandi aðgangi sem stafar af óöruggri reikningsstjórnun."
+                },
+                "validity": {
+                    "title": "3. Lagalegt gildi",
+                    "content": "Paktio útvegar verkfæri fyrir háþróaðar rafrænar undirskriftir (AdES) samkvæmt eIDAS stöðlum. Hins vegar bera notendur ábyrgð á að tryggja að sérstakir samningar þeirra krefjist ekki fullgildrar rafrænnar undirskriftar (QES) samkvæmt staðbundnum lögum."
+                },
+                "integrity": {
+                    "title": "4. Reglan um heilindi",
+                    "content": "Paktio framfylgir strangri stefnu um heilindi skjala. Breyting á hvaða skjalainnihaldi sem er eftir að undirskrift hefur verið beitt mun leiða til tafarlauss og óafturkallanlegrar ógildingar á öllum núverandi undirskriftum fyrir þá útgáfu."
+                }
+            }
+        }
+    },
+    "mfa": {
+        "verifyTitle": "Fjölþátta auðkenning",
+        "verifySubtitle": "Sláðu inn kóðann úr auðkenningarforritinu þínu.",
+        "verifyLabel": "Staðfesta",
+        "setupTitle": "Virkja fjölþátta auðkenningu",
+        "setupSubtitle": "Tryggðu Paktio reikninginn þinn með auðkenningarforriti (t.d. Google Authenticator, Authy).",
+        "step1Description": "Smelltu hér að neðan til að búa til þinn einstaka QR kóða",
+        "startSetup": "Hefja uppsetningu",
+        "step2Scan": "Skannaðu þennan kóða með auðkenningarforritinu þínu.",
+        "step2Verify": "Sláðu inn 6 stafa kóðann úr forritinu þínu.",
+        "verifyActivate": "Staðfesta og virkja",
+        "step3Success": "MFA virkjað",
+        "step3Description": "Reikningurinn þinn er nú öruggari."
+    },
+    "pdf": {
+        "reference": "Tilvísun",
+        "hash": "Hajastala",
+        "version": "Útgáfa",
+        "name": "Nafn",
+        "email": "Netfang",
+        "phone": "Sími",
+        "address": "Heimilisfang",
+        "dob": "Fæðingardagur",
+        "ssn": "Kennitala",
+        "noParties": "Engir aðilar skráðir.",
+        "attachments": "Viðhengi",
+        "noAttachments": "Engin viðhengi",
+        "signatures": "Undirskriftir",
+        "integrityNotice": "Þessi samningur er undirritaður rafrænt með rafrænni undirritunarþjónustu PAKTIO. Undirskriftirnar með ítarlegum upplýsingum fylgja með á sérstakri undirskriftarvottorðssíðu aftast í þessari PDF skjali.",
+        "learnMore": "Lærðu meira um rafrænar undirskriftir PAKTIO á",
+        "footerNotice": "Stafrænt undirritað og staðfest",
+        "certificateTitle": "Stafrænt undirritunarvottorð",
+        "certificateSubtitle": "Þetta vottorð staðfestir heilindi skjalsins.",
+        "documentInfo": "Upplýsingar um skjal",
+        "signingRecords": "Undirritunarskrár og rithandaryndarskriftir",
+        "signedAt": "Undirritað",
+        "noImage": "Engin mynd",
+        "capturedSignature": "CAPTURED SIGNATURE"
     }
 }

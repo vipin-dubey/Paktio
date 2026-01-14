@@ -8,17 +8,18 @@ import type { ContractDTO } from '@/lib/types/database'
 
 interface ContractTabsProps {
     contracts: ContractDTO[]
+    dictionary: any
 }
 
-export default function ContractTabs({ contracts }: ContractTabsProps) {
+export default function ContractTabs({ contracts, dictionary }: ContractTabsProps) {
     const [activeTab, setActiveTab] = useState<'draft' | 'pending' | 'signed'>('draft')
 
     const filteredContracts = contracts.filter(c => c.status === activeTab)
 
     const tabs = [
-        { id: 'draft', label: 'Drafts' },
-        { id: 'pending', label: 'Pending' },
-        { id: 'signed', label: 'Signed' }
+        { id: 'draft', label: dictionary.dashboard.insights.drafts },
+        { id: 'pending', label: dictionary.dashboard.insights.awaiting },
+        { id: 'signed', label: dictionary.dashboard.insights.signed }
     ] as const
 
     return (
@@ -81,13 +82,13 @@ export default function ContractTabs({ contracts }: ContractTabsProps) {
                                                     c.status === 'pending' ? 'bg-amber-50 text-amber-700 border-amber-100' :
                                                         'bg-slate-50 text-slate-600 border-slate-100'
                                             )}>
-                                                {c.status}
+                                                {dictionary.dashboard.insights[c.status === 'draft' ? 'drafts' : c.status === 'pending' ? 'awaiting' : 'signed']}
                                             </span>
                                             <Link
                                                 href={`/history/${c.id}`}
                                                 className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline hidden sm:block"
                                             >
-                                                Audit Log
+                                                {dictionary.dashboard.auditLog}
                                             </Link>
                                         </div>
                                     </div>
@@ -96,10 +97,10 @@ export default function ContractTabs({ contracts }: ContractTabsProps) {
                         </ul>
                     ) : (
                         <div className="p-16 text-center space-y-4">
-                            <p className="text-muted-foreground italic text-sm">No agreements in this category.</p>
+                            <p className="text-muted-foreground italic text-sm">{dictionary.dashboard.noAgreements}</p>
                             {activeTab === 'draft' && (
                                 <Link href="/editor" className="inline-block border border-primary text-primary px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/5">
-                                    Draft your first contract
+                                    {dictionary.dashboard.draftFirst}
                                 </Link>
                             )}
                         </div>

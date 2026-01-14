@@ -2,6 +2,7 @@
     "common": {
         "loading": "Loading...",
         "error": "Something went wrong",
+        "unexpectedError": "An unexpected error occurred",
         "save": "Save",
         "cancel": "Cancel",
         "delete": "Delete"
@@ -42,6 +43,23 @@
         "privacy": "Privacy Policy",
         "terms": "Terms of Service"
     },
+    "shared": {
+        "cookieBanner": {
+            "title": "We value your privacy",
+            "description": "Paktio uses cookies to improve your experience and ensure document integrity as per EU laws. By clicking \"Accept All\", you consent to our use of cookies for analytics and personalized content.",
+            "privacyPolicy": "Privacy Policy",
+            "viewDetails": "View our {privacyPolicy} for more details.",
+            "necessary": "Necessary only",
+            "acceptAll": "Accept All"
+        },
+        "chatSupport": {
+            "title": "Paktio Support",
+            "status": "Always Online",
+            "greeting": "How can we help today?",
+            "description": "Our legal engineering team is ready to assist you.",
+            "startChat": "Start Chat"
+        }
+    },
     "marketing": {
         "hero": {
             "title": "Paktio",
@@ -64,5 +82,270 @@
                 "text": "eIDAS AdES compliant signatures optimized for EEA and Scandinavian markets."
             }
         }
+    },
+    "dashboard": {
+        "workspace": "Workspace",
+        "precision": "Character-level precision at your fingertips.",
+        "insights": {
+            "drafts": "Drafts",
+            "awaiting": "Awaiting",
+            "signed": "Signed"
+        },
+        "pipeline": "Management Pipeline",
+        "templates": {
+            "title": "System Templates",
+            "subtitle": "Standardized frameworks for rapid drafting.",
+            "browseAll": "Browse All"
+        },
+        "security": {
+            "title": "Document Security",
+            "description": "Paktio seals every draft with a unique **SHA-256 hash**, ensuring that the version being signed is exactly what you approved."
+        },
+        "links": {
+            "title": "Helpful Links",
+            "compliance": "Compliance Guide",
+            "api": "API Documentation"
+        },
+        "noAgreements": "No agreements in this category.",
+        "draftFirst": "Draft your first contract",
+        "auditLog": "Audit Log",
+        "useTemplate": "Use"
+    },
+    "editor": {
+        "status": {
+            "drafting": "Drafting",
+            "edit": "Edit",
+            "saving": "Saving changes before requesting signature...",
+            "errorGenerating": "Error generating contract",
+            "savedTemplate": "Saved as Template",
+            "savedDraft": "Saved Draft",
+            "failedSave": "Failed to save",
+            "dispatching": "Dispatching..."
+        },
+        "actions": {
+            "saveDraft": "Save Draft",
+            "save": "Save",
+            "requestSignature": "Request Signature",
+            "send": "Send",
+            "sent": "Sent",
+            "preview": "Preview Document"
+        },
+        "architect": {
+            "title": "Legal Architect",
+            "placeholder": "Draft a 6-month consulting agreement...",
+            "generate": "Generate Draft",
+            "tools": "Editor Tools"
+        },
+        "roles": {
+            "title": "Document Roles",
+            "primary": "Primary Entity",
+            "counterparty": "Counterparty",
+            "primaryPlaceholder": "e.g. Landlord",
+            "counterpartyPlaceholder": "e.g. Tenant"
+        },
+        "canvas": {
+            "untitled": "Untitled Contract",
+            "emptyTitle": "Draft from scratch or use AI",
+            "emptyDescription": "Start typing below to manually build your contract or use the Legal Architect for a baseline.",
+            "addHeader": "Add Header",
+            "addClause": "Add Clause",
+            "chooseTemplates": "Choose from Templates",
+            "insertSection": "Insert Section",
+            "header": "Header",
+            "clause": "Clause",
+            "listItem": "List Item",
+            "footer": "Footer",
+            "deleteBlock": "Delete Block",
+            "moveUp": "Move Up",
+            "moveDown": "Move Down"
+        },
+        "modal": {
+            "requestTitle": "Send Request",
+            "requestDescription": "Enter the counterparty's email. They'll receive a secure link to sign.",
+            "previewTitle": "Document Preview",
+            "previewSubtitle": "This is how your contract will appear to signers.",
+            "signaturePlaceholder": "Signature Placeholder"
+        }
+    },
+    "history": {
+        "title": "Contract History",
+        "details": "Document Details",
+        "subtitle": "Immutable record of this legal agreement.",
+        "actions": {
+            "goToSigning": "Go to Signing",
+            "sign": "Sign"
+        },
+        "signatures": {
+            "title": "Recorded Signatures",
+            "signedOn": "Signed on",
+            "verified": "Verified",
+            "noSignatures": "No signatures recorded yet."
+        },
+        "info": {
+            "title": "Document Info",
+            "referenceId": "Reference ID",
+            "mathematicalSignature": "Mathematical Signature",
+            "version": "Version",
+            "status": "Status",
+            "integrityNotice": "All signatures are cryptographically tied to the hash displayed above. Modification of content will void this record."
+        }
+    },
+    "templates": {
+        "title": "Template Library",
+        "subtitle": "Curated frameworks for rapid high-fidelity drafting.",
+        "available": "System Templates Available",
+        "featured": "Featured Frameworks"
+    },
+    "upgrade": {
+        "title": "Choose your plan",
+        "subtitle": "High-end agreement management tailored for Scandinavian precision.",
+        "current": "Current Plan",
+        "monthly": "/month",
+        "currentLabel": "Your current plan",
+        "upgradeTo": "Upgrade to ",
+        "tiers": {
+            "starter": {
+                "name": "Starter",
+                "price": "$0",
+                "description": "Perfect for freelancers. 3 contracts/month.",
+                "features": [
+                    "AI Contract Drafting",
+                    "SHA-256 Integrity",
+                    "Public Signing links"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "price": "$29",
+                "description": "For small teams and legal pros.",
+                "features": [
+                    "Unlimited Contracts",
+                    "MFA Authentication",
+                    "Custom Branding",
+                    "Priority Support"
+                ]
+            }
+        }
+    },
+    "settings": {
+        "title": "User Settings",
+        "loginRequired": "Please log in",
+        "personal": {
+            "title": "Personal Information",
+            "fullName": "Full Name",
+            "phone": "Phone Number",
+            "email": "Email",
+            "locale": "Locale",
+            "save": "Save Changes"
+        },
+        "security": {
+            "title": "Security & MFA",
+            "description": "Multi-Factor Authentication adds an extra layer of security to your account.",
+            "manage": "Manage MFA",
+            "activate": "Activate MFA"
+        }
+    },
+    "pages": {
+        "contact": {
+            "title": "Contact Us",
+            "subtitle": "We are here to help. Reach out to our team in Oslo for support, inquiries, or partnership opportunities.",
+            "getInTouch": "Get in Touch",
+            "hq": "Headquarters",
+            "details": "For general inquiries or support, please email us directly or use the chat widget if available."
+        },
+        "about": {
+            "title": "About Paktio",
+            "subtitle": "Defined by Integrity. Driven by Intelligence. Secured by Mathematics.",
+            "mission": {
+                "title": "Our Mission",
+                "content": "We are reimagining legal agreements for the digital age. We believe that a contract should be more than just text on a page—it should be an immutable, verifiable record of truth."
+            },
+            "sovereignty": {
+                "title": "Sovereign Documents",
+                "content": "In a world of ephemeral data, Paktio stands for permanence. We build tools that respect the sanctity of the agreement, ensuring that what you sign is exactly what stays on record, forever."
+            },
+            "roots": {
+                "title": "Scandinavian Roots",
+                "content": "Born in Oslo, Paktio embodies the Scandinavian principles of transparency, trust, and minimalist design. We strip away the unnecessary to focus on what matters: the agreement itself."
+            }
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "subtitle": "At Paktio, document integrity and data sovereignty are at the core of everything we build. This policy outlines how we protect your information in accordance with GDPR and EEA standards.",
+            "sections": {
+                "sovereignty": {
+                    "title": "1. Data Sovereignty",
+                    "content": "We believe your data belongs to you. Paktio serves as a custodian of your legal agreements. All data entered into the Paktio Block Schema is stored securely in the EEA."
+                },
+                "integrity": {
+                    "title": "2. Document Integrity",
+                    "content": "Our \"Integrity Rule\" uses SHA-256 hashing to ensure that once a document is signed, its state cannot be modified without voiding the signatures. This cryptographic proof is stored alongside your document metadata."
+                },
+                "rights": {
+                    "title": "3. Your Rights",
+                    "content": "As per EU law, you have the right to access, rectify, or delete your personal data. You may request a full export of your account data at any time through the Settings page."
+                }
+            }
+        },
+        "terms": {
+            "title": "Terms of Service",
+            "sections": {
+                "agreement": {
+                    "title": "1. Agreement to Terms",
+                    "content": "By using Paktio, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the application."
+                },
+                "accounts": {
+                    "title": "2. User Accounts",
+                    "content": "You are responsible for maintaining the security of your account, including enabling Multi-Factor Authentication (MFA) where available. Paktio is not liable for unauthorized access resulting from insecure account management."
+                },
+                "validity": {
+                    "title": "3. Legal Validity",
+                    "content": "Paktio provides tools for Advanced Electronic Signatures (AdES) as per eIDAS standards. However, users are responsible for ensuring that their specific agreements do not require a Qualified Electronic Signature (QES) under local law."
+                },
+                "integrity": {
+                    "title": "4. The Integrity Rule",
+                    "content": "Paktio enforces a strict document integrity policy. Modification of any document content after a signature has been applied will result in the immediate and irreversible voiding of all existing signatures for that version."
+                }
+            }
+        }
+    },
+    "mfa": {
+        "verifyTitle": "Two-Factor Authentication",
+        "verifySubtitle": "Enter the code from your authenticator app.",
+        "verifyLabel": "Verify",
+        "setupTitle": "Enable Multi-Factor Auth",
+        "setupSubtitle": "Secure your Paktio account with an authenticator app (e.g. Google Authenticator, Authy).",
+        "step1Description": "Click below to generate your unique QR code",
+        "startSetup": "Start Setup",
+        "step2Scan": "Scan this code with your authenticator app.",
+        "step2Verify": "Enter the 6-digit code from your app.",
+        "verifyActivate": "Verify & Activate",
+        "step3Success": "MFA Activated",
+        "step3Description": "Your account is now more secure."
+    },
+    "pdf": {
+        "reference": "Reference",
+        "hash": "Hash",
+        "version": "Version",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "dob": "DOB",
+        "ssn": "SSN",
+        "noParties": "No parties recorded.",
+        "attachments": "Attachments",
+        "noAttachments": "No attachments",
+        "signatures": "Signatures",
+        "integrityNotice": "This contract is signed electronically using PAKTIO's e-signing service. The signatures with detailed information are attached in a separate signing certificate page at the end of this pdf.",
+        "learnMore": "Learn more about PAKTIO's electronic signatures at",
+        "footerNotice": "Digitally signed and verified",
+        "certificateTitle": "Digital Signing Certificate",
+        "certificateSubtitle": "This certificate attests to the integrity of the document.",
+        "documentInfo": "Document Information",
+        "signingRecords": "Signing Records & Handwritten Signatures",
+        "signedAt": "Signed",
+        "noImage": "No image",
+        "capturedSignature": "CAPTURED SIGNATURE"
     }
 }

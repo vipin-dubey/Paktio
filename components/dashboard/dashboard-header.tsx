@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import { SignOutButton } from '@/components/shared/sign-out-button'
 import { Plus, Settings, User } from 'lucide-react'
+import { getDictionary } from '@/app/[lang]/dictionaries/get-dictionary'
 
-export function DashboardHeader({ lang = 'en' }: { lang?: string }) {
+export async function DashboardHeader({ lang = 'en' }: { lang?: string }) {
+    const dictionary = await getDictionary(lang)
+
     return (
         <header className="bg-white border-b border-muted">
             <div className="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
@@ -15,19 +18,19 @@ export function DashboardHeader({ lang = 'en' }: { lang?: string }) {
                             href={`/${lang}/editor`}
                             className="hidden lg:flex items-center gap-2 bg-foreground text-background px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-sm"
                         >
-                            <Plus className="w-3.5 h-3.5" /> Draft New
+                            <Plus className="w-3.5 h-3.5" /> {dictionary.dashboard.noAgreements === 'No agreements in this category.' ? 'Draft New' : dictionary.dashboard.draftFirst.split(' ').slice(0, 2).join(' ')}
                         </Link>
                         <Link href={`/${lang}/templates`} className="hidden md:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                            Templates
+                            {dictionary.nav.templates}
                         </Link>
                         <Link href={`/${lang}/upgrade`} className="hidden md:block text-primary hover:underline text-sm font-medium">
-                            Upgrade
+                            {dictionary.upgrade.title.split(' ').pop()}
                         </Link>
 
                         {/* Mobile: Show Icons for Templates/Upgrade or simplified menu if complex. 
                             For now, hiding labels is sufficient to fix crowding. */}
                         <Link href={`/${lang}/templates`} className="md:hidden p-2 text-muted-foreground hover:text-foreground">
-                            <span className="sr-only">Templates</span>
+                            <span className="sr-only">{dictionary.nav.templates}</span>
                             {/* Simple Document Icon */}
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /></svg>
                         </Link>
@@ -35,7 +38,7 @@ export function DashboardHeader({ lang = 'en' }: { lang?: string }) {
                         <Link
                             href={`/${lang}/settings`}
                             className="text-muted-foreground hover:text-foreground transition-colors p-2 rounded-lg hover:bg-muted/50"
-                            title="Settings"
+                            title={dictionary.nav.settings}
                         >
                             <Settings className="w-5 h-5" />
                         </Link>
@@ -43,7 +46,7 @@ export function DashboardHeader({ lang = 'en' }: { lang?: string }) {
                             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                                 <User className="w-4 h-4 text-primary" />
                             </div>
-                            <SignOutButton />
+                            <SignOutButton lang={lang} />
                         </div>
                     </nav>
                 </div>

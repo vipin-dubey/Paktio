@@ -23,16 +23,17 @@ interface ContractEditorProps {
             signer_label?: string
         }
     }
+    dictionary: any
 }
 
-export default function ContractEditor({ initialData }: ContractEditorProps) {
+export default function ContractEditor({ initialData, dictionary }: ContractEditorProps) {
     const router = useRouter()
     const [prompt, setPrompt] = useState('')
-    const [title, setTitle] = useState(initialData?.title || 'Untitled Contract')
+    const [title, setTitle] = useState(initialData?.title || dictionary.editor.canvas.untitled)
     const [blocks, setBlocks] = useState<Block[]>(initialData?.blocks || [])
     const [contractId, setContractId] = useState<string | undefined>(initialData?.id)
-    const [ownerLabel, setOwnerLabel] = useState(initialData?.party_roles?.owner_label || 'Contract Owner')
-    const [signerLabel, setSignerLabel] = useState(initialData?.party_roles?.signer_label || 'Signer')
+    const [ownerLabel, setOwnerLabel] = useState(initialData?.party_roles?.owner_label || dictionary.editor.roles.primary)
+    const [signerLabel, setSignerLabel] = useState(initialData?.party_roles?.signer_label || dictionary.editor.roles.counterparty)
     const [loading, setLoading] = useState(false)
     const [saving, setSaving] = useState(false)
     const [saveMessage, setSaveMessage] = useState('')
@@ -54,7 +55,7 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
             setBlocks(result.blocks)
         } catch (error) {
             console.error(error)
-            setSaveMessage('Error generating contract')
+            setSaveMessage(dictionary.editor.status.errorGenerating)
         } finally {
             setLoading(false)
         }
@@ -84,11 +85,11 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                 }
             }
 
-            setSaveMessage(isTemplate ? 'Saved as Template' : 'Saved Draft')
+            setSaveMessage(isTemplate ? dictionary.editor.status.savedTemplate : dictionary.editor.status.savedDraft)
             return activeId
         } catch (err) {
             console.error(err)
-            setSaveMessage('Failed to save')
+            setSaveMessage(dictionary.editor.status.failedSave)
             return null
         } finally {
             setSaving(false)
@@ -126,7 +127,7 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
     }
 
     async function handleRequestSignatures() {
-        setSaveMessage('Saving changes before requesting signature...')
+        setSaveMessage(dictionary.editor.status.saving)
         const currentId = await handleSave(false)
         if (!currentId) return
         setShowSignerModal(true)
@@ -173,7 +174,7 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                         <div className="truncate">
                             <Breadcrumbs
                                 items={[
-                                    { label: contractId ? 'Edit' : 'Drafting', icon: FilePenLine }
+                                    { label: contractId ? dictionary.editor.status.edit : dictionary.editor.status.drafting, icon: FilePenLine }
                                 ]}
                             />
                         </div>
@@ -210,10 +211,10 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                 disabled={saving || blocks.length === 0 || signatureRequested}
                                 className="bg-foreground text-background px-4 sm:px-6 py-1.5 rounded-lg hover:opacity-90 disabled:opacity-50 text-[10px] font-black uppercase tracking-[0.15em] transition-all shadow-lg shadow-foreground/10"
                             >
-                                {signatureRequested ? 'Sent' : (
+                                {signatureRequested ? dictionary.editor.actions.sent : (
                                     <>
-                                        <span className="hidden sm:inline">Request Signature</span>
-                                        <span className="sm:hidden">Send</span>
+                                        <span className="hidden sm:inline">{dictionary.editor.actions.requestSignature}</span>
+                                        <span className="sm:hidden">{dictionary.editor.actions.send}</span>
                                     </>
                                 )}
                             </button>
@@ -233,7 +234,7 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                     >
                         <div className="flex flex-col h-full">
                             <div className="p-4 border-b border-muted flex items-center justify-between lg:hidden">
-                                <h3 className="text-xs font-black uppercase tracking-widest">Editor Tools</h3>
+                                <h3 className="text-xs font-black uppercase tracking-widest">{dictionary.editor.architect.tools}</h3>
                                 <button onClick={() => setShowSidebar(false)} className="p-2 hover:bg-muted rounded-full">
                                     <X className="w-4 h-4" />
                                 </button>
@@ -244,13 +245,13 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                 <section className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Legal Architect</h3>
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{dictionary.editor.architect.title}</h3>
                                     </div>
                                     <div className="bg-[#F9F9F8] rounded-xl p-4 space-y-3">
                                         <textarea
                                             value={prompt}
                                             onChange={(e) => setPrompt(e.target.value)}
-                                            placeholder="Draft a 6-month consulting agreement..."
+                                            placeholder={dictionary.editor.architect.placeholder}
                                             className="w-full bg-transparent border-none p-0 text-sm h-32 focus:ring-0 placeholder:text-muted-foreground/40 resize-none leading-relaxed"
                                         />
                                         <button
@@ -258,7 +259,7 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                             disabled={loading || !prompt}
                                             className="w-full bg-foreground text-background py-2.5 rounded-lg font-black uppercase tracking-widest text-[9px] hover:opacity-90 disabled:opacity-50 transition-all flex justify-center items-center gap-2 shadow-sm"
                                         >
-                                            {loading ? <span className="animate-spin text-lg">⟳</span> : 'Generate Draft'}
+                                            {loading ? <span className="animate-spin text-lg">⟳</span> : dictionary.editor.architect.generate}
                                         </button>
                                     </div>
                                 </section>
@@ -267,27 +268,27 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                 <section className="space-y-4">
                                     <div className="flex items-center gap-2 mb-2">
                                         <FileLineChart className="w-3.5 h-3.5 text-primary" />
-                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Document Roles</h3>
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{dictionary.editor.roles.title}</h3>
                                     </div>
                                     <div className="space-y-4 px-1">
                                         <div className="space-y-2">
-                                            <label className="block text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">Primary Entity</label>
+                                            <label className="block text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">{dictionary.editor.roles.primary}</label>
                                             <input
                                                 type="text"
                                                 value={ownerLabel}
                                                 onChange={(e) => setOwnerLabel(e.target.value)}
                                                 className="w-full bg-[#F9F9F8] border-none rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-primary/20 transition-all"
-                                                placeholder="e.g. Landlord"
+                                                placeholder={dictionary.editor.roles.primaryPlaceholder}
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">Counterparty</label>
+                                            <label className="block text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">{dictionary.editor.roles.counterparty}</label>
                                             <input
                                                 type="text"
                                                 value={signerLabel}
                                                 onChange={(e) => setSignerLabel(e.target.value)}
                                                 className="w-full bg-[#F9F9F8] border-none rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-primary/20 transition-all"
-                                                placeholder="e.g. Tenant"
+                                                placeholder={dictionary.editor.roles.counterpartyPlaceholder}
                                             />
                                         </div>
                                     </div>
@@ -319,20 +320,20 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                             <div className="w-16 h-16 bg-muted/5 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-dashed border-muted">
                                                 <Sparkles className="w-6 h-6 text-muted-foreground/40" />
                                             </div>
-                                            <h3 className="text-lg font-bold tracking-tight">Draft from scratch or use AI</h3>
+                                            <h3 className="text-lg font-bold tracking-tight">{dictionary.editor.canvas.emptyTitle}</h3>
                                             <p className="text-sm text-muted-foreground max-w-xs mx-auto italic font-serif">
-                                                Start typing below to manually build your contract or use the Legal Architect for a baseline.
+                                                {dictionary.editor.canvas.emptyDescription}
                                             </p>
                                         </div>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
                                             <button onClick={() => addBlock('header')} className="flex items-center justify-center gap-2 px-6 py-3 border border-muted rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-muted/5 hover:border-foreground transition-all">
-                                                <Heading1 className="w-4 h-4" /> Add Header
+                                                <Heading1 className="w-4 h-4" /> {dictionary.editor.canvas.addHeader}
                                             </button>
                                             <button onClick={() => addBlock('clause')} className="flex items-center justify-center gap-2 px-6 py-3 border border-muted rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-muted/5 hover:border-foreground transition-all">
-                                                <AlignLeft className="w-4 h-4" /> Add Clause
+                                                <AlignLeft className="w-4 h-4" /> {dictionary.editor.canvas.addClause}
                                             </button>
                                             <Link href="/templates" className="flex items-center justify-center gap-2 px-6 py-3 bg-primary/5 text-primary border border-primary/20 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/10 transition-all sm:col-span-2">
-                                                <BookOpen className="w-4 h-4" /> Choose from Templates
+                                                <BookOpen className="w-4 h-4" /> {dictionary.editor.canvas.chooseTemplates}
                                             </Link>
                                         </div>
                                     </div>
@@ -458,20 +459,20 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                         {/* Add Block Tool Bar */}
                                         <div className="flex flex-col items-center pt-12 pb-16">
                                             <div className="text-[10px] font-black tracking-[0.2em] text-muted-foreground/40 uppercase mb-6 flex items-center gap-4 before:h-[1px] before:w-12 before:bg-muted/30 after:h-[1px] after:w-12 after:bg-muted/30">
-                                                Insert Section
+                                                {dictionary.editor.canvas.insertSection}
                                             </div>
                                             <div className="flex flex-wrap justify-center gap-3 sm:gap-4 opacity-70 hover:opacity-100 transition-opacity">
                                                 <button onClick={() => addBlock('header')} className="text-[9px] font-black uppercase tracking-widest border border-dashed border-muted px-4 py-2.5 rounded-full hover:border-foreground hover:bg-white transition-all flex items-center gap-2">
-                                                    <Plus className="w-2.5 h-2.5" /> Header
+                                                    <Plus className="w-2.5 h-2.5" /> {dictionary.editor.canvas.header}
                                                 </button>
                                                 <button onClick={() => addBlock('clause')} className="text-[9px] font-black uppercase tracking-widest border border-dashed border-muted px-4 py-2.5 rounded-full hover:border-foreground hover:bg-white transition-all flex items-center gap-2">
-                                                    <Plus className="w-2.5 h-2.5" /> Clause
+                                                    <Plus className="w-2.5 h-2.5" /> {dictionary.editor.canvas.clause}
                                                 </button>
                                                 <button onClick={() => addBlock('list')} className="text-[9px] font-black uppercase tracking-widest border border-dashed border-muted px-4 py-2.5 rounded-full hover:border-foreground hover:bg-white transition-all flex items-center gap-2">
-                                                    <List className="w-2.5 h-2.5" /> List Item
+                                                    <List className="w-2.5 h-2.5" /> {dictionary.editor.canvas.listItem}
                                                 </button>
                                                 <button onClick={() => addBlock('footer')} className="text-[9px] font-black uppercase tracking-widest border border-dashed border-muted px-4 py-2.5 rounded-full hover:border-foreground hover:bg-white transition-all flex items-center gap-2">
-                                                    <Plus className="w-2.5 h-2.5" /> Footer
+                                                    <Plus className="w-2.5 h-2.5" /> {dictionary.editor.canvas.footer}
                                                 </button>
                                             </div>
                                         </div>
@@ -488,15 +489,15 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300">
                     <div className="bg-white rounded-3xl p-6 sm:p-10 max-w-md w-full shadow-2xl space-y-8 animate-in zoom-in-95 duration-300">
                         <div className="space-y-2">
-                            <h3 className="text-2xl sm:text-3xl font-black tracking-tight uppercase">Send Request</h3>
+                            <h3 className="text-2xl sm:text-3xl font-black tracking-tight uppercase">{dictionary.editor.modal.requestTitle}</h3>
                             <p className="text-sm text-muted-foreground leading-relaxed">
-                                Enter the counterparty's email. They'll receive a secure link to sign.
+                                {dictionary.editor.modal.requestDescription}
                             </p>
                         </div>
 
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/70 pl-1">Counterparty Email</label>
+                                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/70 pl-1">{dictionary.editor.roles.counterparty}</label>
                                 <input
                                     type="email"
                                     value={signerEmail}
@@ -512,14 +513,14 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                     onClick={() => setShowSignerModal(false)}
                                     className="flex-1 px-6 py-4 border border-muted rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-muted/5 transition-all text-muted-foreground"
                                 >
-                                    Cancel
+                                    {dictionary.common.cancel}
                                 </button>
                                 <button
                                     onClick={submitSignatureRequest}
                                     disabled={sendingRequest || !signerEmail}
                                     className="flex-[2] bg-foreground text-background px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:opacity-90 disabled:opacity-50 transition-all shadow-xl shadow-foreground/20"
                                 >
-                                    {sendingRequest ? 'Dispatching...' : 'Request Signature'}
+                                    {sendingRequest ? dictionary.editor.status.dispatching : dictionary.editor.actions.requestSignature}
                                 </button>
                             </div>
                         </div>
@@ -533,8 +534,8 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                     <div className="bg-white rounded-[32px] sm:rounded-[40px] w-full max-w-4xl h-full flex flex-col overflow-hidden shadow-2xl">
                         <div className="p-6 sm:p-8 border-b border-muted flex justify-between items-center bg-muted/5">
                             <div>
-                                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight">Document Preview</h3>
-                                <p className="text-xs sm:text-sm text-muted-foreground">This is how your contract will appear to signers.</p>
+                                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight">{dictionary.editor.modal.previewTitle}</h3>
+                                <p className="text-xs sm:text-sm text-muted-foreground">{dictionary.editor.modal.previewSubtitle}</p>
                             </div>
                             <button
                                 onClick={() => setShowPreview(false)}
@@ -567,13 +568,13 @@ export default function ContractEditor({ initialData }: ContractEditorProps) {
                                     <div className="space-y-4">
                                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{ownerLabel}</p>
                                         <div className="h-24 bg-muted/5 rounded-2xl border border-dashed border-muted flex items-center justify-center italic text-muted-foreground/30 text-xs text-center px-4">
-                                            Signature Placeholder
+                                            {dictionary.editor.modal.signaturePlaceholder}
                                         </div>
                                     </div>
                                     <div className="space-y-4">
                                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{signerLabel}</p>
                                         <div className="h-24 bg-muted/5 rounded-2xl border border-dashed border-muted flex items-center justify-center italic text-muted-foreground/30 text-xs text-center px-4">
-                                            Signature Placeholder
+                                            {dictionary.editor.modal.signaturePlaceholder}
                                         </div>
                                     </div>
                                 </div>

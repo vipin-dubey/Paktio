@@ -2,6 +2,7 @@
     "common": {
         "loading": "Indlæser...",
         "error": "Noget gik galt",
+        "unexpectedError": "Der opstod en uventet fejl",
         "save": "Gem",
         "cancel": "Annuller",
         "delete": "Slet"
@@ -42,11 +43,28 @@
         "privacy": "Privatlivspolitik",
         "terms": "Betingelser"
     },
+    "shared": {
+        "cookieBanner": {
+            "title": "Vi værdsætter dit privatliv",
+            "description": "Paktio bruger cookies til at forbedre din oplevelse og sikre dokumentintegritet i henhold til EU-lovgivning. Ved at klikke på \"Accepter alle\" giver du samtykke til vores brug af cookies til analyse og personligt indhold.",
+            "privacyPolicy": "Privatlivspolitik",
+            "viewDetails": "Se vores {privacyPolicy} for flere detaljer.",
+            "necessary": "Kun nødvendige",
+            "acceptAll": "Accepter alle"
+        },
+        "chatSupport": {
+            "title": "Paktio Support",
+            "status": "Altid online",
+            "greeting": "Hvordan kan vi hjælpe i dag?",
+            "description": "Vores juridiske ingeniørteam er klar til at hjælpe dig.",
+            "startChat": "Start chat"
+        }
+    },
     "marketing": {
         "hero": {
             "title": "Paktio",
             "subtitle": "Suveræne dokumenter",
-            "description": "High-end AI-kontraktudarbejdelse med præcision på tegnniveau og SHA-256 dokumentintegritet til det skandinaviske juridiske landskab.",
+            "description": "High-end AI-kontraktudarbejdelse med præcision på tegnniveau og SHA-256 dokumentintegritet til det skandinaviske juridiske landskapet.",
             "ctaStart": "Start gratis prøveperiode",
             "ctaSignIn": "Log ind"
         },
@@ -64,5 +82,270 @@
                 "text": "eIDAS AdES-kompatible signaturer optimeret til EØS og de skandinaviske markeder."
             }
         }
+    },
+    "dashboard": {
+        "workspace": "Workspace",
+        "precision": "Præcision på tegnniveau lige ved hånden.",
+        "insights": {
+            "drafts": "Udkast",
+            "awaiting": "Afventer",
+            "signed": "Signeret"
+        },
+        "pipeline": "Styringspipeline",
+        "templates": {
+            "title": "Systemskabeloner",
+            "subtitle": "Standardiserede rammer for hurtig udarbejdelse.",
+            "browseAll": "Gennemse alle"
+        },
+        "security": {
+            "title": "Dokumentsikkerhed",
+            "description": "Paktio forsegler hvert udkast med en unik **SHA-256-hash**, hvilket sikrer, at den version, der underskrives, er præcis det, du godkendte."
+        },
+        "links": {
+            "title": "Nyttige links",
+            "compliance": "Overholdelsesguide",
+            "api": "API-dokumentation"
+        },
+        "noAgreements": "Ingen aftaler i denne kategori.",
+        "draftFirst": "Udarbejd din første kontrakt",
+        "auditLog": "Revisionslog",
+        "useTemplate": "Brug"
+    },
+    "editor": {
+        "status": {
+            "drafting": "Udarbejdelse",
+            "edit": "Rediger",
+            "saving": "Gemmer ændringer før signaturanmodning...",
+            "errorGenerating": "Fejl ved generering av kontrakt",
+            "savedTemplate": "Gemt som skabelon",
+            "savedDraft": "Gemt udkast",
+            "failedSave": "Kunne ikke gemme",
+            "dispatching": "Sender..."
+        },
+        "actions": {
+            "saveDraft": "Gem udkast",
+            "save": "Gem",
+            "requestSignature": "Anmod om signatur",
+            "send": "Send",
+            "sent": "Sendt",
+            "preview": "Gennemse dokument"
+        },
+        "architect": {
+            "title": "Juridisk arkitekt",
+            "placeholder": "Udkast til en 6-måneders konsulentfold...",
+            "generate": "Generer udkast",
+            "tools": "Værktøjer"
+        },
+        "roles": {
+            "title": "Dokumentroller",
+            "primary": "Primær enhed",
+            "counterparty": "Modpart",
+            "primaryPlaceholder": "f.eks. Udlejer",
+            "counterpartyPlaceholder": "f.eks. Lejer"
+        },
+        "canvas": {
+            "untitled": "Unavngiven kontrakt",
+            "emptyTitle": "Lav fra bunden eller brug AI",
+            "emptyDescription": "Begynd at skrive nedenfor for at opbygge din kontrakt manuelt, eller brug den juridiske arkitekt som udgangspunkt.",
+            "addHeader": "Tilføj overskrift",
+            "addClause": "Tilføj klausul",
+            "chooseTemplates": "Vælg fra skabeloner",
+            "insertSection": "Indsæt sektion",
+            "header": "Overskrift",
+            "clause": "Klausul",
+            "listItem": "Listepunkt",
+            "footer": "Sidefod",
+            "deleteBlock": "Slet blok",
+            "moveUp": "Flyt op",
+            "moveDown": "Flyt ned"
+        },
+        "modal": {
+            "requestTitle": "Send anmodning",
+            "requestDescription": "Indtast modpartens e-mail. De vil modtage et sikkert link til at underskrive.",
+            "previewTitle": "Gennemse dokument",
+            "previewSubtitle": "Sådan vil din kontrakt se ud for underskrivere.",
+            "signaturePlaceholder": "Signaturpladsholder"
+        }
+    },
+    "history": {
+        "title": "Kontrakthistorik",
+        "details": "Dokumentdetaljer",
+        "subtitle": "Uforanderlig registrering af denne juridiske aftale.",
+        "actions": {
+            "goToSigning": "Gå til underskrift",
+            "sign": "Underskriv"
+        },
+        "signatures": {
+            "title": "Registrerede underskrifter",
+            "signedOn": "Underskrevet den",
+            "verified": "Verificeret",
+            "noSignatures": "Ingen underskrifter registreret endnu."
+        },
+        "info": {
+            "title": "Dokumentinfo",
+            "referenceId": "Reference-ID",
+            "mathematicalSignature": "Matematisk underskrift",
+            "version": "Version",
+            "status": "Status",
+            "integrityNotice": "Alle underskrifter er kryptografisk bundet til det hash, der vises ovenfor. Ændring af indhold vil annullere denne registrering."
+        }
+    },
+    "templates": {
+        "title": "Skabelonbibliotek",
+        "subtitle": "Kuraterede rammer for hurtig udarbejdelse af høj kvalitet.",
+        "available": "Systemskabeloner tilgængelige",
+        "featured": "Udvalgte rammer"
+    },
+    "upgrade": {
+        "title": "Vælg din plan",
+        "subtitle": "High-end aftalestyring skræddersyet til skandinavisk præcision.",
+        "current": "Nuværende plan",
+        "monthly": "/måned",
+        "currentLabel": "Din nuværende plan",
+        "upgradeTo": "Opgrader til ",
+        "tiers": {
+            "starter": {
+                "name": "Starter",
+                "price": "0 kr.",
+                "description": "Perfekt til freelancere. 3 kontrakter/måned.",
+                "features": [
+                    "AI-kontraktudarbejdelse",
+                    "SHA-256 integritet",
+                    "Offentlige underskriftslinks"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "price": "290 kr.",
+                "description": "Til små teams og juridiske professionelle.",
+                "features": [
+                    "Ubegrænset antal kontrakter",
+                    "To-faktor autentificering",
+                    "Brugerdefineret branding",
+                    "Prioriteret support"
+                ]
+            }
+        }
+    },
+    "settings": {
+        "title": "Brugerindstillinger",
+        "loginRequired": "Venligst log ind",
+        "personal": {
+            "title": "Personlige oplysninger",
+            "fullName": "Fulde navn",
+            "phone": "Telefonnummer",
+            "email": "E-mail",
+            "locale": "Sprog",
+            "save": "Gem ændringer"
+        },
+        "security": {
+            "title": "Sikkerhed & MFA",
+            "description": "To-faktor autentificering tilføjer et ekstra lag sikkerhed til din konto.",
+            "manage": "Administrer MFA",
+            "activate": "Aktiver MFA"
+        }
+    },
+    "pages": {
+        "contact": {
+            "title": "Kontakt os",
+            "subtitle": "Vi er her for at hjælpe. Kontakt vores team i Oslo for support, forespørgsler eller partnerskabsmuligheder.",
+            "getInTouch": "Kontakt os",
+            "hq": "Hovedkvarter",
+            "details": "For generelle forespørgsler eller support, send os venligst en e-post direkte eller brug chat-widgetten, hvis den er tilgængelig."
+        },
+        "about": {
+            "title": "Om Paktio",
+            "subtitle": "Defineret af integritet. Drevet af intelligens. Sikret av matematik.",
+            "mission": {
+                "title": "Vores mission",
+                "content": "Vi genopfinder juridiske aftaler til den digitale tidsalder. Vi mener, at en kontrakt bør være mere end blot tekst på en side – den bør være en uforanderlig, verificerbar kilde til sandhed."
+            },
+            "sovereignty": {
+                "title": "Suveræne dokumenter",
+                "content": "I en verden af flygtige data står Paktio for varighed. Vi bygger værktøjer, der respekterer aftalens hellighed, og sikrer, at det du underskriver, er præcis det, der forbliver i protokollen, for evigt."
+            },
+            "roots": {
+                "title": "Skandinaviske rødder",
+                "content": "Født i Oslo emmer Paktio af de skandinaviske principper om gennemsigtighed, tillid og minimalistisk design. Vi fjerner det unødvendige for at fokusere på det som betyder noget: selve aftalen."
+            }
+        },
+        "privacy": {
+            "title": "Privatlivspolitik",
+            "subtitle": "Hos Paktio er dokumentintegritet og datasuverænitet kernen i alt, hvad vi bygger. Denne politik beskriver, hvordan vi beskytter dine oplysninger i overensstemmelse med GDPR- og EØS-standarder.",
+            "sections": {
+                "sovereignty": {
+                    "title": "1. Datasuverænitet",
+                    "content": "Vi mener, at dine data tilhører dig. Paktio fungerer som vogter af dine juridiske aftaler. Alle data, der indtastes i Paktio, opbevares sikkert i EØS."
+                },
+                "integrity": {
+                    "title": "2. Dokumentintegritet",
+                    "content": "Vores \"integritetsregel\" bruger SHA-256-hashing til at sikre, at når et dokument er underskrevet, kan dets tilstand ikke ændres uden at annullere underskrifterne. Dette kryptografiske bevis gemmes sammen med dine dokumentmetadata."
+                },
+                "rights": {
+                    "title": "3. Dine rettigheder",
+                    "content": "I henhold til EU-lovgivningen har du ret til at få adgang til, rette eller slette dine personlige data. Du kan til enhver tid anmode om en fuld eksport af dine kontodata via siden Indstillinger."
+                }
+            }
+        },
+        "terms": {
+            "title": "Servicevilkår",
+            "sections": {
+                "agreement": {
+                    "title": "1. Accept af vilkår",
+                    "content": "Ved at bruge Paktio accepterer du at være bundet af disse servicevilkår. Hvis du ikke accepterer disse vilkår, må du ikke bruge applikationen."
+                },
+                "accounts": {
+                    "title": "2. Brugerkonti",
+                    "content": "Du er ansvarlig for at opretholde sikkerheden på din konto, herunder at aktivere to-faktor autentificering (MFA), hvor det er tilgængeligt. Paktio er ikke ansvarlig for uautoriseret adgang som følge af usikker kontostyring."
+                },
+                "validity": {
+                    "title": "3. Juridisk gyldighed",
+                    "content": "Paktio leverer værktøjer til avancerede elektroniske underskrifter (AdES) i henhold til eIDAS-standarder. Brugerne er dog ansvarlige for at sikre, at deres specifikke aftaler ikke kræver en kvalificeret elektronisk underskrift (QES) under lokal lovgivning."
+                },
+                "integrity": {
+                    "title": "4. Integritetsregelen",
+                    "content": "Paktio håndhæver en streng politik for dokumentintegritet. Ændring af dokumentindhold, efter at en underskrift er påført, vil resultere i øjeblikkelig og irreversibel annullering af alle eksisterende underskrifter for den pågældende version."
+                }
+            }
+        }
+    },
+    "mfa": {
+        "verifyTitle": "To-faktor autentificering",
+        "verifySubtitle": "Indtast koden fra din autentiseringsapp.",
+        "verifyLabel": "Bekræft",
+        "setupTitle": "Aktivér to-faktor autentificering",
+        "setupSubtitle": "Sikr din Paktio-konto med en autentiseringsapp (f.eks. Google Authenticator, Authy).",
+        "step1Description": "Klik nedenfor for at generere din unikke QR-kode",
+        "startSetup": "Start opsætning",
+        "step2Scan": "Scan denne kode med din autentiseringsapp.",
+        "step2Verify": "Indtast den 6-cifrede kode fra din app.",
+        "verifyActivate": "Bekræft og aktivér",
+        "step3Success": "MFA aktiveret",
+        "step3Description": "Din konto er nu mere sikker."
+    },
+    "pdf": {
+        "reference": "Reference",
+        "hash": "Hash",
+        "version": "Version",
+        "name": "Navn",
+        "email": "E-mail",
+        "phone": "Telefon",
+        "address": "Adresse",
+        "dob": "Fødselsdato",
+        "ssn": "CPR-nummer",
+        "noParties": "Ingen parter registreret.",
+        "attachments": "Bilag",
+        "noAttachments": "Ingen bilag",
+        "signatures": "Underskrifter",
+        "integrityNotice": "Denne kontrakt er underskrevet elektronisk ved hjælp af PAKTIOs e-underskriftstjeneste. Underskrifterne med detaljerede oplysninger er vedlagt i et separat underskriftscertifikat i slutningen af denne PDF.",
+        "learnMore": "Lær mere om PAKTIOs elektroniske underskrifter på",
+        "footerNotice": "Digitalt underskrevet og verificeret",
+        "certificateTitle": "Digitalt underskriftscertifikat",
+        "certificateSubtitle": "Dette certifikat bekræfter dokumentets integritet.",
+        "documentInfo": "Dokumentoplysninger",
+        "signingRecords": "Underskriftsprotokoller og håndskrevne underskrifter",
+        "signedAt": "Underskrevet",
+        "noImage": "Intet billede",
+        "capturedSignature": "CAPTURED SIGNATURE"
     }
 }

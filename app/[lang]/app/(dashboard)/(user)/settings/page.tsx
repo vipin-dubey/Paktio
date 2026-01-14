@@ -3,12 +3,19 @@ import { updateProfile } from '@/lib/actions/settings'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { Plus, Settings } from 'lucide-react'
 import Link from 'next/link'
+import { getDictionary } from '@/app/[lang]/dictionaries/get-dictionary'
 
-export default async function SettingsPage() {
+export default async function SettingsPage({
+    params
+}: {
+    params: Promise<{ lang: string }>
+}) {
+    const { lang } = await params
+    const dictionary = await getDictionary(lang)
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
-    if (!user) return <div>Please log in</div>
+    if (!user) return <div className="p-8 text-center">{dictionary.settings.loginRequired}</div>
 
     const { data: profile } = await supabase
         .from('profiles')
@@ -21,7 +28,7 @@ export default async function SettingsPage() {
             <div className="mb-6 flex items-center justify-between gap-4">
                 <Breadcrumbs
                     items={[
-                        { label: 'User Settings', icon: Settings }
+                        { label: dictionary.settings.title, icon: Settings }
                     ]}
                 />
                 <Link
@@ -31,11 +38,11 @@ export default async function SettingsPage() {
                     <Plus className="w-5 h-5" />
                 </Link>
             </div>
-            <h1 className="text-3xl font-bold mb-8">User Settings</h1>
+            <h1 className="text-3xl font-bold mb-8">{dictionary.settings.title}</h1>
 
             <div className="bg-white shadow rounded-lg p-6 space-y-8">
                 <section>
-                    <h2 className="text-xl font-semibold mb-4 text-primary">Personal Information</h2>
+                    <h2 className="text-xl font-semibold mb-4 text-primary">{dictionary.settings.personal.title}</h2>
                     <form
                         action={async (formData) => {
                             'use server'
@@ -45,7 +52,7 @@ export default async function SettingsPage() {
                     >
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <label className="block text-sm font-medium text-muted-foreground">Full Name</label>
+                                <label className="block text-sm font-medium text-muted-foreground">{dictionary.settings.personal.fullName}</label>
                                 <input
                                     name="fullName"
                                     defaultValue={profile?.full_name || ''}
@@ -53,7 +60,7 @@ export default async function SettingsPage() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-muted-foreground">Phone Number</label>
+                                <label className="block text-sm font-medium text-muted-foreground">{dictionary.settings.personal.phone}</label>
                                 <input
                                     name="phoneNumber"
                                     defaultValue={profile?.phone_number || ''}
@@ -63,7 +70,7 @@ export default async function SettingsPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-muted-foreground">Email</label>
+                            <label className="block text-sm font-medium text-muted-foreground">{dictionary.settings.personal.email}</label>
                             <input
                                 disabled
                                 value={user.email || ''}
@@ -72,7 +79,7 @@ export default async function SettingsPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-muted-foreground">Locale</label>
+                            <label className="block text-sm font-medium text-muted-foreground">{dictionary.settings.personal.locale}</label>
                             <select
                                 name="locale"
                                 defaultValue={profile?.locale || 'en'}
@@ -81,12 +88,14 @@ export default async function SettingsPage() {
                                 <option value="en">English (Global)</option>
                                 <option value="no">Norwegian (Bokmål)</option>
                                 <option value="se">Swedish</option>
-                                <option value="dk">Danish</option>
+                                <option value="da">Danish</option>
+                                <option value="fi">Finnish</option>
+                                <option value="is">Icelandic</option>
                             </select>
                         </div>
 
                         <button type="submit" className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90">
-                            Save Changes
+                            {dictionary.settings.personal.save}
                         </button>
                     </form>
                 </section>
@@ -94,10 +103,10 @@ export default async function SettingsPage() {
                 <hr className="border-muted" />
 
                 <section>
-                    <h2 className="text-xl font-semibold mb-4 text-destructive">Security & MFA</h2>
-                    <p className="text-muted-foreground mb-4">Multi-Factor Authentication adds an extra layer of security to your account.</p>
+                    <h2 className="text-xl font-semibold mb-4 text-destructive">{dictionary.settings.security.title}</h2>
+                    <p className="text-muted-foreground mb-4">{dictionary.settings.security.description}</p>
                     <button className="border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10">
-                        {profile?.is_mfa_enabled ? 'Manage MFA' : 'Activate MFA'}
+                        {profile?.is_mfa_enabled ? dictionary.settings.security.manage : dictionary.settings.security.activate}
                     </button>
                 </section>
             </div>

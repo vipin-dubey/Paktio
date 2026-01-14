@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import type { ContractDTO } from '@/lib/types/database'
 import { duplicateContract } from '@/lib/dal/contracts'
 
-export default function TemplateGallery({ templates }: { templates: ContractDTO[] }) {
+export default function TemplateGallery({ templates, dictionary }: { templates: ContractDTO[], dictionary: any }) {
     const router = useRouter()
     const [loadingId, setLoadingId] = useState<string | null>(null)
 
@@ -17,7 +17,7 @@ export default function TemplateGallery({ templates }: { templates: ContractDTO[
             router.push(`/editor?id=${newContractId}`)
         } catch (error) {
             console.error('Failed to copy template:', error)
-            alert('Failed to use template')
+            alert(dictionary.common.error)
         } finally {
             setLoadingId(null)
         }
@@ -26,7 +26,7 @@ export default function TemplateGallery({ templates }: { templates: ContractDTO[
     if (templates.length === 0) {
         return (
             <div className="bg-muted/10 border border-dashed border-muted rounded-xl p-8 text-center">
-                <p className="text-muted-foreground text-sm">No templates found. Create one to get started.</p>
+                <p className="text-muted-foreground text-sm">{dictionary.dashboard.templates.noTemplates || 'No templates found.'}</p>
             </div>
         )
     }
@@ -57,7 +57,7 @@ export default function TemplateGallery({ templates }: { templates: ContractDTO[
                         ) : (
                             <>
                                 <Copy className="w-3 h-3" />
-                                Use
+                                {dictionary.dashboard.useTemplate}
                             </>
                         )}
                     </button>

@@ -2,6 +2,7 @@
     "common": {
         "loading": "Ladataan...",
         "error": "Jokin meni pieleen",
+        "unexpectedError": "Tapahtui odottamaton virhe",
         "save": "Tallenna",
         "cancel": "Peruuta",
         "delete": "Poista"
@@ -42,6 +43,23 @@
         "privacy": "Tietosuojaseloste",
         "terms": "Käyttöehdot"
     },
+    "shared": {
+        "cookieBanner": {
+            "title": "Arvostamme yksityisyyttäsi",
+            "description": "Paktio käyttää evästeitä parantaakseen kokemustasi ja varmistaakseen asiakirjojen eheyden EU:n lainsäädännön mukaisesti. Klikkaamalla \"Hyväksy kaikki\" annat suostumuksesi evästeiden käyttöön analytiikkaa ja personoitua sisältöä varten.",
+            "privacyPolicy": "Tietosuojaseloste",
+            "viewDetails": "Katso {privacyPolicy} saadaksesi lisätietoja.",
+            "necessary": "Vain välttämättömät",
+            "acceptAll": "Hyväksy kaikki"
+        },
+        "chatSupport": {
+            "title": "Paktio-tuki",
+            "status": "Aina paikalla",
+            "greeting": "Miten voimme auttaa tänään?",
+            "description": "Laki-insinööritiimimme on valmis auttamaan sinua.",
+            "startChat": "Aloita chat"
+        }
+    },
     "marketing": {
         "hero": {
             "title": "Paktio",
@@ -64,5 +82,270 @@
                 "text": "eIDAS AdES -yhteensopivat allekirjoitukset, jotka on optimoitu ETA- ja Skandinavian markkinoille."
             }
         }
+    },
+    "dashboard": {
+        "workspace": "Työtila",
+        "precision": "Merkitason tarkkuus käden ulottuvilla.",
+        "insights": {
+            "drafts": "Luonnokset",
+            "awaiting": "Odottaa",
+            "signed": "Allekirjoitettu"
+        },
+        "pipeline": "Hallintaputki",
+        "templates": {
+            "title": "Järjestelmämallit",
+            "subtitle": "Standardoidut raamit nopeaa luonnostelua varten.",
+            "browseAll": "Selaa kaikkia"
+        },
+        "security": {
+            "title": "Asiakirjojen turvallisuus",
+            "description": "Paktio sinetöi jokaisen luonnoksen ainutlaatuisella **SHA-256-hajautuksella**, varmistaen, että allekirjoitettava versio on täsmälleen se, jonka hyväksyit."
+        },
+        "links": {
+            "title": "Hyödyllisiä linkkejä",
+            "compliance": "Vaatimustenmukaisuusopas",
+            "api": "API-dokumentaatio"
+        },
+        "noAgreements": "Ei sopimuksia tässä kategoriassa.",
+        "draftFirst": "Luonnostele ensimmäinen sopimuksesi",
+        "auditLog": "Tarkistusloki",
+        "useTemplate": "Käytä"
+    },
+    "editor": {
+        "status": {
+            "drafting": "Luonnostellaan",
+            "edit": "Muokkaa",
+            "saving": "Tallennetaan muutoksia ennen allekirjoituspyyntöä...",
+            "errorGenerating": "Virhe sopimuksen luomisessa",
+            "savedTemplate": "Tallennettu mallina",
+            "savedDraft": "Tallennettu luonnos",
+            "failedSave": "Tallennus epäonnistui",
+            "dispatching": "Lähetetään..."
+        },
+        "actions": {
+            "saveDraft": "Tallenna luonnos",
+            "save": "Tallenna",
+            "requestSignature": "Pyydä allekirjoitus",
+            "send": "Lähetä",
+            "sent": "Lähetetty",
+            "preview": "Esikatsele asiakirja"
+        },
+        "architect": {
+            "title": "Oikeudellinen arkkitehti",
+            "placeholder": "Luonnostele 6 kuukauden konsulttisopimus...",
+            "generate": "Luo luonnos",
+            "tools": "Muokkaustyökalut"
+        },
+        "roles": {
+            "title": "Asiakirjan roolit",
+            "primary": "Ensisijainen osapuoli",
+            "counterparty": "Vastapuoli",
+            "primaryPlaceholder": "esim. Vuokranantaja",
+            "counterpartyPlaceholder": "esim. Vuokralainen"
+        },
+        "canvas": {
+            "untitled": "Nimetön sopimus",
+            "emptyTitle": "Luo tyhjästä tai käytä AI:ta",
+            "emptyDescription": "Aloita kirjoittaminen alle rakentaaksesi sopimuksesi manuaalisesti tai käytä oikeudellista arkkitehtia pohjana.",
+            "addHeader": "Lisää otsikko",
+            "addClause": "Lisää lauseke",
+            "chooseTemplates": "Valitse malleista",
+            "insertSection": "Lisää osio",
+            "header": "Otsikko",
+            "clause": "Lauseke",
+            "listItem": "Luettelokohta",
+            "footer": "Alatunniste",
+            "deleteBlock": "Poista lohko",
+            "moveUp": "Siirrä ylös",
+            "moveDown": "Siirrä alas"
+        },
+        "modal": {
+            "requestTitle": "Lähetä pyyntö",
+            "requestDescription": "Anna vastapuolen sähköpostiosoite. He saavat turvallisen linkin allekirjoittamista varten.",
+            "previewTitle": "Asiakirjan esikatselu",
+            "previewSubtitle": "Tältä sopimuksesi näyttää allekirjoittajille.",
+            "signaturePlaceholder": "Allekirjoituksen paikkamerkki"
+        }
+    },
+    "history": {
+        "title": "Sopimushistoria",
+        "details": "Asiakirjan tiedot",
+        "subtitle": "Muuttumaton tallenne tästä oikeudellisesta sopimuksesta.",
+        "actions": {
+            "goToSigning": "Siirry allekirjoitukseen",
+            "sign": "Allekirjoita"
+        },
+        "signatures": {
+            "title": "Tallennetut allekirjoitukset",
+            "signedOn": "Allekirjoitettu",
+            "verified": "Vahvistettu",
+            "noSignatures": "Ei vielä tallennettuja allekirjoituksia."
+        },
+        "info": {
+            "title": "Asiakirjan tiedot",
+            "referenceId": "Viite-ID",
+            "mathematicalSignature": "Matematisk allekirjoitus",
+            "version": "Versio",
+            "status": "Tila",
+            "integrityNotice": "Kaikki allekirjoitukset on sidottu kryptografisesti yllä olevaan hajautukseen. Sisällön muuttaminen mitätöi tämän tallenteen."
+        }
+    },
+    "templates": {
+        "title": "Mallikirjasto",
+        "subtitle": "Kuratoidut raamit nopeaa ja korkealaatuista luonnostelua varten.",
+        "available": "Järjestelmämalleja saatavilla",
+        "featured": "Suositellut raamit"
+    },
+    "upgrade": {
+        "title": "Valitse jäsenyytesi",
+        "subtitle": "Korkealaatuista sopimushallintaa skandinaavisella tarkkuudella.",
+        "current": "Nykyinen jäsenyys",
+        "monthly": "/kk",
+        "currentLabel": "Nykyinen jäsenyytesi",
+        "upgradeTo": "Päivitä tasoon ",
+        "tiers": {
+            "starter": {
+                "name": "Starter",
+                "price": "0 €",
+                "description": "Täydellinen freelancereille. 3 sopimusta/kk.",
+                "features": [
+                    "AI-sopimusluonnostelu",
+                    "SHA-256-eheys",
+                    "Julkiset allekirjoituslinkit"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "price": "29 €",
+                "description": "Pienille tiimeille ja lakiammattilaisille.",
+                "features": [
+                    "Rajattomat sopimukset",
+                    "MFA-tunnistautuminen",
+                    "Mukautettu brändäys",
+                    "Prioriteettituki"
+                ]
+            }
+        }
+    },
+    "settings": {
+        "title": "Käyttäjäasetukset",
+        "loginRequired": "Kirjaudu sisään",
+        "personal": {
+            "title": "Henkilötiedot",
+            "fullName": "Koko nimi",
+            "phone": "Puhelinnumero",
+            "email": "Sähköposti",
+            "locale": "Kieli",
+            "save": "Tallenna muutokset"
+        },
+        "security": {
+            "title": "Turvallisuus ja MFA",
+            "description": "Monivaiheinen tunnistautuminen lisää ylimääräisen turvakerroksen tilillesi.",
+            "manage": "Hallitse MFA:ta",
+            "activate": "Aktivoi MFA"
+        }
+    },
+    "pages": {
+        "contact": {
+            "title": "Ota yhteyttä",
+            "subtitle": "Olemme täällä auttaaksemme. Ota yhteyttä Oslon tiimiimme tukea, tiedusteluja tai kumppanuusmahdollisuuksia varten.",
+            "getInTouch": "Ota yhteyttä",
+            "hq": "Pääkonttori",
+            "details": "Yleisiä tiedusteluja tai tukea varten lähetä meille sähköpostia suoraan tai käytä chat-widgetiä, jos se on saatavilla."
+        },
+        "about": {
+            "title": "Tietoa Paktiosta",
+            "subtitle": "Integriteetin määrittelemä. Älykkyyden ohjaama. Matematiikan suojaama.",
+            "mission": {
+                "title": "Missiomme",
+                "content": "Uudistamme oikeudelliset sopimukset digitaalista aikakautta varten. Uskomme, että sopimuksen pitäisi olla enemmän kuin vain tekstiä sivulla – sen pitäisi olla muuttumaton, todennettavissa oleva totuuden lähde."
+            },
+            "sovereignty": {
+                "title": "Suvereenit asiakirjat",
+                "content": "Katoavan datan maailmassa Paktio edustaa pysyvyyttä. Rakennamme työkaluja, jotka kunnioittavat sopimuksen pyhyyttä ja varmistavat, että se, mitä allekirjoitat, on täsmälleen se, mikä säilyy pöytäkirjassa ikuisesti."
+            },
+            "roots": {
+                "title": "Skandinaaviset juuret",
+                "content": "Oslossa syntynyt Paktio ilmentää skandinaavisia avoimuuden, luottamuksen ja minimalistisen suunnittelun periaatteita. Karsimme kaiken turhan keskittyäksemme siihen, millä on merkitystä: itse sopimukseen."
+            }
+        },
+        "privacy": {
+            "title": "Tietosuojaseloste",
+            "subtitle": "Paktiossa asiakirjojen eheys ja tietosuvereniteetti ovat kaiken rakentamamme ytimessä. Tämä seloste kuvaa, miten suojaamme tietojasi GDPR- ja ETA-standardien mukaisesti.",
+            "sections": {
+                "sovereignty": {
+                    "title": "1. Tietosuvereniteetti",
+                    "content": "Uskomme, että tietosi kuuluvat sinulle. Paktio toimii oikeudellisten sopimustesi huoltajana. Kaikki Paktioon syötetyt tiedot tallennetaan turvallisesti ETA-alueella."
+                },
+                "integrity": {
+                    "title": "2. Asiakirjan eheys",
+                    "content": "\"Eheyssääntömme\" käyttää SHA-256-hajautusta varmistaakseen, että kun asiakirja on allekirjoitettu, sen tilaa ei voida muuttaa ilman allekirjoitusten mitätöimistä. Tämä kryptografinen todiste tallennetaan asiakirjan metatietojen rinnalle."
+                },
+                "rights": {
+                    "title": "3. Oikeutesi",
+                    "content": "EU-lainsäädännön mukaisesti sinulla on oikeus tarkastella, korjata tai poistaa henkilötietojasi. Voit pyytää tilisi tietojen täydellistä vientiä milloin tahansa asetussivun kautta."
+                }
+            }
+        },
+        "terms": {
+            "title": "Käyttöehdot",
+            "sections": {
+                "agreement": {
+                    "title": "1. Sopimus ehtoihin",
+                    "content": "Käyttämällä Paktiota sitoudut noudattamaan näitä käyttöehtoja. Jos et hyväksy näitä ehtoja, älä käytä sovellusta."
+                },
+                "accounts": {
+                    "title": "2. Käyttäjätilit",
+                    "content": "Olet vastuussa tilisi turvallisuudesta, mukaan lukien monivaiheisen tunnistautumisen (MFA) käyttöönotto, jos se on saatavilla. Paktio ei ole vastuussa luvattomasta pääsystä, joka johtuu turvattomasta tilinhallinnasta."
+                },
+                "validity": {
+                    "title": "3. Oikeudellinen pätevyys",
+                    "content": "Paktio tarjoaa työkaluja kehittyneisiin sähköisiin allekirjoituksiin (AdES) eIDAS-standardien mukaisesti. Käyttäjät ovat kuitenkin vastuussa siitä, etteivät heidän erityiset sopimuksensa vaadi paikallisen lain mukaista pätevää sähköistä allekirjoitusta (QES)."
+                },
+                "integrity": {
+                    "title": "4. Eheyssääntö",
+                    "content": "Paktio noudattaa tiukkaa asiakirjojen eheyspolitiikkaa. Asiakirjan sisällön muuttaminen allekirjoituksen jälkeen johtaa kaikkien kyseisen version olemassa olevien allekirjoitusten välittömään ja peruuttamattomaan mitätöimiseen."
+                }
+            }
+        }
+    },
+    "mfa": {
+        "verifyTitle": "Kaksivaiheinen tunnistautuminen",
+        "verifySubtitle": "Syötä koodi autentikaattorisovelluksestasi.",
+        "verifyLabel": "Vahvista",
+        "setupTitle": "Ota käyttöön monivaiheinen tunnistautuminen",
+        "setupSubtitle": "Suojaa Paktio-tilisi autentikaattorisovelluksella (esim. Google Authenticator, Authy).",
+        "step1Description": "Klikkaa alta luodaksesi yksilöllisen QR-koodisi",
+        "startSetup": "Aloita asennus",
+        "step2Scan": "Skannaa tämä koodi autentikaattorisovelluksellasi.",
+        "step2Verify": "Syötä 6-numeroinen koodi sovelluksestasi.",
+        "verifyActivate": "Vahvista ja aktivoi",
+        "step3Success": "MFA otettu käyttöön",
+        "step3Description": "Tilisi on nyt turvallisempi."
+    },
+    "pdf": {
+        "reference": "Viite",
+        "hash": "Hajautus",
+        "version": "Versio",
+        "name": "Nimi",
+        "email": "Sähköposti",
+        "phone": "Puhelin",
+        "address": "Osoite",
+        "dob": "Syntymäaika",
+        "ssn": "Henkilötunnus",
+        "noParties": "Ei tallennettuja osapuolia.",
+        "attachments": "Liitteet",
+        "noAttachments": "Ei liitteitä",
+        "signatures": "Allekirjoitukset",
+        "integrityNotice": "Tämä sopimus on allekirjoitettu sähköisesti käyttämällä PAKTIO:n e-allekirjoituspalvelua. Allekirjoitukset yksityiskohtaisine tietoineen on liitetty erilliseen allekirjoitusvarmennesivuun tämän PDF-tiedoston lopussa.",
+        "learnMore": "Lue lisää PAKTIO:n sähköisistä allekirjoituksista osoitteessa",
+        "footerNotice": "Digitaalisesti allekirjoitettu ja vahvistettu",
+        "certificateTitle": "Digitaalinen allekirjoitusvarmenne",
+        "certificateSubtitle": "Tämä varmenne todistaa asiakirjan eheyden.",
+        "documentInfo": "Asiakirjan tiedot",
+        "signingRecords": "Allekirjoitustiedot ja käsinkirjoitetut allekirjoitukset",
+        "signedAt": "Allekirjoitettu",
+        "noImage": "Ei kuvaa",
+        "capturedSignature": "CAPTURED SIGNATURE"
     }
 }
