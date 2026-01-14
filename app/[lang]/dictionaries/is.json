@@ -9,7 +9,7 @@
     },
     "auth": {
         "signIn": "Skrá inn",
-        "signUp": "Byrja frítt tímabil",
+        "signUp": "Byrja frítt",
         "email": "Netfang",
         "password": "Lykilorð",
         "passwordHint": "Lykilorð (lágm. 6 stafir)",
@@ -65,7 +65,7 @@
             "title": "Paktio",
             "subtitle": "Fullvalda skjöl",
             "description": "Hágæða AI samningsgerð með nákvæmni á stafstigi og SHA-256 skjalaheilindum fyrir skandinavískt lögfræðilegt landslag.",
-            "ctaStart": "Byrja frítt tímabil",
+            "ctaStart": "Byrja frítt",
             "ctaSignIn": "Skrá inn"
         },
         "features": {
@@ -248,7 +248,7 @@
     "pages": {
         "contact": {
             "title": "Hafa samband",
-            "subtitle": "Við erum hér til að hjálpa. Hafðu samband við teymið okkar í Ósló fyrir stuðning, fyrirspurnir eða samstarfstækifæri.",
+            "subtitle": "Við erum hér til að hjálpa. Hafðu samband við teymið okkar fyrir stuðning, fyrirspurnir eða samstarfstækifæri.",
             "getInTouch": "Hafa samband",
             "hq": "Höfuðstöðvar",
             "details": "Fyrir almennar fyrirspurnir eða stuðning, vinsamlegast sendu okkur tölvupóst beint eða notaðu spjallgræjuna ef hún er í boði."
@@ -262,11 +262,11 @@
             },
             "sovereignty": {
                 "title": "Fullvalda skjöl",
-                "content": "Í heimi hverfulla gagna stendur Paktio fyrir varanleika. Við smíðum verkfæri som virða heilagleika samningsins og tryggja að það sem þú skrifar undir sé nákvæmlega það sem verður áfram í skránni, að eilífu."
+                "content": "Í heimi hverfulla gagna stendur Paktio fyrir varanleika. Við smíðum verkfæri som virða heilagleika samningsins og tryggja að það som þú skrifar undir sé nákvæmlega það som verður áfram í skránni, að eilífu."
             },
             "roots": {
                 "title": "Skandinavískar rætur",
-                "content": "Paktio fæddist í Osló og felur í sér skandinavísku meginreglurnar um gagnsæi, traust og naumhyggju. Við fjarlægjum allt óþarfa til að einbeita okkur að því sem skiptir máli: samningnum sjálfum."
+                "content": "Paktio felur í sér skandinavísku meginreglurnar um gagnsæi, traust og naumhyggju. Við fjarlægjum allt óþarfa till að einbeita okkur að því sem skiptir máli: samningnum sjálfum."
             }
         },
         "privacy": {
@@ -275,7 +275,7 @@
             "sections": {
                 "sovereignty": {
                     "title": "1. Gagnafullveldi",
-                    "content": "Við trúum því að gögnin þín tilheyri þér. Paktio þjónar sem vörsluaðili lagalegra samninga þinna. Öll gögn sem slegin eru inn í Paktio eru geymd á öruggan hátt innan EES."
+                    "content": "Við trúum því að gögnin þín tilheyri þér. Paktio þjónar som vörsluaðili lagalegra samninga þinna. Öll gögn som slegin eru inn í Paktio eru geymd á öruggan hátt innan EES."
                 },
                 "integrity": {
                     "title": "2. Heilindi skjala",
@@ -283,30 +283,82 @@
                 },
                 "rights": {
                     "title": "3. Réttindi þín",
-                    "content": "Samkvæmt lögum ESB átt þú rétt á að fá aðgang að, leiðrétta eða eyða persónuupplýsingum þínum. Þú getur hvenær sem er óskað eftir fullum útflutningi á reikningsgögnum þínum í gegnum stillingasíðuna."
+                    "content": "Samkvæmt lögum ESB átt þú rétt á að fá aðgang að, leiðrétta eða eyða persónuupplýsingum þínum. Þú getur hvenær som er óskað eftir fullum útflutningi á reikningsgögnum þínum í gegnum stillingasíðuna."
                 }
             }
         },
         "terms": {
             "title": "Þjónustuskilmálar",
-            "sections": {
-                "agreement": {
-                    "title": "1. Samþykki á skilmálum",
-                    "content": "Með því að nota Paktio samþykkir þú að vera bundinn af þessum þjónustuskilmálum. Ef þú samþykkir ekki þessa skilmála skaltu ekki nota forritið."
+            "sections": [
+                {
+                    "title": "1. Samþykki og samkomulag um skilmála",
+                    "content": "Þessir þjónustuskilmálar („Skilmálar“) gilda um aðgang þinn og notkun á Paktio („Vettvangurinn“), veflægri þjónustu fyrir gerð, undirritun og umsýslu rafrænna samninga. Með því að búa til aðgang eða nota Vettvanginn samþykkir þú að vera bundinn af þessum Skilmálum og persónuverndarstefnu okkar. Ef þú samþykkir ekki þessa skilmála skaltu hætta allri notkun á Vettvanginum þegar í stað."
                 },
-                "accounts": {
-                    "title": "2. Notendareikningar",
-                    "content": "Þú berð ábyrgð á að viðhalda öryggi reikningsins þíns, þar á meðal að virkja fjölþátta auðkenningu (MFA) þar sem hún er í boði. Paktio ber ekki ábyrgð á óviðkomandi aðgangi sem stafar af óöruggri reikningsstjórnun."
+                {
+                    "title": "2. Skilgreiningar",
+                    "content": "„Vettvangurinn“ merkir Paktio-vefsíðuna, forritið og alla tengda þjónustu, þar á meðal „Legal Architect“ ritunartækin og eiginleika fyrir rafrænar undirskriftir.\n„Notandi“ (eða „þú“) merkir einstaklinginn eða aðilann som notar Vettvanginn.\n„AdES“ vísar til ítarlegra rafrænna undirskrifta (Advanced Electronic Signatures) eins og þær eru skilgreindar í eIDAS-reglugerð ESB (nr. 910/2014).\n„Heilleikareglan“ vísar til dulkóðunaraðferðarinnar som Paktio notar til að innsigla ástand skjala.\n„Notendaefni“ vísar til hvers kyns gagna, texta eða skjala som Notandinn hleður upp eða semur á Vettvanginum."
                 },
-                "validity": {
-                    "title": "3. Lagalegt gildi",
-                    "content": "Paktio útvegar verkfæri fyrir háþróaðar rafrænar undirskriftir (AdES) samkvæmt eIDAS stöðlum. Hins vegar bera notendur ábyrgð á að tryggja að sérstakir samningar þeirra krefjist ekki fullgildrar rafrænnar undirskriftar (QES) samkvæmt staðbundnum lögum."
+                {
+                    "title": "3. Lýsing á þjónustu",
+                    "content": "Paktio býður upp á öflug tæki til samningastjórnunar, þar á meðal gervigreindardrifna ritun með nákvæmni á stafstigi og dulkóðaðan heilleika skjala. Vettvangurinn er sem stendur á MVP- (Minimum Viable Product) og prófunarstigi. Eiginleikar eru veittir eins og þeir eru („as-available“) til að auðvelda nútímaleg vinnubrögð í lögfræði."
                 },
-                "integrity": {
-                    "title": "4. Reglan um heilindi",
-                    "content": "Paktio framfylgir strangri stefnu um heilindi skjala. Breyting á hvaða skjalainnihaldi sem er eftir að undirskrift hefur verið beitt mun leiða til tafarlauss og óafturkallanlegrar ógildingar á öllum núverandi undirskriftum fyrir þá útgáfu."
+                {
+                    "title": "4. Notendareikningar og öryggi",
+                    "content": "Þú berð ábyrgð á öryggi aðgangs þíns, þar með talið notkun á sterkum lykilorðum og að virkja tvíþætta auðkenningu (MFA) þar som hún er í boði. Paktio ber ekki ábyrgð á óheimilaðri notkun som stafar af ófullnægjandi öryggi á aðgangi. Þú samþykkir að veita réttar upplýsingar og láta okkur vita tafarlaust um óheimilaða notkun á aðgangi þínum."
+                },
+                {
+                    "title": "5. Lagalegt gildi og fylgni",
+                    "content": "Paktio býður upp á verkfæri fyrir ítarlegar rafrænar undirskriftir (AdES) í samræmi við eIDAS-staðla. Það er hins vegar alfarið á þinni ábyrgð að tryggja að tilteknir samningar þínir krefjist ekki fullgildrar rafrænnar undirskrifar (QES) eða annarra formkrafna samkvæmt staðbundnum lögum. Paktio ábyrgist ekki lagalegt gildi neins tiltekins skjals í neinu tilteknu lögsagnarumdæmi."
+                },
+                {
+                    "title": "6. Heilleikareglan",
+                    "content": "Paktio fylgir strangri stefnu um heilleika skjala. Sérhvert skjal er innsiglað með einstöku SHA-256 tætigildi. Sérhver breyting á innihaldi skjals eftir að undirskrift hefur verið sett á það leiðir til tafarlauss og óafturkallanlegs ógildingar á öllum undirskriftum fyrir þá útgáfu. Þetta tryggir að það som þú skrifar undir sé nákvæmlega það sama og varðveitt er í gögnum."
+                },
+                {
+                    "title": "7. Ásættanleg notkun og bönnuð hegðun",
+                    "content": "Þú samþykkir að nota Vettvanginn aðeins í lögmætum tilgangi. Bönnuð hegðun felur meðal annars í sér: tilraunir til að trufla dulkóðunaröryggi Vettvangsins eða Heilleikaregluna; notkun gervigreindartóla til að búa til sviksamleg eða ólögleg skjöl; upphleðslu á efni som brýtur gegn hugverkaréttindum eða friðhelgi þriðja aðila; og tilraunir til að bakþýða eða ná í frumkóða Vettvangsins."
+                },
+                {
+                    "title": "8. Hugverkaréttindi",
+                    "content": "Allur réttur, eignarréttur og hagsmunir að Vettvanginum (að frátöldu Notendaefni) eru og verða eign Paktio. Þetta nær yfir allan hugbúnað, hönnunareiningar, útlit og gervigreindarrökfræði."
+                },
+                {
+                    "title": "9. Notendaefni og leyfisveiting",
+                    "content": "Þú heldur öllum eignarrétti að Notendaefni þínu. Þú veitir Paktiö takmarkað, óeinkaréttarlegt og gjaldfrjálst leyfi til að hýsa, geyma og vinna úr efni þínu eingöngu í þeim tilgangi að veita Þjónustuna. Paktio starfar som vinnsluaðili fyrir gögn þín í samræmi við GDPR og EES-staðla."
+                },
+                {
+                    "title": "10. Gagnavernd og friðhelgi (GDPR)",
+                    "content": "Friðhelgi þín og fullveldi yfir skjölum þínum eru kjarninn í Paktio. Við meðhöndlum allar persónuupplýsingar í samræmi við persónuverndarstefnu okkar. Með notkun á Vettvanginum viðurkennir þú að við geymum lýsigögn skjala og dulkóðuð tætigildi til að tryggja varanleika og heilleika samninga þinna."
+                },
+                {
+                    "title": "11. Fyrirvarar: „EINS OG HANN ER“ og nákvæmni",
+                    "content": "Paktio er tæknifyrirtæki, ekki lögmannsstofa. Vettvangurinn er veittur „EINS OG HANN ER“ án nokkurrar ábyrgðar. Paktio er tæknilegt tól sem hannað er til að auðvelda gerð samninga; það er alfarið á ábyrgð notenda að staðfesta lagalegt gildi og fylgni við reglugerðir fyrir hvers kyns innihald samninga eða samkomulaga. Við veitum ekki lögfræðiráðgjöf. Allar gervigreindargerðar drög ættu að vera yfirfarin af hæfum lögfræðingi fyrir notkun."
+                },
+                {
+                    "title": "12. Takmörkun á ábyrgð",
+                    "content": "Að því marki som gildandi lög leyfa skal Paktio eða rekstraraðilar þess ekki bera ábyrgð á óbeinu, sérstöku eða afleiddu tjóni. Undir engum kringumstæðum skal heildarábyrgð Paktio fara yfir 100 NOK, som endurspeglur núverandi prófunarstöðu Vettvangsins."
+                },
+                {
+                    "title": "13. Skaðabótalausn",
+                    "content": "Þú samþykkir að halda Paktiö skaðlausu af hvers kyns kröfum, skuldbindingum eða kostnaði (þ.m.t. lögfræðikostnaði) som stafar af rangri notkun þinni á Vettvanginum, broti á þessum Skilmálum eða broti á réttindum þriðja aðila."
+                },
+                {
+                    "title": "14. Uppsögn og frestun",
+                    "content": "Við áskiljum okkur rétt til að frysta eða loka aðgangi þínum að eigin vild, án fyrirvara, vegna hegðunar som við teljum brjóta gegn þessum Skilmálum eða vera skaðlega fyrir aðra notendur eða heilleika Vettvangsins."
+                },
+                {
+                    "title": "15. Breytingar á skilmálum",
+                    "content": "Paktio kann að uppfæra þessa Skilmála reglulega. Við munum láta vita af verulegum breytingum með því að birta nýja skilmála á vefsíðunni. Áframhaldandi notkun á Vettvanginum eftir breytingar telst samþykki þitt á uppfærðum skilmálum."
+                },
+                {
+                    "title": "16. Gildandi lög og lögsaga",
+                    "content": "Skilmálar þessir og hvers kyns deilur tengdar þeim skulu lúta lögum í Noregi. Öll lagaleg mál skulu rekin fyrir dómstólum í Ósló, Noregi."
+                },
+                {
+                    "title": "17. Samskiptaupplýsingar",
+                    "content": "Fyrir fyrirspurnir varðandi þessa skilmála eða vegna aðstoðar, vinsamlegast hafið samband við support@paktio.com."
                 }
-            }
+            ]
         }
     },
     "mfa": {

@@ -14,25 +14,12 @@ export default async function TermsPage({
             <h1 className="text-5xl font-black mb-12 tracking-tighter uppercase">{content.title}</h1>
 
             <section className="space-y-12">
-                <div className="space-y-4">
-                    <h2 className="text-2xl font-bold uppercase tracking-widest text-primary">{content.sections.agreement.title}</h2>
-                    <p>{content.sections.agreement.content}</p>
-                </div>
-
-                <div className="space-y-4">
-                    <h2 className="text-2xl font-bold uppercase tracking-widest text-primary">{content.sections.accounts.title}</h2>
-                    <p>{content.sections.accounts.content}</p>
-                </div>
-
-                <div className="space-y-4">
-                    <h2 className="text-2xl font-bold uppercase tracking-widest text-primary">{content.sections.validity.title}</h2>
-                    <p>{content.sections.validity.content}</p>
-                </div>
-
-                <div className="space-y-4">
-                    <h2 className="text-2xl font-bold uppercase tracking-widest text-primary">{content.sections.integrity.title}</h2>
-                    <p>{content.sections.integrity.content}</p>
-                </div>
+                {content.sections.map((section: { title: string; content: string }, index: number) => (
+                    <div key={index} className="space-y-4">
+                        <h2 className="text-2xl font-bold uppercase tracking-widest text-primary">{section.title}</h2>
+                        <p className="whitespace-pre-wrap">{section.content}</p>
+                    </div>
+                ))}
             </section>
         </div>
     )

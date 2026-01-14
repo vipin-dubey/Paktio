@@ -9,7 +9,7 @@
     },
     "auth": {
         "signIn": "Logg inn",
-        "signUp": "Start gratis prøveperiode",
+        "signUp": "Start gratis",
         "email": "E-postadresse",
         "password": "Passord",
         "passwordHint": "Passord (min. 6 tegn)",
@@ -65,7 +65,7 @@
             "title": "Paktio",
             "subtitle": "Suverene dokumenter",
             "description": "High-end AI-kontraktsutforming med presisjon på tegnnivå og SHA-256 dokumentintegritet for det skandinaviske juridiske landskapet.",
-            "ctaStart": "Start gratis prøveperiode",
+            "ctaStart": "Start gratis",
             "ctaSignIn": "Logg inn"
         },
         "features": {
@@ -248,7 +248,7 @@
     "pages": {
         "contact": {
             "title": "Kontakt oss",
-            "subtitle": "Vi er her for å hjelpe. Kontakt vårt team i Oslo for støtte, forespørsler eller partnerskapsmuligheter.",
+            "subtitle": "Vi er her for å hjelpe. Kontakt vårt team for støtte, forespørsler eller partnerskapsmuligheter.",
             "getInTouch": "Ta kontakt",
             "hq": "Hovedkontor",
             "details": "For generelle forespørsler eller støtte, vennligst send oss en e-post direkte eller bruk chat-funksjonen hvis tilgjengelig."
@@ -266,7 +266,7 @@
             },
             "roots": {
                 "title": "Skandinaviske røtter",
-                "content": "Born in Oslo, Paktio embodies the Scandinavian principles of transparency, trust, and minimalist design. We strip away the unnecessary to focus on what matters: the agreement itself."
+                "content": "Paktio legemliggjør de skandinaviske prinsippene om åpenhet, tillit og minimalistisk design. Vi fjerner det unødige for å fokusere på det som betyr noe: selve avtalen."
             }
         },
         "privacy": {
@@ -288,25 +288,77 @@
             }
         },
         "terms": {
-            "title": "Vilkår for bruk",
-            "sections": {
-                "agreement": {
-                    "title": "1. Aksept av vilkår",
-                    "content": "Ved å bruke Paktio godtar du å være bundet av disse vilkårene. Hvis du ikke godtar disse vilkårene, må du ikke bruke applikasjonen."
+            "title": "Brukervilkår",
+            "sections": [
+                {
+                    "title": "1. Aksept og avtale om vilkår",
+                    "content": "Disse brukervilkårene (\"Vilkårene\") regulerer din tilgang til og bruk av Paktio (\"Plattformen\"), en nettbasert tjeneste for oppretting, signering og håndtering av digitale avtaler. Ved å opprette en konto eller bruke Plattformen, godtar du å være bundet av disse Vilkårene og vår personvernerklæring. Hvis du ikke er enig i disse vilkårene, må du umiddelbart slutte å bruke Plattformen."
                 },
-                "accounts": {
-                    "title": "2. Brukerkontoer",
-                    "content": "Du er ansvarlig for å opprettholde sikkerheten til kontoen din, inkludert å aktivere to-faktor autentisering (MFA) der det er tilgjengelig. Paktio er ikke ansvarlig for uautorisert tilgang som følge av usikker kontohåndtering."
+                {
+                    "title": "2. Definisjoner",
+                    "content": "\"Plattformen\" betyr Paktio-nettstedet, applikasjonen og alle tilknyttede tjenester, inkludert \"Legal Architect\"-verktøy og funksjoner for elektronisk signatur.\n\"Bruker\" (eller \"du\") betyr individet eller enheten som har tilgang til Plattformen.\n\"AdES\" refererer til avanserte elektroniske signaturer som definert i EU eIDAS-forordningen (nr. 910/2014).\n\"Integritetsregelen\" refererer til den kryptografiske verifiseringsmetoden som brukes av Paktio for å forsegle dokumenttilstander.\n\"Brukerinnhold\" refererer til data, tekst eller dokumenter lastet opp eller utarbeidet av Brukeren på Plattformen."
                 },
-                "validity": {
-                    "title": "3. Juridisk gyldighet",
-                    "content": "Paktio tilbyr verktøy for avanserte elektroniske signaturer (AdES) i henhold til eIDAS-standarder. Brukere er imidlertid ansvarlige for å sikre at deres spesifikke avtaler ikke krever en kvalifisert elektronisk signatur (QES) under lokal lov."
+                {
+                    "title": "3. Beskrivelse av tjenesten",
+                    "content": "Paktio tilbyr verktøy for avansert avtalehåndtering, inkludert AI-basert drafting med presisjon på tegnnivå og kryptografisk dokumentintegritet. Plattformen er for tiden i en MVP- (Minimum Viable Product) og testfase. Funksjoner leveres som de er for å forenkle moderne juridiske arbeidsflyter."
                 },
-                "integrity": {
-                    "title": "4. Integritetsregelen",
-                    "content": "Paktio håndhever en streng policy for dokumentintegritet. Endring av dokumentinnhold etter at en signatur er påført, vil føre til umiddelbar og irreversibel ugyldiggjøring av alle eksisterende signaturer for den versjonen."
+                {
+                    "title": "4. Brukerkontoer og sikkerhet",
+                    "content": "Du er ansvarlig for å opprettholde sikkerheten for din konto, inkludert bruk av sterke passord og aktivering av multifaktorautentisering (MFA) der dette er tilgjengelig. Paktio er ikke ansvarlig for uautorisert tilgang som følge av usikker kontohåndtering. Du godtar å oppgi nøyaktig informasjon og å varsle oss umiddelbart ved uautorisert bruk av kontoen din."
+                },
+                {
+                    "title": "5. Juridisk gyldighet og etterlevelse",
+                    "content": "Paktio tilbyr verktøy for avanserte elektroniske signaturer (AdES) i samsvar med eIDAS-standarder. Det er imidlertid ditt eget ansvar å sikre at dine spesifikke avtaler ikke krever en kvalifisert elektronisk signatur (QES) eller andre fysiske formaliteter i henhold til lokal lov. Paktio garanterer ikke rettskraften til noe spesifikt dokument i noen spesifikk jurisdiksjon."
+                },
+                {
+                    "title": "6. Integritetsregelen",
+                    "content": "Paktio håndhever en streng policy for dokumentintegritet. Hvert dokument forsegles med en unik SHA-256-hash. Enhver endring av dokumentinnhold etter at en signatur er påført, vil føre til umiddelbar og irreversibel annullering av alle eksisterende signaturer for den versjonen. Dette sikrer at det du signerer er nøyaktig det som forblir i protokollen."
+                },
+                {
+                    "title": "7. Akseptabel bruk og forbudt adferd",
+                    "content": "Du godtar å bruke Plattformen kun til lovlige formål. Forbudt adferd inkluderer: forsøk på å forstyrre Plattformens kryptografiske sikkerhet eller Integritetsregelen; bruk av AI-verktøy for å generere svindelforsøk eller ulovlige dokumenter; opplasting av innhold som krenker tredjeparts immaterielle rettigheter eller personvern; og forsøk på å dekode eller hente ut Plattformens kildekode."
+                },
+                {
+                    "title": "8. Immaterielle rettigheter",
+                    "content": "Alle rettigheter og eierskap til Plattformen (unntatt Brukerinnhold) forblir Paktios eksklusive eiendom. Dette inkluderer all programvare, designelementer, estetiske tokens og AI-basert drafting-logikk."
+                },
+                {
+                    "title": "9. Brukerinnhold og lisensbevilling",
+                    "content": "Du beholder alle eierskaprettigheter til ditt Brukerinnhold. Du gir Paktio en begrenset, ikke-eksklusiv, avgiftsfri lisens til å drifte, lagre og behandle ditt innhold utelukkende for å levere Tjenesten. Paktio fungerer som en databehandler for dine data i samsvar med GDPR og EØS-standarder."
+                },
+                {
+                    "title": "10. Personvern og databeskyttelse (GDPR)",
+                    "content": "Ditt personvern og din dokument-suverenitet er sentralt for Paktio. Vi behandler alle personopplysninger i samsvar med vår personvernerklæring. Ved å bruke Plattformen erkjenner du at vi lagrer dokument-metadata og kryptografiske hasher for å sikre varighet og integritet for dine avtaler."
+                },
+                {
+                    "title": "11. Ansvarsfraskrivelser: \"SOM DEN ER\" og nøyaktighet",
+                    "content": "Paktio er en teknologileverandør, ikke et advokatfirma. Plattformen leveres \"SOM DEN ER\" uten noen form for garantier. Paktio er et teknisk verktøy utviklet for å forenkle opprettelse av avtaler; det er brukernes eget ansvar å bekrefte den juridiske gyldigheten og overholdelsen av lover og regler for alt innhold i kontrakter eller avtaler. Vi gir ikke juridisk rådgivning. Alle AI-genererte utkast bør gjennomgås av en kvalifisert juridisk fagperson før bruk."
+                },
+                {
+                    "title": "12. Ansvarsbegrensning",
+                    "content": "I den grad det er tillatt etter gjeldende lov, skal ikke Paktio eller dets operatører holdes ansvarlig for indirekte skader, spesielle skader eller følgeskader. Under ingen omstendigheter skal Paktios totale ansvar overstige 100 NOK, noe som gjenspeiler Plattformens nåværende teststatus."
+                },
+                {
+                    "title": "13. Skadesløsholdelse",
+                    "content": "Du godtar å holde Paktio skadesløs fra ethvert krav, ansvar eller utgifter (inkludert juridiske gebyrer) som oppstår som følge av din feilaktige bruk av Plattformen, ditt brudd på disse Vilkårene, eller din krenkelse av tredjeparts rettigheter."
+                },
+                {
+                    "title": "14. Oppsigelse og suspensjon",
+                    "content": "Vi forbeholder oss retten til å suspendere eller avslutte din konto etter eget skjønn, uten varsel, for adferd som vi mener bryter med disse Vilkårene eller er skadelig for andre brukere eller Plattformens integritet."
+                },
+                {
+                    "title": "15. Endring av vilkårene",
+                    "content": "Paktio kan oppdatere disse Vilkårene fra tid til annen. Vi vil varsle deg om vesentlige endringer ved å publisere de nye Vilkårene på nettstedet. Fortsatt bruk av Plattformen etter endringer utgjør din aksept av de reviderte Vilkårene."
+                },
+                {
+                    "title": "16. Lovvalg og jurisdiksjon",
+                    "content": "Disse Vilkårene og eventuelle tvister knyttet til dem skal reguleres av norsk lov. Enhver rettslig handling skal utelukkende bringes inn for domstolene i Norge."
+                },
+                {
+                    "title": "17. Kontaktinformasjon",
+                    "content": "For henvendelser angående disse Vilkårene eller for brukerstøtte, vennligst kontakt support@paktio.com."
                 }
-            }
+            ]
         }
     },
     "mfa": {

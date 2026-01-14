@@ -9,7 +9,7 @@
     },
     "auth": {
         "signIn": "Kirjaudu sisään",
-        "signUp": "Aloita ilmainen kokeilu",
+        "signUp": "Aloita ilmaiseksi",
         "email": "Sähköpostiosoite",
         "password": "Salasana",
         "passwordHint": "Salasana (väh. 6 merkkiä)",
@@ -65,7 +65,7 @@
             "title": "Paktio",
             "subtitle": "Suvereenit asiakirjat",
             "description": "Korkealaatuinen AI-sopimusluonnostelu merkitason tarkkuudella ja SHA-256-asiakirjojen eheydellä skandinaaviseen oikeusympäristöön.",
-            "ctaStart": "Aloita ilmainen kokeilu",
+            "ctaStart": "Aloita ilmaiseksi",
             "ctaSignIn": "Kirjaudu sisään"
         },
         "features": {
@@ -248,7 +248,7 @@
     "pages": {
         "contact": {
             "title": "Ota yhteyttä",
-            "subtitle": "Olemme täällä auttaaksemme. Ota yhteyttä Oslon tiimiimme tukea, tiedusteluja tai kumppanuusmahdollisuuksia varten.",
+            "subtitle": "Olemme täällä auttaaksemme. Ota yhteyttä tiimiimme tukea, tiedusteluja tai kumppanuusmahdollisuuksia varten.",
             "getInTouch": "Ota yhteyttä",
             "hq": "Pääkonttori",
             "details": "Yleisiä tiedusteluja tai tukea varten lähetä meille sähköpostia suoraan tai käytä chat-widgetiä, jos se on saatavilla."
@@ -266,7 +266,7 @@
             },
             "roots": {
                 "title": "Skandinaaviset juuret",
-                "content": "Oslossa syntynyt Paktio ilmentää skandinaavisia avoimuuden, luottamuksen ja minimalistisen suunnittelun periaatteita. Karsimme kaiken turhan keskittyäksemme siihen, millä on merkitystä: itse sopimukseen."
+                "content": "Paktio ilmentää skandinaavisia avoimuuden, luottamuksen ja minimalistisen suunnittelun periaatteita. Karsimme kaiken turhan keskittyäksemme siihen, millä on merkitystä: itse sopimukseen."
             }
         },
         "privacy": {
@@ -289,24 +289,76 @@
         },
         "terms": {
             "title": "Käyttöehdot",
-            "sections": {
-                "agreement": {
-                    "title": "1. Sopimus ehtoihin",
-                    "content": "Käyttämällä Paktiota sitoudut noudattamaan näitä käyttöehtoja. Jos et hyväksy näitä ehtoja, älä käytä sovellusta."
+            "sections": [
+                {
+                    "title": "1. Ehtojen hyväksyminen",
+                    "content": "Nämä käyttöehdot (\"Ehdot\") säätelevät pääsyäsi Paktio-palveluun (\"Alusta\") ja sen käyttöä. Paktio on verkkopohjainen palvelu digitaalisten sopimusten luomiseen, allekirjoittamiseen ja hallintaan. Luomalla tilin tai käyttämällä Alustaa sitoudut noudattamaan näitä Ehtoja ja tietosuojaselostettamme. Jos et hyväksy näitä ehtoja, sinun on lopetettava Alustan käyttö välittömästi."
                 },
-                "accounts": {
-                    "title": "2. Käyttäjätilit",
-                    "content": "Olet vastuussa tilisi turvallisuudesta, mukaan lukien monivaiheisen tunnistautumisen (MFA) käyttöönotto, jos se on saatavilla. Paktio ei ole vastuussa luvattomasta pääsystä, joka johtuu turvattomasta tilinhallinnasta."
+                {
+                    "title": "2. Määritelmät",
+                    "content": "\"Alusta\" tarkoittaa Paktio-verkkosivustoa, sovellusta ja kaikkia niihin liittyviä palveluita, mukaan lukien \"Legal Architect\" -työkalut ja sähköisen allekirjoituksen toiminnot.\n\"Käyttäjä\" (tai \"sinä\") tarkoittaa Alustaa käyttävää henkilöä tai yhteisöä.\n\"AdES\" tarkoittaa kehittynyttä sähköistä allekirjoitusta EU:n eIDAS-asetuksen (nro 910/2014) mukaisesti.\n\"Eheyssääntö\" tarkoittaa Paktion käyttämää kryptografista varmennusmenetelmää asiakirjan tilan sinetöimiseksi.\n\"Käyttäjäsisältö\" tarkoittaa Käyttäjän Alustalle lataamia tai siellä laatimia tietoja, tekstejä tai asiakirjoja."
                 },
-                "validity": {
-                    "title": "3. Oikeudellinen pätevyys",
-                    "content": "Paktio tarjoaa työkaluja kehittyneisiin sähköisiin allekirjoituksiin (AdES) eIDAS-standardien mukaisesti. Käyttäjät ovat kuitenkin vastuussa siitä, etteivät heidän erityiset sopimuksensa vaadi paikallisen lain mukaista pätevää sähköistä allekirjoitusta (QES)."
+                {
+                    "title": "3. Palvelun kuvaus",
+                    "content": "Paktio tarjoaa edistyneitä sopimustenhallintatyökaluja, kuten tekoälypohjaista luonnostelua tehostettuna merkkikohtaisella tarkkuudella ja kryptografisella asiakirjojen eheydellä. Alusta on tällä hetkellä MVP- (Minimum Viable Product) ja testivaiheessa. Ominaisuudet tarjotaan sellaisenaan nykyaikaisten oikeudellisten työnkulkujen helpottamiseksi."
                 },
-                "integrity": {
-                    "title": "4. Eheyssääntö",
-                    "content": "Paktio noudattaa tiukkaa asiakirjojen eheyspolitiikkaa. Asiakirjan sisällön muuttaminen allekirjoituksen jälkeen johtaa kaikkien kyseisen version olemassa olevien allekirjoitusten välittömään ja peruuttamattomaan mitätöimiseen."
+                {
+                    "title": "4. Käyttäjätilit ja turvallisuus",
+                    "content": "Vastaat tilisi turvallisuudesta, mukaan lukien vahvojen salasanojen käytöstä ja monivaiheisen tunnistautumisen (MFA) käyttöönotosta, jos se on saatavilla. Paktio ei ole vastuussa luvattomasta pääsystä, joka johtuu puutteellisesta tilin hallinnasta. Sitoudut antamaan oikeat tiedot ja ilmoittamaan meille välittömästi tilisi luvattomasta käytöstä."
+                },
+                {
+                    "title": "5. Oikeudellinen pätevyys ja noudattaminen",
+                    "content": "Paktio tarjoaa työkalut kehittyneisiin sähköisiin allekirjoituksiin (AdES) eIDAS-standardien mukaisesti. On kuitenkin omalla vastuullasi varmistaa, etteivät sopimuksesi vaadi paikallisen lain mukaan varmennettua sähköistä allekirjoitusta (QES) tai muita muodollisuuksia. Paktio ei takaa minkään tietyn asiakirjan täytäntöönpanokelpoisuutta tietyllä lainkäyttöalueella."
+                },
+                {
+                    "title": "6. Eheyssääntö",
+                    "content": "Paktio noudattaa tiukkaa asiakirjojen eheyttä koskevaa käytäntöä. Jokainen asiakirja sinetöidään ainutlaatuisella SHA-256-tiivisteellä. Mikäli asiakirjan sisältöä muutetaan allekirjoituksen jälkeen, kaikki kyseisen version olemassa olevat allekirjoitukset mitätöityvät välittömästi ja lopullisesti. Tämä varmistaa, että allekirjoitettu sisältö säilyy muuttumattomana."
+                },
+                {
+                    "title": "7. Hyväksyttävä käyttö ja kielletty toiminta",
+                    "content": "Sitoudut käyttämään Alustaa vain laillisiin tarkoituksiin. Kiellettyä toimintaa ovat muun muassa: yritykset häiritä Alustan kryptografista turvallisuutta tai Eheyssääntöä; tekoälytyökalujen käyttö harhaanjohtavien tai laittomien asiakirjojen luomiseen; kolmansien osapuolten immateriaalioikeuksia tai yksityisyyttä loukkaavan sisällön lataaminen; sekä yritykset purkaa tai selvittää Alustan lähdekoodia."
+                },
+                {
+                    "title": "8. Immateriaalioikeudet",
+                    "content": "Kaikki oikeudet Alustaan (lukuun ottamatta Käyttäjäsisältöä) kuuluvat yksinomaan Paktiolle. Tämä sisältää kaikki ohjelmistot, suunnitteluelementit, esteettiset ominaisuudet ja tekoälypohjaisen luonnostelulogiikan."
+                },
+                {
+                    "title": "9. Käyttäjäsisältö ja lisenssin myöntäminen",
+                    "content": "Säilytät kaikki omistusoikeudet Käyttäjäsisältöösi. Myönnät Paktiolle rajoitetun, ei-yksinomaisen ja maksuttoman lisenssin sisältösi isännöintiin, säilyttämiseen ja käsittelyyn ainoastaan Palvelun tarjoamiseksi. Paktio toimii tietojesi käsittelijänä GDPR:n ja ETA-standardien mukaisesti."
+                },
+                {
+                    "title": "10. Tietosuoja ja yksityisyys (GDPR)",
+                    "content": "Yksityisyytesi ja asiakirjasi suvereniteetti ovat Paktiolle ensisijaisia. Käsittelemme kaikkia henkilötietoja tietosuojaselosteemme mukaisesti. Käyttämällä Alustaa hyväksyt, että tallennamme asiakirjojen metatietoja ja kryptografisia tiivisteitä varmistaaksemme sopimustesi pysyvyyden ja eheyden."
+                },
+                {
+                    "title": "11. Vastuuvapauslausekkeet: \"SELLAISENA KUIN SE ON\" ja tarkkuus",
+                    "content": "Paktio on teknologiatoimittaja, ei asianajotoimisto. Alusta tarjotaan \"SELLAISENA KUIN SE ON\" ilman minkäänlaisia takuita. Paktio on tekninen työkalu, joka on suunniteltu helpottamaan sopimusten luomista; on käyttäjien yksinomaisella vastuulla varmistaa kaikkien sopimusten tai asiakirjojen sisällön laillisuus ja säädöstenmukaisuus. Emme tarjoa oikeudellista neuvontaa. Kaikki tekoälyn luomat luonnokset on tarkistettava pätevän oikeudellisen asiantuntijan toimesta ennen käyttöä."
+                },
+                {
+                    "title": "12. Vastuunrajoitus",
+                    "content": "Sovellettavan lain sallimissa rajoissa Paktio tai sen ylläpitäjät eivät ole vastuussa mistään epäsuorista, erityisistä tai välillisistä vahingoista. Paktion kokonaisvastuu ei missään tapauksessa ylitä 100 Norjan kruunua (NOK), mikä heijastaa Alustan nykyistä testivaihetta."
+                },
+                {
+                    "title": "13. Vastuuvapaus",
+                    "content": "Sitoudut vapauttamaan Paktion kaikista vaatimuksista, vastuista tai kuluista (mukaan lukien oikeudenkäyntikulut), jotka johtuvat Alustan väärinkäytöstä, näiden Ehtojen rikkomisesta tai kolmansien osapuolten oikeuksien loukkaamisesta."
+                },
+                {
+                    "title": "14. Irtisanominen ja tilapäinen sulkeminen",
+                    "content": "Pidätämme oikeuden sulkea tai irtisanoa tilisi oman harkintamme mukaan ilman ennakkoilmoitusta toiminnasta, jonka katsomme rikkovan näitä Ehtoja tai olevan haitallista muille käyttäjille tai Alustan eheydelle."
+                },
+                {
+                    "title": "15. Ehtojen muuttaminen",
+                    "content": "Paktio voi päivittää näitä Ehtoja ajoittain. Ilmoitamme merkittävistä muutoksista julkaisemalla uudet Ehdot verkkosivustolla. Alustan käytön jatkaminen muutosten jälkeen katsotaan uusien Ehtojen hyväksymiseksi."
+                },
+                {
+                    "title": "16. Sovellettava laki ja toimivalta",
+                    "content": "Näihin Ehtoihin ja kaikkiin niihin liittyviin erimielisyyksiin sovelletaan Norjan lakia. Kaikki oikeustoimet käsitellään yksinomaan Oslon käräjäoikeudessa Norjassa."
+                },
+                {
+                    "title": "17. Yhteystiedot",
+                    "content": "Näitä Ehtoja koskevissa kysymyksissä tai tuen saamiseksi ota yhteyttä osoitteeseen support@paktio.com."
                 }
-            }
+            ]
         }
     },
     "mfa": {

@@ -9,7 +9,7 @@
     },
     "auth": {
         "signIn": "Sign In",
-        "signUp": "Start Free Trial",
+        "signUp": "Start Free",
         "email": "Email Address",
         "password": "Password",
         "passwordHint": "Password (min 6 characters)",
@@ -65,7 +65,7 @@
             "title": "Paktio",
             "subtitle": "Sovereign Documents",
             "description": "High-end AI contract drafting with character-level precision and SHA-256 document integrity for the Scandinavian legal landscape.",
-            "ctaStart": "Start Free Trial",
+            "ctaStart": "Start Free",
             "ctaSignIn": "Sign In"
         },
         "features": {
@@ -248,7 +248,7 @@
     "pages": {
         "contact": {
             "title": "Contact Us",
-            "subtitle": "We are here to help. Reach out to our team in Oslo for support, inquiries, or partnership opportunities.",
+            "subtitle": "We are here to help. Reach out to our team for support, inquiries, or partnership opportunities.",
             "getInTouch": "Get in Touch",
             "hq": "Headquarters",
             "details": "For general inquiries or support, please email us directly or use the chat widget if available."
@@ -266,7 +266,7 @@
             },
             "roots": {
                 "title": "Scandinavian Roots",
-                "content": "Born in Oslo, Paktio embodies the Scandinavian principles of transparency, trust, and minimalist design. We strip away the unnecessary to focus on what matters: the agreement itself."
+                "content": "Paktio embodies the Scandinavian principles of transparency, trust, and minimalist design. We strip away the unnecessary to focus on what matters: the agreement itself."
             }
         },
         "privacy": {
@@ -289,24 +289,76 @@
         },
         "terms": {
             "title": "Terms of Service",
-            "sections": {
-                "agreement": {
-                    "title": "1. Agreement to Terms",
-                    "content": "By using Paktio, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the application."
+            "sections": [
+                {
+                    "title": "1. Acceptance and Agreement to Terms",
+                    "content": "These Terms of Service (\"Terms\") govern your access to and use of Paktio (the \"Platform\"), a web-based service provided for the creation, signing, and management of digital agreements. By creating an account or using the Platform, you agree to be bound by these Terms and our Privacy Policy. If you do not agree to these terms, you must immediately cease all use of the Platform."
                 },
-                "accounts": {
-                    "title": "2. User Accounts",
-                    "content": "You are responsible for maintaining the security of your account, including enabling Multi-Factor Authentication (MFA) where available. Paktio is not liable for unauthorized access resulting from insecure account management."
+                {
+                    "title": "2. Definitions",
+                    "content": "\"Platform\" means the Paktio website, application, and all associated services, including the \"Legal Architect\" drafting tools and electronic signature features.\n\"User\" (or \"you\") means the individual or entity accessing the Platform.\n\"AdES\" refers to Advanced Electronic Signatures as defined by the EU eIDAS Regulation (No 910/2014).\n\"Integrity Rule\" refers to the cryptographic verification methodology employed by Paktio to seal document states.\n\"User Content\" refers to any data, text, or documents uploaded or drafted by the User on the Platform."
                 },
-                "validity": {
-                    "title": "3. Legal Validity",
-                    "content": "Paktio provides tools for Advanced Electronic Signatures (AdES) as per eIDAS standards. However, users are responsible for ensuring that their specific agreements do not require a Qualified Electronic Signature (QES) under local law."
+                {
+                    "title": "3. Description of Service",
+                    "content": "Paktio provides high-end agreement management tools, including AI-native drafting with character-level precision and cryptographic document integrity. The Platform is currently in an MVP (Minimum Viable Product) and testing phase. Features are provided \"as-available\" to facilitate modern legal workflows."
                 },
-                "integrity": {
-                    "title": "4. The Integrity Rule",
-                    "content": "Paktio enforces a strict document integrity policy. Modification of any document content after a signature has been applied will result in the immediate and irreversible voiding of all existing signatures for that version."
+                {
+                    "title": "4. User Accounts and Security",
+                    "content": "You are responsible for maintaining the security of your account, including the use of strong passwords and enabling Multi-Factor Authentication (MFA) where available. Paktio is not liable for unauthorized access resulting from insecure account management. You agree to provide accurate information and to notify us immediately of any unauthorized use of your account."
+                },
+                {
+                    "title": "5. Legal Validity and Compliance",
+                    "content": "Paktio provides tools for Advanced Electronic Signatures (AdES) in accordance with eIDAS standards. However, it is your sole responsibility to ensure that your specific agreements do not require a Qualified Electronic Signature (QES) or other physical formalities under local law. Paktio does not guarantee the enforceability of any specific document in any specific jurisdiction."
+                },
+                {
+                    "title": "6. The Integrity Rule",
+                    "content": "Paktio enforces a strict document integrity policy. Every document is sealed with a unique SHA-256 hash. Any modification of document content after a signature has been applied will result in the immediate and irreversible voiding of all existing signatures for that version. This ensures that what you sign is exactly what stays on record."
+                },
+                {
+                    "title": "7. Acceptable Use and Prohibited Conduct",
+                    "content": "You agree to use the Platform only for lawful purposes. Prohibited conduct includes: attempting to interfere with the Platform's cryptographic security or the Integrity Rule; using AI drafting tools to generate fraudulent or illegal documents; uploading any content that infringes on third-party intellectual property or privacy rights; and reverse engineering or attempting to extract the source code of the Platform."
+                },
+                {
+                    "title": "8. Intellectual Property Rights",
+                    "content": "All rights, title, and interest in and to the Platform (excluding User Content) are and will remain the exclusive property of Paktio. This includes all software, design elements, aesthetic tokens, and AI-native drafting logic."
+                },
+                {
+                    "title": "9. User Content and License Grant",
+                    "content": "You retain all ownership rights to your User Content. You grant Paktio a limited, non-exclusive, royalty-free license to host, store, and process your content solely for the purpose of providing the Service. Paktio acts as a processor for your data in accordance with the GDPR and EEA standards."
+                },
+                {
+                    "title": "10. Data Protection and Privacy (GDPR)",
+                    "content": "Your privacy and document sovereignty are central to Paktio. We handle all personal data in accordance with our Privacy Policy. By using the Platform, you acknowledge that we store document metadata and cryptographic hashes to ensure the permanence and integrity of your agreements."
+                },
+                {
+                    "title": "11. Disclaimers: \"AS IS\" and Accuracy",
+                    "content": "Paktio is a technology provider, not a law firm. The Platform is provided \"AS IS\" without any warranties of any kind. Paktio is a technical tool designed to facilitate agreement creation; it is the sole responsibility of users to confirm the legal validity and regulatory compliance of any contract or agreement content. We do not provide legal advice. All AI-generated drafts should be reviewed by a qualified legal professional before use."
+                },
+                {
+                    "title": "12. Limitation of Liability",
+                    "content": "To the maximum extent permitted by applicable law, Paktio and its operators shall not be liable for any indirect, special, incidental, or consequential damages. In no event shall Paktio’s total liability exceed 100 NOK, reflecting the Platform's current testing/MVP status."
+                },
+                {
+                    "title": "13. Indemnification",
+                    "content": "You agree to indemnify and hold harmless Paktio from any claims, liabilities, or expenses (including legal fees) arising from your misuse of the Platform, your violation of these Terms, or your infringement of any third-party rights."
+                },
+                {
+                    "title": "14. Termination and Suspension",
+                    "content": "We reserve the right to suspend or terminate your account at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other users or the Platform’s integrity."
+                },
+                {
+                    "title": "15. Modification of Terms",
+                    "content": "Paktio may update these Terms from time to time. We will notify you of material changes by posting the new Terms on the website. Continued use of the Platform after changes constitutes your acceptance of the revised Terms."
+                },
+                {
+                    "title": "16. Governing Law and Jurisdiction",
+                    "content": "These Terms and any disputes relating to them shall be governed by the laws of Norway. Any legal action shall be brought exclusively in the courts of Oslo, Norway."
+                },
+                {
+                    "title": "17. Contact Information",
+                    "content": "For inquiries regarding these Terms or for support, please contact support@paktio.com."
                 }
-            }
+            ]
         }
     },
     "mfa": {
