@@ -105,6 +105,19 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
         setError('')
 
         try {
+            // Validate age
+            const birthDate = new Date(dateOfBirth)
+            const today = new Date()
+            let age = today.getFullYear() - birthDate.getFullYear()
+            const m = today.getMonth() - birthDate.getMonth()
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--
+            }
+
+            if (age < 18 || age > 110) {
+                throw new Error('You must be between 18 and 110 years old to sign this contract.')
+            }
+
             await submitSignature(contractId, {
                 email,
                 firstName,
@@ -353,6 +366,8 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
                         value={dateOfBirth}
                         onChange={(e) => setDateOfBirth(e.target.value)}
                         required
+                        max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
+                        min={new Date(new Date().setFullYear(new Date().getFullYear() - 110)).toISOString().split('T')[0]}
                         className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                     />
                 </div>
@@ -366,8 +381,13 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
                     <input
                         id="ssn"
                         type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={ssn}
-                        onChange={(e) => setSsn(e.target.value)}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            if (/^\d*$/.test(val)) setSsn(val);
+                        }}
                         className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="123456789"
                     />
@@ -397,8 +417,13 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
                     <input
                         id="postalCode"
                         type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={postalCode}
-                        onChange={(e) => setPostalCode(e.target.value)}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            if (/^\d*$/.test(val)) setPostalCode(val);
+                        }}
                         required
                         className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="0123"
