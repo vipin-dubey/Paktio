@@ -3,6 +3,9 @@ import { notFound } from 'next/navigation'
 import ContractViewer from '@/components/features/sign/contract-viewer'
 import SigningForm from '@/components/features/sign/signing-form'
 
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
+import { PenTool } from 'lucide-react'
+
 export default async function SigningPage({
     params,
     searchParams
@@ -40,8 +43,15 @@ export default async function SigningPage({
         .maybeSingle()
 
     return (
-        <div className="min-h-screen bg-[#F9F9F8] py-8 sm:py-20 px-4">
-            <div className="max-w-3xl mx-auto bg-white border border-muted rounded-2xl shadow-sm overflow-hidden">
+        <div className="min-h-screen bg-[#F9F9F8] pt-4 lg:pt-8 px-4 pb-12">
+            <div className="max-w-7xl mx-auto mb-4">
+                <Breadcrumbs
+                    items={[
+                        { label: 'Sign Contract', icon: PenTool }
+                    ]}
+                />
+            </div>
+            <div className="max-w-4xl mx-auto bg-white border border-muted rounded-2xl shadow-sm overflow-hidden">
                 <div className="p-6 sm:p-8 border-b border-muted bg-muted/5">
                     <div className="flex justify-between items-start">
                         <div>

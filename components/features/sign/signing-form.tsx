@@ -166,7 +166,16 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
                 {wentThroughEmailVerification && (
                     <p className="text-sm text-green-600 mb-4">✓ Email verified via secure link</p>
                 )}
-                <p className="text-sm text-muted-foreground mt-4">You can now safely close this page.</p>
+                <p className="text-sm text-muted-foreground mt-4 mb-8">You can now safely close this page.</p>
+
+                {user && (
+                    <Link
+                        href="/dashboard"
+                        className="inline-block bg-foreground text-background px-6 py-3 rounded-lg text-sm font-bold hover:opacity-90 transition-all"
+                    >
+                        Return to Dashboard
+                    </Link>
+                )}
             </div>
         )
     }
@@ -349,33 +358,35 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
                 </div>
             </div>
 
-            <div>
-                <label htmlFor="ssn" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
-                    Social Security Number <span className="text-muted-foreground text-[8px] tracking-normal lowercase">(Optional)</span>
-                </label>
-                <input
-                    id="ssn"
-                    type="text"
-                    value={ssn}
-                    onChange={(e) => setSsn(e.target.value)}
-                    className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
-                    placeholder="123456789"
-                />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="ssn" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
+                        Social Security Number <span className="text-muted-foreground text-[8px] tracking-normal lowercase">(Optional)</span>
+                    </label>
+                    <input
+                        id="ssn"
+                        type="text"
+                        value={ssn}
+                        onChange={(e) => setSsn(e.target.value)}
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
+                        placeholder="123456789"
+                    />
+                </div>
 
-            <div>
-                <label htmlFor="address" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
-                    Address <span className="text-red-500">*</span>
-                </label>
-                <input
-                    id="address"
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
-                    placeholder="Street name and number"
-                />
+                <div>
+                    <label htmlFor="address" className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
+                        Address <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        id="address"
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
+                        placeholder="Street name and number"
+                    />
+                </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -404,20 +415,22 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         required
-                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-muted/30 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
+                        className="w-full px-4 py-3 bg-[#F9F9F8] border border-stone-300 rounded-xl focus:ring-1 focus:ring-primary text-sm transition-all"
                         placeholder="Oslo"
                     />
                 </div>
             </div>
 
-            <div className="pt-6 border-t border-muted mt-6">
-                <label className="block text-sm font-semibold mb-4 text-foreground/80">
-                    Finger/Mouse Signature <span className="text-red-500">*</span>
-                </label>
-                <SignaturePad
-                    onSave={(data) => setSignatureImage(data)}
-                    onClear={() => setSignatureImage('')}
-                />
+            <div className="pt-6 border-t border-muted mt-6 flex flex-col items-center w-full">
+                <div className="w-full md:max-w-md">
+                    <label className="block text-sm font-semibold mb-4 text-foreground/80">
+                        Finger/Mouse Signature <span className="text-red-500">*</span>
+                    </label>
+                    <SignaturePad
+                        onSave={(data) => setSignatureImage(data)}
+                        onClear={() => setSignatureImage('')}
+                    />
+                </div>
             </div>
 
 
@@ -429,7 +442,7 @@ export default function SigningForm({ contractId, intendedEmail, user: initialUs
 
             <button
                 type="submit"
-                disabled={loading || !signatureImage}
+                disabled={loading || !signatureImage || !firstName || !lastName || !phoneNumber || !dateOfBirth || !address || !postalCode || !city}
                 className="w-full bg-foreground text-background px-6 py-4 rounded-xl text-sm sm:text-lg font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-xl disabled:opacity-50 active:scale-[0.98]"
             >
                 {loading ? 'Signing...' : 'Sign and Accept Agreement'}

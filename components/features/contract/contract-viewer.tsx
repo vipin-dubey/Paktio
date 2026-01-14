@@ -10,9 +10,10 @@ interface ContractViewerProps {
     contract: ContractDetailDTO
     contractId: string
     userHasSigned: boolean
+    className?: string
 }
 
-export function ContractViewer({ contract, contractId, userHasSigned }: ContractViewerProps) {
+export function ContractViewer({ contract, contractId, userHasSigned, className }: ContractViewerProps) {
     const [hasReadToBottom, setHasReadToBottom] = useState(false)
     const [isAccepted, setIsAccepted] = useState(false)
     const scrollRef = useRef<HTMLDivElement>(null)
@@ -38,10 +39,10 @@ export function ContractViewer({ contract, contractId, userHasSigned }: Contract
     }, [])
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 flex flex-col h-full">
             {/* Document Content View */}
-            <section>
-                <div className="flex justify-between items-end mb-4">
+            <section className="flex-1 flex flex-col min-h-0">
+                <div className="flex justify-between items-end mb-4 shrink-0">
                     <h2 className="text-xl font-semibold">Document Content</h2>
                     <Link
                         href={`/view/${contractId}`}
@@ -54,8 +55,8 @@ export function ContractViewer({ contract, contractId, userHasSigned }: Contract
                         View Full Document
                     </Link>
                 </div>
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col border border-muted">
-                    <div className="px-8 py-6 border-b bg-muted/5">
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col border border-muted flex-1 min-h-0">
+                    <div className="px-8 py-6 border-b bg-muted/5 shrink-0">
                         <h1 className="text-2xl font-bold text-center">
                             {contract?.title}
                         </h1>
@@ -64,7 +65,7 @@ export function ContractViewer({ contract, contractId, userHasSigned }: Contract
                     <div
                         ref={scrollRef}
                         onScroll={handleScroll}
-                        className="p-8 h-[500px] overflow-y-auto space-y-4 scroll-smooth"
+                        className={cn("p-8 overflow-y-auto space-y-4 scroll-smooth flex-1", className || "h-[500px]")}
                     >
                         {(contract?.content?.blocks || []).map((block: ContractBlock) => (
                             <div key={block.id} className="text-foreground">

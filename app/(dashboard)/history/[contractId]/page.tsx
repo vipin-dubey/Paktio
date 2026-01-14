@@ -24,8 +24,8 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
     const userHasSigned = user && signatures?.some((sig: any) => sig.signer_email === user.email)
 
     return (
-        <div className="max-w-7xl mx-auto py-12 px-4 pb-24 h-full flex flex-col min-h-0 bg-[#F9F9F8]">
-            <div className="mb-6 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto pt-4 lg:pt-8 px-4 pb-12 flex flex-col bg-[#F9F9F8]">
+            <div className="mb-4 flex items-center justify-between gap-4">
                 <Breadcrumbs
                     items={[
                         { label: 'Contract History', icon: History }
@@ -38,49 +38,54 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                     <Plus className="w-5 h-5" />
                 </Link>
             </div>
-            <div className="flex justify-between items-center mb-10">
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-black tracking-tighter uppercase">Document Details</h1>
-                    <p className="text-sm text-muted-foreground italic">Immutable record of this legal agreement.</p>
+            <div className="flex flex-row justify-between items-start gap-4 mb-6">
+                <div className="space-y-1 min-w-0">
+                    <h1 className="text-xl sm:text-3xl font-black tracking-tighter uppercase truncate">Document Details</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground italic truncate">Immutable record of this legal agreement.</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 shrink-0">
                     {!userHasSigned && contract?.status !== 'draft' && (
                         <Link
                             href="#signing-section"
-                            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-3 rounded-lg text-sm font-bold hover:bg-primary/20 transition-all border border-primary/20"
+                            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-2 sm:px-4 sm:py-3 rounded-lg text-xs sm:text-sm font-bold hover:bg-primary/20 transition-all border border-primary/20 whitespace-nowrap"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
-                            Go to Signing
+                            <span className="hidden sm:inline">Go to Signing</span>
+                            <span className="sm:hidden">Sign</span>
                         </Link>
                     )}
                     <DownloadCertificateButton
                         contract={contract}
                         signatures={signatures || []}
                         contractId={contractId}
+                        className="inline-flex items-center gap-2 bg-foreground text-background px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-xs sm:text-sm font-bold hover:opacity-90 transition-all whitespace-nowrap"
                     />
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 flex-1 min-h-0 overflow-hidden">
-                <div className="lg:col-span-2 space-y-12 overflow-y-auto pr-4 custom-scrollbar">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div className="lg:col-span-2 flex flex-col gap-12">
+                    {/* Contract Box: Standard height, internal scroll still useful for long docs, but page scrolls too */}
                     <ContractViewer
                         contract={contract}
                         contractId={contractId}
                         userHasSigned={!!userHasSigned}
+                        className="h-[600px]"
                     />
 
-                    <section className="pb-12">
+                    {/* Signatures List */}
+                    <section className="pb-2">
                         <h2 className="text-xl font-bold tracking-tight mb-6 flex items-center gap-2">
                             <span className="w-1.5 h-6 bg-primary rounded-full"></span>
                             Recorded Signatures
                         </h2>
                         {signatures && signatures.length > 0 ? (
-                            <div className="space-y-6">
+                            <div className="space-y-4">
                                 {signatures.map((sig: any) => (
-                                    <div key={sig.id} className="bg-white border border-muted rounded-2xl p-6 shadow-sm">
-                                        <div className="mb-6 flex justify-between items-start">
+                                    <div key={sig.id} className="bg-white border border-muted rounded-2xl p-4 shadow-sm">
+                                        <div className="mb-4 flex justify-between items-start">
                                             <div>
                                                 <p className="text-sm font-bold">{sig.first_name} {sig.last_name}</p>
                                                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">
@@ -108,7 +113,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ contra
                                 ))}
                             </div>
                         ) : (
-                            <div className="bg-muted/5 border border-dashed border-muted rounded-2xl p-12 text-center">
+                            <div className="bg-muted/5 border border-dashed border-muted rounded-2xl p-8 text-center">
                                 <p className="text-muted-foreground italic text-sm">No signatures recorded yet.</p>
                             </div>
                         )}

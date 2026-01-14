@@ -54,6 +54,7 @@ export function SignaturePad({ onSave, onClear }: SignaturePadProps) {
     }
 
     const stopDrawing = () => {
+        if (!isDrawing) return
         setIsDrawing(false)
         if (canvasRef.current) {
             onSave(canvasRef.current.toDataURL('image/png'))
