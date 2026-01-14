@@ -18,9 +18,18 @@ export async function saveContract(title: string, contentJson: ContractContent) 
         .eq('id', user.id)
         .single()
 
+    // Check if contract exists (update) or let upsert handle it without overwriting created_by
+    // CAUTION: 'upsert' with 'created_by: user.id' is dangerous as it transfers ownership if user changes.
+    // We should fetching existing first or separate create/update logic.
+    // However, saveContract assumes 'upsert' based on... title?? No, that generates duplicates.
+    // This function seems flawed as it lacks an ID argument.
+    // Assuming this is intended for 'Create New Draft', we keep 'insert'.
+    // If it's used for updates, it must take an ID.
+    // Current signature: saveContract(title, content) -> No ID.
+    // So this ALWAYS creates a new contract.
     const { data, error } = await supabase
         .from('contracts')
-        .upsert({
+        .insert({
             title,
             content_json: contentJson,
             org_id: profile?.org_id,

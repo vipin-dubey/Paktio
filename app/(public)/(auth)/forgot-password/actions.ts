@@ -7,9 +7,14 @@ export async function resetPassword(formData: FormData) {
     const supabase = await createClient()
     const email = formData.get('email') as string
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`,
+    const redirectTo = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/auth/reset-password`
+    console.log('[Forgot Password] Sending reset to:', email, 'RedirectTo:', redirectTo)
+
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo,
     })
+
+    console.log('[Forgot Password] Result:', { data, error })
 
     if (error) return { error: error.message }
 
@@ -24,5 +29,5 @@ export async function updatePassword(formData: FormData) {
 
     if (error) return { error: error.message }
 
-    redirect('/login')
+    redirect('/dashboard?password_updated=true')
 }

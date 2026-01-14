@@ -1,14 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { LoginForm } from '@/components/auth/login-form'
+import { ResetPasswordForm } from '@/components/auth/reset-password-form'
 
-export default async function LoginPage() {
-    // Check if user is already logged in
+export default async function ResetPasswordPage() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
-    if (user) {
-        redirect('/dashboard')
+    // If no user (e.g. direct access without session), redirect to login
+    if (!user) {
+        redirect('/login')
     }
 
     return (
@@ -16,13 +16,13 @@ export default async function LoginPage() {
             <div className="w-full max-w-md space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold tracking-tight text-foreground">
-                        Sign in to Paktio
+                        Set New Password
                     </h2>
                     <p className="mt-2 text-center text-sm text-muted-foreground">
-                        Scandinavian minimalist precision for your agreements.
+                        Create a strong password for your account.
                     </p>
                 </div>
-                <LoginForm />
+                <ResetPasswordForm />
             </div>
         </div>
     )

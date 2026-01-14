@@ -34,13 +34,13 @@ export async function login(formData: FormData) {
             const hasVerifiedMfa = factors.some(f => f.factor_type === 'totp' && f.status === 'verified')
 
             if (hasVerifiedMfa) {
-                redirect('/auth/mfa/verify')
+                return { success: true, redirectUrl: '/auth/mfa/verify' }
             }
         }
     }
 
     revalidatePath('/', 'layout')
-    redirect('/dashboard')
+    return { success: true, redirectUrl: '/dashboard' }
 }
 
 export async function signup(formData: FormData) {

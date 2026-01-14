@@ -49,10 +49,22 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
     const content = contract.content_json as unknown as ContractContent
     const partyRoles = content?.party_roles || {}
 
+    // logic: 
+    // 1. If user is in signature_requests, they are a Signer/Counterparty
+    // 2. If user is created_by, they are Owner
     let role = partyRoles.signer_label || 'Signer'
 
-    // logic: if logged in user is the creator, they are the owner
-    if (user && user.id === contract.created_by) {
+    // Check if invited
+    const { data: request } = await supabase
+        .from('signature_requests')
+        .select('contract_id')
+        .eq('contract_id', contractId)
+        .eq('signer_email', signerInfo.email)
+        .maybeSingle()
+
+    if (request) {
+        role = partyRoles.signer_label || 'Signer'
+    } else if (user && user.id === contract.created_by) {
         role = partyRoles.owner_label || 'Document Owner'
     }
 
@@ -77,10 +89,26 @@ export async function submitSignature(contractId: string, signerInfo: SignerInfo
 
     if (error) throw new Error(error.message)
 
-    await supabase
-        .from('contracts')
-        .update({ status: 'signed' })
-        .eq('id', contractId)
+    // Check if ALL parties have signed
+    const { count: signatureCount } = await supabase
+        .from('signatures')
+        .select('*', { count: 'exact', head: true })
+        .eq('contract_id', contractId)
+
+    const { count: requestCount } = await supabase
+        .from('signature_requests')
+        .select('*', { count: 'exact', head: true })
+        .eq('contract_id', contractId)
+
+    // Expected = 1 (Owner) + External Requests
+    const expectedSignatures = (requestCount || 0) + 1
+
+    if ((signatureCount || 0) >= expectedSignatures) {
+        await supabase
+            .from('contracts')
+            .update({ status: 'signed' })
+            .eq('id', contractId)
+    }
 
     // Send confirmation emails to all parties
     try {
