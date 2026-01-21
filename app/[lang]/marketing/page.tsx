@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import { getDictionary } from '../dictionaries/get-dictionary'
+import { IS_COMING_SOON } from '@/lib/config'
+import { ComingSoonCta } from '@/components/marketing/coming-soon-cta'
 
 export default async function LandingPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params
     const dict = await getDictionary(lang)
 
     return (
-        <div className="min-h-screen bg-[#F9F9F8] flex flex-col items-center justify-center px-4 pt-24 pb-12 sm:pt-0 sm:pb-0">
-            <div className="max-w-4xl text-center space-y-12">
+        <div className="min-h-screen bg-[#F9F9F8] flex flex-col items-center justify-center px-4 pt-24 pb-12 sm:pt-0 sm:pb-0 relative overflow-hidden">
+            <div className="max-w-4xl text-center space-y-12 relative z-10 w-full">
                 <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9] break-words">
                     {dict.marketing.hero.title} <br />
                     <span className="text-primary italic block sm:inline">{dict.marketing.hero.subtitle}</span>
@@ -18,18 +20,24 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                    <Link
-                        href={`/${lang}/signup`}
-                        className="bg-foreground text-background px-10 py-4 rounded-xl text-lg font-bold hover:opacity-90 transition-all shadow-xl"
-                    >
-                        {dict.marketing.hero.ctaStart}
-                    </Link>
-                    <Link
-                        href={`/${lang}/login`}
-                        className="border border-foreground px-10 py-4 rounded-xl text-lg font-bold hover:bg-foreground/5 transition-all outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    >
-                        {dict.marketing.hero.ctaSignIn}
-                    </Link>
+                    {IS_COMING_SOON ? (
+                        <ComingSoonCta dict={dict} />
+                    ) : (
+                        <>
+                            <Link
+                                href={`/${lang}/signup`}
+                                className="bg-foreground text-background px-10 py-4 rounded-xl text-lg font-bold hover:opacity-90 transition-all shadow-xl"
+                            >
+                                {dict.marketing.hero.ctaStart}
+                            </Link>
+                            <Link
+                                href={`/${lang}/login`}
+                                className="border border-foreground px-10 py-4 rounded-xl text-lg font-bold hover:bg-foreground/5 transition-all outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            >
+                                {dict.marketing.hero.ctaSignIn}
+                            </Link>
+                        </>
+                    )}
                 </div>
 
                 <div className="pt-24 grid grid-cols-1 md:grid-cols-3 gap-12 text-left border-t border-muted/50">

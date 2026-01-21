@@ -66,7 +66,17 @@
             "subtitle": "Suveræne dokumenter",
             "description": "High-end AI-kontraktudarbejdelse med præcision på tegnniveau og SHA-256 dokumentintegritet til det skandinaviske juridiske landskapet.",
             "ctaStart": "Start gratis",
-            "ctaSignIn": "Log ind"
+            "ctaSignIn": "Log ind",
+            "registerInterest": "Tilmeld interesse"
+        },
+        "interestForm": {
+            "title": "Tilmeld interesse",
+            "description": "Efterlad din e-mail og en besked for at holde dig opdateret om vores lancering.",
+            "email": "E-mailadresse",
+            "message": "Din besked",
+            "placeholder": "Jeg er interesseret i at bruge Paktio til...",
+            "send": "Send interesse",
+            "success": "Tak for din interesse!"
         },
         "features": {
             "integrity": {
@@ -289,6 +299,7 @@
         },
         "terms": {
             "title": "Servicevilkår",
+            "lastUpdated": "Sidst opdateret: 21. januar 2026",
             "sections": [
                 {
                     "title": "1. Accept og aftale om vilkår",
@@ -336,7 +347,7 @@
                 },
                 {
                     "title": "12. Ansvarsbegrænsning",
-                    "content": "I det maksimale omfang tilladt af gældende lovgivning er Paktio eller dets operatører ikke ansvarlige for indirekte, særlige, hændelige eller følgeskader. Under ingen omstændigheder skal Paktios samlede ansvar overstige 100 NOK, hvilket afspejler Platformens nuværende teststatus."
+                    "content": "I det maksimale omfang tilladt af gældende lovgivning er Paktio eller dets operatører ikke ansvarlige for skader eller tab. I betragtning af dens nuværende test/MVP-status er Paktios samlede ansvar begrænset til nul (0 DKK/NOK) for alle krav."
                 },
                 {
                     "title": "13. Skadesløsholdelse",

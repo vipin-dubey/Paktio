@@ -11,7 +11,10 @@ export default async function TermsPage({
 
     return (
         <div className="max-w-4xl mx-auto py-24 px-4 font-serif leading-relaxed">
-            <h1 className="text-5xl font-black mb-12 tracking-tighter uppercase">{content.title}</h1>
+            <h1 className="text-5xl font-black mb-4 tracking-tighter uppercase">{content.title}</h1>
+            <p className="text-sm text-muted-foreground mb-12 uppercase tracking-widest font-sans">
+                {content.lastUpdated}
+            </p>
 
             <section className="space-y-12">
                 {content.sections.map((section: { title: string; content: string }, index: number) => (

@@ -66,7 +66,17 @@
             "subtitle": "Suvereenit asiakirjat",
             "description": "Korkealaatuinen AI-sopimusluonnostelu merkitason tarkkuudella ja SHA-256-asiakirjojen eheydellä skandinaaviseen oikeusympäristöön.",
             "ctaStart": "Aloita ilmaiseksi",
-            "ctaSignIn": "Kirjaudu sisään"
+            "ctaSignIn": "Kirjaudu sisään",
+            "registerInterest": "Ilmoita kiinnostuksesi"
+        },
+        "interestForm": {
+            "title": "Ilmoita kiinnostuksesi",
+            "description": "Jätä sähköpostiosoitteesi ja viesti pysyäksesi ajan tasalla julkaisustamme.",
+            "email": "Sähköpostiosoite",
+            "message": "Viestisi",
+            "placeholder": "Olen kiinnostunut käyttämään Paktioa...",
+            "send": "Lähetä kiinnostus",
+            "success": "Kiitos mielenkiinnostasi!"
         },
         "features": {
             "integrity": {
@@ -289,6 +299,7 @@
         },
         "terms": {
             "title": "Käyttöehdot",
+            "lastUpdated": "Viimeksi päivitetty: 21. tammikuuta 2026",
             "sections": [
                 {
                     "title": "1. Ehtojen hyväksyminen",
@@ -336,7 +347,7 @@
                 },
                 {
                     "title": "12. Vastuunrajoitus",
-                    "content": "Sovellettavan lain sallimissa rajoissa Paktio tai sen ylläpitäjät eivät ole vastuussa mistään epäsuorista, erityisistä tai välillisistä vahingoista. Paktion kokonaisvastuu ei missään tapauksessa ylitä 100 Norjan kruunua (NOK), mikä heijastaa Alustan nykyistä testivaihetta."
+                    "content": "Sovellettavan lain sallimissa rajoissa Paktio tai sen ylläpitäjät eivät ole vastuussa mistään vahingoista tai menetyksistä. Alustan nykyisen testi/MVP-vaiheen vuoksi Paktion kokonaisvastuu on rajoitettu nollaan (0 EUR/NOK) kaikkien vaatimusten osalta."
                 },
                 {
                     "title": "13. Vastuuvapaus",

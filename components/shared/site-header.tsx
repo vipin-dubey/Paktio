@@ -5,6 +5,8 @@ import { Settings, LayoutGrid, File, User } from 'lucide-react'
 import { CountrySwitcher } from './country-switcher'
 import { getDictionary } from '@/app/[lang]/dictionaries/get-dictionary'
 
+import { IS_COMING_SOON } from '@/lib/config'
+
 export async function SiteHeader({ lang = 'en' }: { lang?: string }) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -53,17 +55,19 @@ export async function SiteHeader({ lang = 'en' }: { lang?: string }) {
                             </div>
                         </>
                     ) : (
-                        <>
-                            <Link href={`/${lang}/login`} className="text-muted-foreground hover:text-foreground transition-colors">
-                                {dict.auth.signIn}
-                            </Link>
-                            <Link
-                                href={`/${lang}/signup`}
-                                className="bg-foreground text-background px-4 py-2 rounded-lg font-bold hover:opacity-90 transition-all text-xs whitespace-nowrap"
-                            >
-                                {dict.auth.signUp}
-                            </Link>
-                        </>
+                        !IS_COMING_SOON && (
+                            <>
+                                <Link href={`/${lang}/login`} className="text-muted-foreground hover:text-foreground transition-colors">
+                                    {dict.auth.signIn}
+                                </Link>
+                                <Link
+                                    href={`/${lang}/signup`}
+                                    className="bg-foreground text-background px-4 py-2 rounded-lg font-bold hover:opacity-90 transition-all text-xs whitespace-nowrap"
+                                >
+                                    {dict.auth.signUp}
+                                </Link>
+                            </>
+                        )
                     )}
                 </nav>
             </div>

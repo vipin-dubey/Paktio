@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { MessageCircle, X } from 'lucide-react'
 
-export default function ChatSupport() {
+export default function ChatSupport({
+    dictionary
+}: {
+    dictionary: any
+}) {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
@@ -19,8 +23,8 @@ export default function ChatSupport() {
                 <div className="w-80 h-96 bg-white border border-muted rounded-2xl shadow-2xl flex flex-col animate-in zoom-in-95 duration-200">
                     <div className="p-4 bg-muted/5 border-b border-muted flex justify-between items-center">
                         <div>
-                            <p className="text-sm font-bold">Paktio Support</p>
-                            <p className="text-[10px] text-primary uppercase font-black tracking-widest">Always Online</p>
+                            <p className="text-sm font-bold">{dictionary.title}</p>
+                            <p className="text-[10px] text-primary uppercase font-black tracking-widest">{dictionary.status}</p>
                         </div>
                         <button onClick={() => setIsOpen(false)} className="text-muted-foreground hover:text-foreground">
                             <X className="w-4 h-4" />
@@ -32,11 +36,11 @@ export default function ChatSupport() {
                             <MessageCircle className="w-8 h-8 text-primary" />
                         </div>
                         <div>
-                            <p className="text-sm font-medium">How can we help today?</p>
-                            <p className="text-xs text-muted-foreground mt-2">Our legal engineering team is ready to assist you.</p>
+                            <p className="text-sm font-medium">{dictionary.greeting}</p>
+                            <p className="text-xs text-muted-foreground mt-2">{dictionary.description}</p>
                         </div>
                         <button className="w-full bg-foreground text-background py-2 rounded-lg text-sm font-bold hover:opacity-90">
-                            Start Chat
+                            {dictionary.startChat}
                         </button>
                     </div>
                 </div>

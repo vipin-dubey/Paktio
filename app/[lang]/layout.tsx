@@ -3,6 +3,7 @@ import { Geist } from 'next/font/google'
 import '../globals.css'
 import CookieBanner from '@/components/shared/cookie-banner'
 import ChatSupport from '@/components/shared/chat-support'
+import { getDictionary } from '@/app/[lang]/dictionaries/get-dictionary'
 
 const geist = Geist({
     subsets: ['latin'],
@@ -22,12 +23,14 @@ export default async function RootLayout({
     params: Promise<{ lang: string }>
 }) {
     const { lang } = await params
+    const dictionary = await getDictionary(lang)
+
     return (
         <html lang={lang || 'en'}>
             <body className={`${geist.variable} font-sans antialiased bg-background text-foreground flex flex-col min-h-screen`}>
                 {children}
-                <CookieBanner />
-                <ChatSupport />
+                <CookieBanner dictionary={dictionary.shared.cookieBanner} lang={lang} />
+                <ChatSupport dictionary={dictionary.shared.chatSupport} />
             </body>
         </html>
     )

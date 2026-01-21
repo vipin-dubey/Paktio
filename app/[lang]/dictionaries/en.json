@@ -66,7 +66,17 @@
             "subtitle": "Sovereign Documents",
             "description": "High-end AI contract drafting with character-level precision and SHA-256 document integrity for the Scandinavian legal landscape.",
             "ctaStart": "Start Free",
-            "ctaSignIn": "Sign In"
+            "ctaSignIn": "Sign In",
+            "registerInterest": "Register Interest"
+        },
+        "interestForm": {
+            "title": "Register Interest",
+            "description": "Leave your email and a message to stay updated on our launch.",
+            "email": "Email Address",
+            "message": "Your Message",
+            "placeholder": "I'm interested in using Paktio for...",
+            "send": "Send Interest",
+            "success": "Thank you for your interest!"
         },
         "features": {
             "integrity": {
@@ -289,6 +299,7 @@
         },
         "terms": {
             "title": "Terms of Service",
+            "lastUpdated": "Last updated: January 21, 2026",
             "sections": [
                 {
                     "title": "1. Acceptance and Agreement to Terms",
@@ -336,7 +347,7 @@
                 },
                 {
                     "title": "12. Limitation of Liability",
-                    "content": "To the maximum extent permitted by applicable law, Paktio and its operators shall not be liable for any indirect, special, incidental, or consequential damages. In no event shall Paktio’s total liability exceed 100 NOK, reflecting the Platform's current testing/MVP status."
+                    "content": "To the maximum extent permitted by applicable law, Paktio and its operators shall not be liable for any damages or losses. Given its current testing/MVP status, Paktio’s total liability is strictly limited to zero (0 NOK) for all claims and causes of action."
                 },
                 {
                     "title": "13. Indemnification",

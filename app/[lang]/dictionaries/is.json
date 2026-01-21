@@ -66,7 +66,17 @@
             "subtitle": "Fullvalda skjöl",
             "description": "Hágæða AI samningsgerð með nákvæmni á stafstigi og SHA-256 skjalaheilindum fyrir skandinavískt lögfræðilegt landslag.",
             "ctaStart": "Byrja frítt",
-            "ctaSignIn": "Skrá inn"
+            "ctaSignIn": "Skrá inn",
+            "registerInterest": "Skrá áhuga"
+        },
+        "interestForm": {
+            "title": "Skrá áhuga",
+            "description": "Skildu eftir netfangið þitt og skilaboð til að fylgjast með útgáfunni okkar.",
+            "email": "Netfang",
+            "message": "Þín skilaboð",
+            "placeholder": "Ég hef áhuga á að nota Paktio fyrir...",
+            "send": "Senda áhuga",
+            "success": "Takk fyrir áhugann!"
         },
         "features": {
             "integrity": {
@@ -289,6 +299,7 @@
         },
         "terms": {
             "title": "Þjónustuskilmálar",
+            "lastUpdated": "Síðast uppfært: 21. janúar 2026",
             "sections": [
                 {
                     "title": "1. Samþykki og samkomulag um skilmála",
@@ -336,7 +347,7 @@
                 },
                 {
                     "title": "12. Takmörkun á ábyrgð",
-                    "content": "Að því marki som gildandi lög leyfa skal Paktio eða rekstraraðilar þess ekki bera ábyrgð á óbeinu, sérstöku eða afleiddu tjóni. Undir engum kringumstæðum skal heildarábyrgð Paktio fara yfir 100 NOK, som endurspeglur núverandi prófunarstöðu Vettvangsins."
+                    "content": "Að því marki som gildandi lög leyfa skal Paktio eða rekstraraðilar þess ekki bera ábyrgð á tjóni eða skaða. Vegna núverandi prófunar/MVP-stöðu er heildarábyrgð Paktio takmörkuð við núll (0 ISK/NOK) fyrir allar kröfur."
                 },
                 {
                     "title": "13. Skaðabótalausn",
